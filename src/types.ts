@@ -8,5 +8,4 @@ export interface ServerButtonObject {
 export interface ServerBarProp {
     selected: Array<ServerButtonObject>,
     handleButtonClick: (event: any) => void,
-    servers: Array<string>
 }

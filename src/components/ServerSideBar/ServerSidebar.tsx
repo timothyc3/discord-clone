@@ -8,10 +8,14 @@ import ServerButton from "./components/ServerButton";
 export default function ServerSidebar(props: ServerBarProp) {
 
     // create a ServerButton div for each server initialized by parent component 'App'
-    const serverButtons = props.servers.map(serverName =>
-    <ServerButton server={serverName} selected={props.selected.filter(
-        item => item.button === `${serverName}-server`)} handleButtonClick={props.handleButtonClick}/>
-    )
+    const serverButtons = props.selected.map(serverButtonObject => {
+        if (serverButtonObject.button.includes('-server')) {
+            return <ServerButton key={serverButtonObject.button}
+                                 selected={serverButtonObject}
+                                 handleButtonClick={props.handleButtonClick}/>
+        }
+
+    });
 
     return (
       <div className="bg-server-bar-black flex flex-col items-center pt-5">

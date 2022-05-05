@@ -18,8 +18,6 @@ function App() {
     {button: 'discover', active: false},
   ]);
 
-  const [servers, setServers] = useState<Array<string>>([]);
-
   function handleServerBarClicked(event: React.BaseSyntheticEvent) {
     // find the object with that represents the button that the user clicked,
     // set that button's 'active' boolean to true and reset rest to false
@@ -32,18 +30,12 @@ function App() {
   // get a list of all servers stored on firestore
   useEffect( () => {
     getServers().then(result => {
-      setServers(result.docs.map(server => server.id));
-    });
+        let serverArray = result.docs.map(server => {
+            return {button: `${server.id}-server`, active: false}});
+
+        setServerButtonSelected([...serverButtonSelected, ...serverArray])
+    })
   }, [])
-
-  // once the server list is loaded, map the servers into the serverButtonsSelected state
-  useEffect(() => {
-    const serverButtonObjects: Array<ServerButtonObject> = servers.map((server) => {
-        return {button: `${server}-server`, active: false}
-    });
-
-    setServerButtonSelected([...serverButtonSelected, ...serverButtonObjects]);
-  }, [servers]);
 
   useEffect(() => {
       console.log(serverButtonSelected);
@@ -54,7 +46,6 @@ function App() {
         <ServerSidebar
             selected={serverButtonSelected}
             handleButtonClick={handleServerBarClicked}
-            servers={servers}
         />
         <ChannelSidebar />
         <Content />

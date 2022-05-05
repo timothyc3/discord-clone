@@ -20,7 +20,6 @@ describe("Server Side Bar Component", () => {
         const { asFragment } = render(<ServerSidebar
             selected={serverBarMock}
             handleButtonClick={mockFunction}
-            servers={[]}
         />);
 
         expect(asFragment()).toMatchSnapshot();
@@ -31,7 +30,6 @@ describe("Server Side Bar Component", () => {
         render(<ServerSidebar
             selected={serverBarMock}
             handleButtonClick={mockFunction}
-            servers={[]}
         />);
 
         const element = screen.getByRole('button', {
@@ -59,7 +57,6 @@ describe("Server Side Bar Component", () => {
         render(<ServerSidebar
             selected={newServerTrueServerBarMock}
             handleButtonClick={mockFunction}
-            servers={[]}
         />);
         const newServerButton = screen.getByRole('button', {
             name: /newServer/i
@@ -75,28 +72,19 @@ describe("Server Side Bar Component", () => {
 
     it("when servers are passed as props, a server button is added for every string in the array", () => {
 
-        let serverListArrayMock = [
-            "something",
-            "something else"
-        ]
+        let selectedMock = [
+            {button: 'home', active: false},
+            {button: 'newServer', active: false},
+            {button: 'discover', active: false},
+            {button: 'ServerOne', active: false},
+            {button: 'ServerTwo', active: false}
+        ];
 
         render(<ServerSidebar
-            selected={serverBarMock}
+            selected={selectedMock}
             handleButtonClick={mockFunction}
-            servers={serverListArrayMock}
         />);
 
-        const element = screen.getByRole('button', {
-            name: /newServer/i
-        });
 
-        fireEvent.click(element);
-
-        expect(mockFunction).toHaveBeenCalledTimes(1);
-
-        fireEvent.click(element);
-        fireEvent.click(element);
-
-        expect(mockFunction).toHaveBeenCalledTimes(3);
     });
 });
