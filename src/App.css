@@ -1,38 +1,25 @@
-.App {
-  text-align: center;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+@layer components {
+    /* .server button controls the server buttons on the sidebar */
+    .server-button {
+        @apply h-12 w-12 text-green rounded-full bg-main-content-black hover:bg-bright-green
+        hover:rounded-2xl hover:text-white transition-all duration-100 ease-in
+        active:translate-y-0.5
+    }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+    .server-button.selected {
+        @apply rounded-2xl
+    }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+    .server-button ~ *:not(:last-child) {
+        @apply my-2
+    }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    .server-button:last-child {
+        @apply mt-2
+    }
 }
