@@ -1,6 +1,6 @@
 import './App.css';
 import React, {useEffect, useState} from "react";
-import {Server} from "./types"
+import {Server, Channel } from "./types"
 import ChannelSidebar from "./components/ChannelSideBar/ChannelSidebar";
 import HomeButton from "./components/ServerSideBar/components/HomeButton";
 import DiscoverButton from "./components/ServerSideBar/components/DiscoverButton";
@@ -12,6 +12,7 @@ import {getChannels, getServers} from "./firebase";
 // for remixicons usages
 import 'remixicon/fonts/remixicon.css';
 import ServerButton from "./components/ServerSideBar/components/ServerButton";
+import ChannelButton from "./components/ChannelSideBar/components/ChannelButton";
 
 
 export default function App() {
@@ -42,7 +43,7 @@ export default function App() {
 
         // only load data from firestore if the server button is currently not active
         if (!targetServerObject.active) {
-            // updates server state to include a list of channels in that server
+            // updates server state to include a list of channels in that server and update that object's active to true
             const addChannelData = (serverName: string) => {
                 // only load channels from firebase if the channels attribute array is empty (first time loading)
                 getChannels(serverName).then(channelArray => {
@@ -61,7 +62,29 @@ export default function App() {
         }
     }
 
-    function handleChannelButtonClick(event: React.BaseSyntheticEvent) {
+    function handleChannelButtonClick( channelName: string) {
+        // retrieve the server that is currently active from the state
+        const activeServerObject: Server = servers.filter(server => server.name === activeServer[0].name)[0];
+
+        // retrieve the target channel that the user clicked
+        const targetChannelObject: Channel = activeServerObject.channels.filter(channel => channel.name === channelName)[0];
+        // check if the object indicates that the button is already active
+        if (!targetChannelObject.active) {
+
+            // toggle the button to active if it is currently false
+            const updatedChannelObject: Channel = {...targetChannelObject, active: true}
+
+            // updated servers array
+            const updatedChannelArray:Array<Channel> = activeServerObject.channels.map(channel => channel.name === channelName ?
+            updatedChannelObject : {...channel, active: false});
+
+            // updated server object
+            const updatedServerObject: Server = {...activeServerObject, channels: updatedChannelArray}
+
+            setServers(servers.map(server => server.name === activeServer[0].name ? updatedServerObject
+                : server));
+        }
+
 
 
     }
@@ -106,11 +129,11 @@ export default function App() {
 
     // check which button is active right now
     useEffect(() => {
-        console.log(servers)
+        // console.log(servers)
 
     }, [servers])
 
-    // create a ServerButton div for each server
+    // create a ServerButton for each server
     const serverButtons: JSX.Element[] = servers
         .map((server: Server) => <ServerButton key={server.name}
                                                active={server.active}
@@ -120,6 +143,16 @@ export default function App() {
 
     // define active (clicked) server
     const activeServer = servers.filter(server => server.active);
+
+    // create a ChannelButton for each channel in the active server.
+    let channelButtons: Array<JSX.Element> = [];
+    if (servers.some(server => server.active)) {
+        channelButtons = activeServer[0].channels.map(channel => <ChannelButton channelName={channel.name}
+                                                                                active={channel.active}
+                                                                                key={channel.name}
+                                                                                handleClick={handleChannelButtonClick}
+        />)
+    }
 
 
     return (
@@ -143,10 +176,10 @@ export default function App() {
                     }}/>}
             />
             <ChannelSidebar
+                channelButtons={channelButtons}
                 server={activeServer.length === 1 ?
                     activeServer[0]
                     : {name: '', active: false, channels: []}}
-                handleChannelClick={handleChannelButtonClick}
             />
             <Content/>
             {newServer &&

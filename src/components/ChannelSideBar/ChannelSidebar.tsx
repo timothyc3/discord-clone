@@ -1,17 +1,11 @@
 import React from "react";
-import ChannelButton from "./components/ChannelButton";
 import {Server} from "../../types";
 
 
 export default function ChannelSidebar(props: {
-    server: Server,
-    handleChannelClick: (event: any) => void
-
+    server: Server
+    channelButtons: Array<JSX.Element>
 }) {
-
-    // create channel buttons
-    const channelButtons = props.server.channels.map(channel =>
-        <ChannelButton channelName={channel.name} active={channel.active}/>);
 
     return (
         <div className="bg-sub-black grid grid-rows-[3rem_1fr_5rem] w-full h-full">
@@ -27,7 +21,7 @@ export default function ChannelSidebar(props: {
                 </svg>
             </div>
             <div className="w-full h-full py-5 px-2 ">
-                {channelButtons}
+                {props.channelButtons}
             </div>
 
 
