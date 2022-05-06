@@ -1,13 +1,13 @@
 import React from "react";
-import {render, cleanup, fireEvent ,screen} from "@testing-library/react";
+import {render, cleanup, fireEvent, screen} from "@testing-library/react";
 import ServerSidebar from "./ServerSidebar";
 
 describe("Server Side Bar Component", () => {
 
     let serverBarMock = [
-        {button: 'home', active: false},
-        {button: 'newServer', active: false},
-        {button: 'discover', active: false},
+        {name: 'home', active: false, channels:[]},
+        {name: 'newServer', active: false, channels:[]},
+        {name: 'discover', active: false, channels: []},
     ];
 
     const mockFunction = jest.fn();
@@ -15,7 +15,7 @@ describe("Server Side Bar Component", () => {
     afterEach(cleanup);
 
     it("render correctly", () => {
-        const { asFragment } = render(<ServerSidebar
+        const {asFragment} = render(<ServerSidebar
             selected={serverBarMock}
             handleButtonClick={mockFunction}
             home={<></>}
@@ -27,15 +27,11 @@ describe("Server Side Bar Component", () => {
     });
 
 
-
-    it("when servers are passed as props, a server button is added for every string in the array",() => {
+    it("when servers are passed as props, a server button is added for every string in the array", () => {
 
         let selectedMock = [
-            {button: 'home', active: false},
-            {button: 'newServer', active: false},
-            {button: 'discover', active: false},
-            {button: 'one-server', active: false},
-            {button: 'two-server', active: false}
+            {name: 'one-server', active: false, channels:[]},
+            {name: 'two-server', active: false, channels:[]}
         ];
 
         render(<ServerSidebar

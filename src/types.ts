@@ -1,11 +1,22 @@
-// define the shape of ServerButtons to ensure controls on state: serverButtonSelected
-export interface ServerButtonObject {
-    button: string,
-    active: boolean
+export interface Message {
+    name: string,
+    messages: string
+}
+
+export interface Channel {
+    name: string,
+    messages: Array<Message>
+}
+
+// define the shape of ServerObject
+export interface Server {
+    name: string,
+    active: boolean,
+    channels: Array<Channel>
 }
 
 // defines the shape of the prop passed to ServerSideBar
 export interface ServerBarProp {
-    selected: Array<ServerButtonObject>,
+    selected: Array<Server>,
     handleButtonClick: (event: any) => void,
 }

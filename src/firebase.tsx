@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getDocs, getFirestore, collection } from "firebase/firestore";
+import {Server, Channel} from "./types";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,8 +22,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 
-async function getServers() {
-    return await getDocs(collection(firestore, "servers"));
+async function getServers():Promise<Array<Server>> {
+    const docs = await getDocs(collection(firestore, "servers"));
+    return docs.docs.map(server => {
+        return {name: `${server.id}`, active: false, channels: []}
+    });
 }
 
-export {getServers}
+async function getChannels(serverName: string):Promise<Array<Channel>> {
+    const docs = await getDocs(collection(firestore, "servers", serverName, "channels"));
+    return docs.docs.map(channel => {
+        return {name: channel.id, messages: []}});
+}
+
+export {getServers, getChannels}

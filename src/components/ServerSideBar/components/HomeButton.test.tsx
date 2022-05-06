@@ -11,14 +11,14 @@ describe("Home button", () => {
     afterEach(cleanup);
 
     it("render correctly", () => {
-        const { asFragment } = render(<HomeButton  handleButtonClick={mockFunction} active={false}/>);
+        const {asFragment} = render(<HomeButton handleButtonClick={mockFunction} active={false}/>);
 
         expect(asFragment()).toMatchSnapshot();
     });
 
-    it( "when the button object's attribute 'element' is true, the selected class is added", () => {
+    it("when the button object's attribute 'element' is true, the selected class is added", () => {
 
-        render(<HomeButton  handleButtonClick={mockFunction} active={true}/>);
+        render(<HomeButton handleButtonClick={mockFunction} active={true}/>);
 
         const homeButton = screen.getByRole('button', {
             name: /home/i
@@ -29,7 +29,7 @@ describe("Home button", () => {
 
     it("clicking buttons calls handleButtonClick", () => {
 
-        render(<HomeButton  handleButtonClick={mockFunction} active={false}/>);
+        render(<HomeButton handleButtonClick={mockFunction} active={false}/>);
 
         const element = screen.getByRole('button', {
             name: /home/i
