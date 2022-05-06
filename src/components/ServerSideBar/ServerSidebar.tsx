@@ -1,33 +1,28 @@
 import React from "react";
-import HomeButton from "./components/HomeButton";
-import NewServerButton from "./components/NewServerButton";
-import DiscoverButton from "./components/DiscoverButton";
-import {ServerBarProp } from "../../types";
 import ServerButton from "./components/ServerButton";
+import { ServerBarProp } from "../../types";
 
-export default function ServerSidebar(props: ServerBarProp) {
+type ServerBar = ServerBarProp & {home: JSX.Element, discover: JSX.Element, newServer: JSX.Element}
+
+export default function ServerSidebar(props: ServerBar) {
 
     // create a ServerButton div for each server initialized by parent component 'App'
-    const serverButtons = props.selected.map(serverButtonObject => {
-        if (serverButtonObject.button.includes('-server')) {
-            return <ServerButton key={serverButtonObject.button}
-                                 selected={serverButtonObject}
-                                 handleButtonClick={props.handleButtonClick}/>
-        }
-
-    });
+    // -server filter allow us to filter present buttons like home, discover and newServer out
+    // of the initialization.
+    const serverButtons = props.selected
+        .filter(serverButtonObject => serverButtonObject.button.includes('-server'))
+        .map(serverButtonObject => <ServerButton key={serverButtonObject.button}
+                                     selected={serverButtonObject}
+                                     handleButtonClick={props.handleButtonClick}/>
+            );
 
     return (
       <div className="bg-server-bar-black flex flex-col items-center pt-5">
-          <HomeButton handleButtonClick={props.handleButtonClick} selected={props.selected.filter(
-              item => item.button === 'home')}/>
+          {props.home}
           <span className="bg-sub-black w-8 h-0.5 rounded-3xl my-3 after:content-[''] after:text-green"></span>
           {serverButtons}
-          <NewServerButton handleButtonClick={props.handleButtonClick} selected={props.selected.filter(
-              item => item.button === 'newServer')}/>
-          <DiscoverButton handleButtonClick={props.handleButtonClick} selected={props.selected.filter(
-              item => item.button === 'discover')}/>
-
+          {props.newServer}
+          {props.discover}
       </div>
     );
 }

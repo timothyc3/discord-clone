@@ -2,12 +2,16 @@ import './App.css';
 import React, {SyntheticEvent, useEffect, useState} from "react";
 import {ServerBarProp, ServerButtonObject} from "./types"
 import ChannelSidebar from "./components/ChannelSidebar";
-
-// for remixicons usages
-import 'remixicon/fonts/remixicon.css';
+import HomeButton from "./components/ServerSideBar/components/HomeButton";
+import DiscoverButton from "./components/ServerSideBar/components/DiscoverButton";
+import NewServerButton from "./components/ServerSideBar/components/NewServerButton";
 import Content from "./components/Content";
 import ServerSidebar from "./components/ServerSideBar/ServerSidebar";
 import {getServers} from "./firebase";
+
+// for remixicons usages
+import 'remixicon/fonts/remixicon.css';
+
 
 function App() {
 
@@ -27,7 +31,7 @@ function App() {
     setServerButtonSelected(result);
   }
 
-  // get a list of all servers stored on firestore
+  // get a list of all servers stored on firestore on initial render
   useEffect( () => {
     getServers().then(result => {
         let serverArray = result.docs.map(server => {
@@ -37,15 +41,24 @@ function App() {
     })
   }, [])
 
-  useEffect(() => {
-      console.log(serverButtonSelected);
-  }, [serverButtonSelected])
+  // useEffect(() => {
+  //     console.log(serverButtonSelected);
+  // }, [serverButtonSelected])
 
   return (
       <div className="h-screen w-screen grid grid-cols-[75px_240px_1fr] font-body">
         <ServerSidebar
             selected={serverButtonSelected}
             handleButtonClick={handleServerBarClicked}
+            home={<HomeButton
+                selected={serverButtonSelected.filter(item => item.button === 'home')}
+                handleButtonClick={handleServerBarClicked} />}
+            discover={<DiscoverButton
+                selected={serverButtonSelected.filter(item => item.button === 'discover')}
+                handleButtonClick={handleServerBarClicked} />}
+            newServer={<NewServerButton
+                selected={serverButtonSelected.filter(item => item.button === 'newServer')}
+                handleButtonClick={handleServerBarClicked} />}
         />
         <ChannelSidebar />
         <Content />
