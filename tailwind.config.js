@@ -10,7 +10,7 @@ module.exports = {
         'chat-box-search-bar-main': '#42474D',
         'sub-black': '#2F3136',
         'channel-hover-grey': '#3A3C42',
-        'chatroom-hover-grey': '#42474D',
+        'channel-active-grey': '#42474D',
         'server-bar-black': '#212429',
         'light-grey': '#B4BBCF',
         'inactive-light-grey': '#838896',

@@ -7,9 +7,8 @@ export default function ChannelButton(props: {
 }) {
     return (
         <div className={`group w-full h-9 rounded-md p-2 flex items-center flex-grow-0
-                    hover:bg-chatroom-hover-grey duration-75 ${props.active ? 
-            'bg-chatroom-hover-grey' : ''}`}
-             aria-label={props.channelName}
+                        duration-75 ${props.active ? 
+            'bg-channel-active-grey' : 'hover:bg-channel-hover-grey'}`}
              onClick={() => {props.handleClick(props.channelName)}}
         >
 
@@ -21,8 +20,8 @@ export default function ChannelButton(props: {
                       clipRule="evenodd"/>
             </svg>
 
-            <h2 className={`ml-2 group-hover:text-white text-sm font-medium duration-75
-            ${props.active ? 'text-white' : 'text-inactive-light-grey'}`}>{props.channelName}</h2>
+            <h2 className={`ml-2 text-sm font-medium duration-75 select-none
+            ${props.active ? 'text-white' : 'text-inactive-light-grey group-hover:text-light-grey'}`}>{props.channelName}</h2>
 
             <svg xmlns="http://www.w3.org/2000/svg"
                  className={`h-4 w-4 ml-auto text-light-grey group-hover:block duration-75
