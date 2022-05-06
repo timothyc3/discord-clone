@@ -32,7 +32,7 @@ async function getServers():Promise<Array<Server>> {
 async function getChannels(serverName: string):Promise<Array<Channel>> {
     const docs = await getDocs(collection(firestore, "servers", serverName, "channels"));
     return docs.docs.map(channel => {
-        return {name: channel.id, messages: []}});
+        return {name: channel.id, messages: [], active: false}});
 }
 
 export {getServers, getChannels}

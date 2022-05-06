@@ -5,6 +5,7 @@ export interface Message {
 
 export interface Channel {
     name: string,
+    active: boolean,
     messages: Array<Message>
 }
 
@@ -15,8 +16,3 @@ export interface Server {
     channels: Array<Channel>
 }
 
-// defines the shape of the prop passed to ServerSideBar
-export interface ServerBarProp {
-    selected: Array<Server>,
-    handleButtonClick: (event: any) => void,
-}

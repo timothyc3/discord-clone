@@ -1,9 +1,8 @@
 import React from "react";
-import {ServerBarProp} from "../../../types";
 
 export default function DiscoverButton(props: {
     active: boolean,
-    handleButtonClick: ServerBarProp["handleButtonClick"]
+    handleButtonClick: (event: any) => void
 }) {
 
     return (

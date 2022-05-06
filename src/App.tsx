@@ -1,7 +1,7 @@
 import './App.css';
 import React, {useEffect, useState} from "react";
 import {Server} from "./types"
-import ChannelSidebar from "./components/ChannelSidebar";
+import ChannelSidebar from "./components/ChannelSideBar/ChannelSidebar";
 import HomeButton from "./components/ServerSideBar/components/HomeButton";
 import DiscoverButton from "./components/ServerSideBar/components/DiscoverButton";
 import NewServerButton from "./components/ServerSideBar/components/NewServerButton";
@@ -11,6 +11,7 @@ import {getChannels, getServers} from "./firebase";
 
 // for remixicons usages
 import 'remixicon/fonts/remixicon.css';
+import ServerButton from "./components/ServerSideBar/components/ServerButton";
 
 
 export default function App() {
@@ -27,7 +28,7 @@ export default function App() {
     // state that checks if discover button is clicked
     const [discover, setDiscover] = useState<boolean>(false);
 
-    function handleServerButtonClicked(event: React.BaseSyntheticEvent) {
+    function handleServerButtonClick(event: React.BaseSyntheticEvent) {
         // find the object with that represents the button that the user clicked,
         // set that button's 'active' boolean to true and reset rest to false
 
@@ -40,24 +41,29 @@ export default function App() {
         const targetServerObject = servers.filter(server => server.name === event.target.ariaLabel)[0]
 
         // only load data from firestore if the server button is currently not active
-        if (!targetServerObject.active)  {
-            // updates server state to include the sp
+        if (!targetServerObject.active) {
+            // updates server state to include a list of channels in that server
             const addChannelData = (serverName: string) => {
                 // only load channels from firebase if the channels attribute array is empty (first time loading)
-                    getChannels(serverName).then(channelArray => {
+                getChannels(serverName).then(channelArray => {
+                    setServers(servers.map(object => object.name === serverName ?
+                        {...object, channels: channelArray, active: true} : {...object, active: false}));
+                });
+            };
 
-                        // only update the state if
-                        setServers(servers.map(object => object.name === serverName ?
-                            {...object, channels: channelArray} : {...object}));
-                    });};
-
-            if(targetServerObject.channels.length === 0) {addChannelData(event.target.ariaLabel);}
-
-            // change the target button's active state to true and the other server buttons to false
-            setServers(servers.map(object => object.name === event.target.ariaLabel ? {...object, active: true} :
-                {...object, active: false}))
-
+            if (targetServerObject.channels.length === 0) {
+                addChannelData(event.target.ariaLabel);
+            } else {
+                // change the target button's active state to true and the other server buttons to false
+                setServers(servers.map(object => object.name === event.target.ariaLabel ? {...object, active: true} :
+                    {...object, active: false}))
+            }
         }
+    }
+
+    function handleChannelButtonClick(event: React.BaseSyntheticEvent) {
+
+
     }
 
     // get a list of all servers stored on firestore on initial render
@@ -104,11 +110,22 @@ export default function App() {
 
     }, [servers])
 
+    // create a ServerButton div for each server
+    const serverButtons: JSX.Element[] = servers
+        .map((server: Server) => <ServerButton key={server.name}
+                                               active={server.active}
+                                               name={server.name}
+                                               handleButtonClick={handleServerButtonClick}/>
+        );
+
+    // define active (clicked) server
+    const activeServer = servers.filter(server => server.active);
+
+
     return (
         <div className="h-screen w-screen grid grid-cols-[75px_240px_1fr] font-body">
             <ServerSidebar
-                selected={servers}
-                handleButtonClick={handleServerButtonClicked}
+                serverButtons={serverButtons}
                 home={<HomeButton
                     active={home}
                     handleButtonClick={() => {
@@ -125,7 +142,12 @@ export default function App() {
                         setNewServer(true);
                     }}/>}
             />
-            <ChannelSidebar/>
+            <ChannelSidebar
+                server={activeServer.length === 1 ?
+                    activeServer[0]
+                    : {name: '', active: false, channels: []}}
+                handleChannelClick={handleChannelButtonClick}
+            />
             <Content/>
             {newServer &&
                 <div>

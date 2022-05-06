@@ -1,14 +1,13 @@
 import React from "react";
-import {ServerBarProp, Server} from "../../../types";
 
 export default function ServerButton(props: {
-    selected: boolean, name: string
-    handleButtonClick: ServerBarProp["handleButtonClick"]
+    active: boolean, name: string
+    handleButtonClick: (event: any) => void
 }) {
 
     return (
         <div className={`server-button flex justify-center items-center font-extrabold
-        ${props.selected ? 'selected' : ''}`}
+        ${props.active ? 'selected' : ''}`}
              role="button"
              aria-label={props.name}
              onClick={props.handleButtonClick}>

@@ -2,7 +2,6 @@ import {cleanup, fireEvent, render, screen} from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect'
 import HomeButton from "./HomeButton";
 import React from "react";
-import ServerSidebar from "../ServerSidebar";
 
 describe("Home button", () => {
 
