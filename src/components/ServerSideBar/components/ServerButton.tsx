@@ -1,16 +1,16 @@
 import React from "react";
 import {ServerBarProp, ServerButtonObject} from "../../../types";
 
-export default function ServerButton(props: {selected: ServerButtonObject,
+export default function ServerButton(props: {selected: boolean, name: string
     handleButtonClick: ServerBarProp["handleButtonClick"]}) {
 
     return (
         <div className={`server-button flex justify-center items-center font-extrabold
-        ${props.selected.active ? 'selected' : ''}`}
+        ${props.selected ? 'selected' : ''}`}
              role="button"
-             aria-label={props.selected.button}
+             aria-label={props.name}
              onClick={props.handleButtonClick}>
-            {props.selected.button.charAt(0).toUpperCase()}
+            {props.name.charAt(0).toUpperCase()}
         </div>
     )
 }

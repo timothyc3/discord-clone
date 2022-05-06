@@ -13,57 +13,100 @@ import {getServers} from "./firebase";
 import 'remixicon/fonts/remixicon.css';
 
 
-function App() {
+export default function App() {
 
-  // checks which button is currently selected by user
-  const [serverButtonSelected, setServerButtonSelected] = useState<Array<ServerButtonObject>>([
-    {button: 'home', active: false},
-    {button: 'newServer', active: false},
-    {button: 'discover', active: false},
-  ]);
+    // stores an object array that keeps a boolean for each server
+    const [serverButtonSelected, setServerButtonSelected] = useState<Array<ServerButtonObject>>([
+    ]);
 
-  function handleServerBarClicked(event: React.BaseSyntheticEvent) {
+    // state that checks if home button is clicked or not
+    const [homeButton, setHomeButton] = useState<boolean>(false);
+
+    // state that checks if new server button is clicked
+    const [newServerButton, setNewServerButton] = useState<boolean>(false);
+
+    // state that checks if discover button is clicked
+    const [discoverButton, setDiscoverButton]= useState<boolean>(false);
+
+    function handleServerButtonClicked(event: React.BaseSyntheticEvent) {
     // find the object with that represents the button that the user clicked,
     // set that button's 'active' boolean to true and reset rest to false
     const result = serverButtonSelected.map(object => object.button === event.target.ariaLabel ?
         {...object, active: true} : {...object, active: false});
-
     setServerButtonSelected(result);
-  }
 
-  // get a list of all servers stored on firestore on initial render
-  useEffect( () => {
+    // set the special buttons to false
+    setHomeButton(false);
+    setDiscoverButton(false);
+    setNewServerButton(false);
+    }
+
+    // get a list of all servers stored on firestore on initial render
+    useEffect( () => {
     getServers().then(result => {
-        let serverArray = result.docs.map(server => {
+        let serverArray: Array<ServerButtonObject> = result.docs.map(server => {
             return {button: `${server.id}-server`, active: false}});
 
-        setServerButtonSelected([...serverButtonSelected, ...serverArray])
-    })
-  }, [])
+        setServerButtonSelected(serverArray);
+    });
+    }, []);
 
-  // useEffect(() => {
-  //     console.log(serverButtonSelected);
-  // }, [serverButtonSelected])
+    useEffect(() => {
+      if (homeButton) {
+          setNewServerButton(false);
+          setDiscoverButton(false);
+          setServerButtonSelected(serverButtonSelected.map(serverButtonObject => {
+              return {...serverButtonObject, active: false}
+          }));
+      }
+    }, [homeButton]);
 
-  return (
+    useEffect(() => {
+        if (discoverButton) {
+            setNewServerButton(false);
+            setHomeButton(false);
+            setServerButtonSelected(serverButtonSelected.map(serverButtonObject => {
+                return {...serverButtonObject, active: false}
+            }));
+        }
+    }, [discoverButton]);
+
+    useEffect(() => {
+        if (newServerButton) {
+            setHomeButton(false);
+            setDiscoverButton(false);
+            setServerButtonSelected(serverButtonSelected.map(serverButtonObject => {
+                return {...serverButtonObject, active: false}
+            }));
+        }
+    }, [newServerButton]);
+
+
+
+
+    // check which button is active right now
+    useEffect(() => {
+
+
+    }, [serverButtonSelected])
+
+    return (
       <div className="h-screen w-screen grid grid-cols-[75px_240px_1fr] font-body">
         <ServerSidebar
             selected={serverButtonSelected}
-            handleButtonClick={handleServerBarClicked}
+            handleButtonClick={handleServerButtonClicked}
             home={<HomeButton
-                selected={serverButtonSelected.filter(item => item.button === 'home')}
-                handleButtonClick={handleServerBarClicked} />}
+                active={homeButton}
+                handleButtonClick={() => {setHomeButton(true);}} />}
             discover={<DiscoverButton
-                selected={serverButtonSelected.filter(item => item.button === 'discover')}
-                handleButtonClick={handleServerBarClicked} />}
+                active={discoverButton}
+                handleButtonClick={() => {setDiscoverButton(true);}} />}
             newServer={<NewServerButton
-                selected={serverButtonSelected.filter(item => item.button === 'newServer')}
-                handleButtonClick={handleServerBarClicked} />}
+                active={newServerButton}
+                handleButtonClick={() => {setNewServerButton(true);}} />}
         />
         <ChannelSidebar />
         <Content />
       </div>
-  );
-}
-
-export default App;
+    );
+    }

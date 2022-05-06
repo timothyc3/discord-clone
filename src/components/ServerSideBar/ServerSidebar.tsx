@@ -9,10 +9,10 @@ export default function ServerSidebar(props: ServerBar) {
     // create a ServerButton div for each server initialized by parent component 'App'
     // -server filter allow us to filter present buttons like home, discover and newServer out
     // of the initialization.
-    const serverButtons = props.selected
-        .filter(serverButtonObject => serverButtonObject.button.includes('-server'))
+    const serverButtons: JSX.Element[] = props.selected
         .map(serverButtonObject => <ServerButton key={serverButtonObject.button}
-                                     selected={serverButtonObject}
+                                     selected={serverButtonObject.active}
+                                                 name={serverButtonObject.button}
                                      handleButtonClick={props.handleButtonClick}/>
             );
 

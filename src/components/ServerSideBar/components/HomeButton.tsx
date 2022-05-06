@@ -1,12 +1,12 @@
 import React from "react";
 import {ServerBarProp} from "../../../types";
 
-export default function HomeButton(props: {selected: ServerBarProp["selected"],
+export default function HomeButton(props: {active: boolean,
     handleButtonClick: ServerBarProp["handleButtonClick"]}) {
     return (
         <svg xmlns="http://www.w3.org/2000/svg"
              className={`h-12 w-12 
-                ${props.selected[0].active ? 
+                ${props.active ? 
                  'bg-blue rounded-2xl text-white' : 
                  'rounded-full text-light-grey bg-main-content-black'}
                  p-2 hover:bg-blue hover:rounded-2xl hover:text-white

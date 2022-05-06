@@ -6,31 +6,19 @@ import ServerSidebar from "../ServerSidebar";
 
 describe("Home button", () => {
 
-    let serverBarMock = [
-        {button: 'home', active: false},
-        {button: 'newServer', active: false},
-        {button: 'discover', active: false},
-    ];
-
     const mockFunction = jest.fn();
 
     afterEach(cleanup);
 
     it("render correctly", () => {
-        const { asFragment } = render(<HomeButton  handleButtonClick={mockFunction} selected={serverBarMock}/>);
+        const { asFragment } = render(<HomeButton  handleButtonClick={mockFunction} active={false}/>);
 
         expect(asFragment()).toMatchSnapshot();
     });
 
     it( "when the button object's attribute 'element' is true, the selected class is added", () => {
 
-        let activeTrueMock = [
-            {button: 'home', active: true},
-            {button: 'newServer', active: false},
-            {button: 'discover', active: false},
-        ];
-
-        render(<HomeButton  handleButtonClick={mockFunction} selected={activeTrueMock}/>);
+        render(<HomeButton  handleButtonClick={mockFunction} active={true}/>);
 
         const homeButton = screen.getByRole('button', {
             name: /home/i
@@ -41,7 +29,7 @@ describe("Home button", () => {
 
     it("clicking buttons calls handleButtonClick", () => {
 
-        render(<HomeButton  handleButtonClick={mockFunction} selected={serverBarMock}/>);
+        render(<HomeButton  handleButtonClick={mockFunction} active={false}/>);
 
         const element = screen.getByRole('button', {
             name: /home/i
