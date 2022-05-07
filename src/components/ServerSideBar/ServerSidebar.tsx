@@ -1,16 +1,17 @@
 import React from "react";
+// import ServerButton from "./components/ServerSideBar/components/ServerButton";
+import HomeButton from "./components/HomeButton";
+import NewServerButton from "./components/NewServerButton";
+import DiscoverButton from "./components/DiscoverButton";
 
-type ServerBar = {serverButtons: Array<JSX.Element>, home: JSX.Element, discover: JSX.Element, newServer: JSX.Element }
-
-export default function ServerSidebar(props: ServerBar) {
+export default function ServerSidebar() {
 
     return (
         <div className="bg-server-bar-black flex flex-col items-center pt-5">
-            {props.home}
+            <HomeButton />
             <span className="bg-sub-black w-8 h-0.5 rounded-3xl my-3 after:content-[''] after:text-green"></span>
-            {props.serverButtons}
-            {props.newServer}
-            {props.discover}
+            <NewServerButton />
+            <DiscoverButton />
         </div>
     );
 }

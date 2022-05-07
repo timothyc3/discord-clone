@@ -1,18 +1,27 @@
 export interface Message {
-    name: string,
-    messages: string
+    id: number,
+    authorId: number,
+    text: string
+    date: Date,
 }
 
 export interface Channel {
+    id: number,
     name: string,
-    active: boolean,
-    messages: Array<Message>
+    messageIds: number[],
+    userIds: number[]
 }
 
-// define the shape of ServerObject
 export interface Server {
+    id: number,
     name: string,
-    active: boolean,
-    channels: Array<Channel>
+    channelIds: number[],
+    userIds: number[]
+}
+
+export interface User {
+    id: number,
+    avatar: string,
+    userName: string,
 }
 

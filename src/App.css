@@ -15,7 +15,11 @@
         @apply rounded-2xl
     }
 
-    .server-button ~ .server-button {
+    .server-button ~ *:not(:last-child) {
+        @apply my-2
+    }
+
+    .server-button:last-child {
         @apply mt-2
     }
 }
