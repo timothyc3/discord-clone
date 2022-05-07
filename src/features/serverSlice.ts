@@ -6,8 +6,7 @@ interface ServerState {
     entities: {
         id: { [key: number]: Server },
         allIds: number[]
-    },
-    activeId: number
+    }
 }
 
 const initialState : ServerState = {
@@ -27,8 +26,7 @@ const initialState : ServerState = {
             }
         },
         allIds: [1, 2]
-    },
-    activeId: 1
+    }
 }
 
 export const serverSlice = createSlice({
@@ -47,11 +45,6 @@ export const serverSlice = createSlice({
                 userIds: [action.payload.userId]
             };
             state.entities.allIds.push(newId);
-        },
-
-        // changes the active server so the UI knows what to render
-        changeActive: (state: ServerState, action: {payload: {activeId: number}}) => {
-            state.activeId = action.payload.activeId;
         },
 
         updateServerChannels: (state: ServerState, action: {payload: {serverId: number, channelId: number}}) => {

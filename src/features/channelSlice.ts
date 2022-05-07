@@ -6,8 +6,7 @@ interface ChannelState {
     entities: {
         id: { [key: number]: Channel },
         allIds: number[]
-    },
-    activeId: number
+    }
 }
 
 const initialState : ChannelState = {
@@ -39,8 +38,7 @@ const initialState : ChannelState = {
             }
         },
         allIds: [1, 2, 3, 4]
-    },
-    activeId: 1
+    }
 }
 
 export const channelSlice = createSlice({
@@ -59,11 +57,6 @@ export const channelSlice = createSlice({
                     userIds: [action.payload.userId]
                 };
                 state.entities.allIds.push(newId);
-            },
-
-            // change activeId of this slice
-            changeActive: (state: ChannelState, action: {payload: {activeId: number}}) => {
-                state.activeId = action.payload.activeId;
             },
         }
     }

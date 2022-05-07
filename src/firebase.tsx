@@ -21,18 +21,3 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
-
-// async function getServers():Promise<Array<Server>> {
-//     const docs = await getDocs(collection(firestore, "servers"));
-//     return docs.docs.map(server => {
-//         return {name: `${server.id}`, active: false, channels: []}
-//     });
-// }
-//
-// async function getChannels(serverName: string):Promise<Array<Channel>> {
-//     const docs = await getDocs(collection(firestore, "servers", serverName, "channels"));
-//     return docs.docs.map(channel => {
-//         return {name: channel.id, messages: [], active: false}});
-// }
-
-// export {getServers, getChannels}
