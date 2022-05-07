@@ -48,7 +48,7 @@ export const channelSlice = createSlice({
         initialState: initialState,
         reducers: {
             // add a channel
-            addChannel: (state, action: {payload: {name: string, userId: number}}) => {
+            addChannel: (state: ChannelState, action: {payload: {name: string, userId: number}}) => {
                 const lastId : number = state.entities.allIds[state.entities.allIds.length - 1];
                 const newId : number = lastId + 1;
 
@@ -62,9 +62,13 @@ export const channelSlice = createSlice({
             },
 
             // change activeId of this slice
-            changeActive: (state, action: {payload: {activeId: number}}) => {
+            changeActive: (state: ChannelState, action: {payload: {activeId: number}}) => {
                 state.activeId = action.payload.activeId;
             },
         }
     }
-)
+);
+
+export const { addChannel } = channelSlice.actions;
+
+export default channelSlice.reducer;

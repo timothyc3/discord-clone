@@ -36,7 +36,7 @@ export const serverSlice = createSlice({
     initialState: initialState,
     reducers: {
         // adds a server to the server slice
-        addServer: (state, action: {payload: {name: string, userId: number}}) => {
+        addServer: (state: ServerState, action: {payload: {name: string, userId: number}}) => {
             const lastId : number = state.entities.allIds[state.entities.allIds.length - 1];
             const newId : number = lastId + 1;
 
@@ -50,11 +50,11 @@ export const serverSlice = createSlice({
         },
 
         // changes the active server so the UI knows what to render
-        changeActive: (state, action: {payload: {activeId: number}}) => {
+        changeActive: (state: ServerState, action: {payload: {activeId: number}}) => {
             state.activeId = action.payload.activeId;
         },
 
-        updateServerChannels: (state, action: {payload: {serverId: number, channelId: number}}) => {
+        updateServerChannels: (state: ServerState, action: {payload: {serverId: number, channelId: number}}) => {
             state.entities.id[action.payload.serverId].channelIds.push(action.payload.channelId)
         }
     }
