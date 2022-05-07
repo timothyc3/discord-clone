@@ -59,7 +59,12 @@ export const channelSlice = createSlice({
                     userIds: [action.payload.userId]
                 };
                 state.entities.allIds.push(newId);
-            }
+            },
+
+            // change activeId of this slice
+            changeActive: (state, action: {payload: {activeId: number}}) => {
+                state.activeId = action.payload.activeId;
+            },
         }
     }
 )

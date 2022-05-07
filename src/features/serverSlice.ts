@@ -52,8 +52,11 @@ export const serverSlice = createSlice({
         // changes the active server so the UI knows what to render
         changeActive: (state, action: {payload: {activeId: number}}) => {
             state.activeId = action.payload.activeId;
-        }
+        },
 
+        updateServerChannels: (state, action: {payload: {serverId: number, channelId: number}}) => {
+            state.entities.id[action.payload.serverId].channelIds.push(action.payload.channelId)
+        }
     }
 });
 
