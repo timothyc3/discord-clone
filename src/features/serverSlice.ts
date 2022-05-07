@@ -6,7 +6,8 @@ interface ServerState {
     entities: {
         id: { [key: number]: Server },
         allIds: number[]
-    }
+    },
+    activeId: number
 }
 
 const initialState : ServerState = {
@@ -26,12 +27,15 @@ const initialState : ServerState = {
             }
         },
         allIds: [1, 2]
-    }}
+    },
+    activeId: 1
+}
 
 export const serverSlice = createSlice({
     name: 'servers',
     initialState: initialState,
     reducers: {
+        // adds a server to the server slice
         addServer: (state, action: {payload: {name: string, userId: number}}) => {
             const lastId : number = state.entities.allIds[state.entities.allIds.length - 1];
             const newId = lastId + 1;
@@ -41,17 +45,18 @@ export const serverSlice = createSlice({
                 name: action.payload.name,
                 channelIds: [],
                 userIds: [action.payload.userId]
-            }
+            };
 
-            return {
-                ...state,
-                entities: {
-                    ...state.entities,
-                    id: {
-                        ...state.entities.id,
-                        newServerObject
-                    }}}
-        }}
+            state.entities.id[newId] = newServerObject;
+            state.entities.allIds.push(newId);
+        },
+
+        // changes the active server so the UI knows what to render
+        changeActive: (state, action: {payload: {activeId: number}}) => {
+            state.activeId = action.payload.activeId;
+        }
+
+    }
 });
 
 export const { addServer } = serverSlice.actions;
