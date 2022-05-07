@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { Server } from "../types"
+import {createSlice} from "@reduxjs/toolkit";
+import {Server} from "../types"
 
 interface ServerState {
     status: 'idle' | 'loading',
@@ -38,16 +38,14 @@ export const serverSlice = createSlice({
         // adds a server to the server slice
         addServer: (state, action: {payload: {name: string, userId: number}}) => {
             const lastId : number = state.entities.allIds[state.entities.allIds.length - 1];
-            const newId = lastId + 1;
+            const newId : number = lastId + 1;
 
-            const newServerObject : Server = {
+            state.entities.id[newId] = {
                 id: newId,
                 name: action.payload.name,
                 channelIds: [],
                 userIds: [action.payload.userId]
             };
-
-            state.entities.id[newId] = newServerObject;
             state.entities.allIds.push(newId);
         },
 
