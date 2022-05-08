@@ -13,7 +13,7 @@ export default function ServerButton(props: {
 
     // update active server in redux store
     function updateActive() {
-        dispatch(updateLevelOne(props.serverId))
+        dispatch(updateLevelOne(props.serverId));
     }
 
     function handleClick() {

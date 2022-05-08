@@ -1,5 +1,4 @@
 import React from "react";
-import {Server} from "../../types";
 // import ChannelButton from "./components/ChannelSideBar/components/ChannelButton";
 
 
