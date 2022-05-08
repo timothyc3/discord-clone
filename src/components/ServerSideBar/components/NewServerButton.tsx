@@ -5,13 +5,13 @@ import {updateLevelOne} from "../../../features/activeSlice";
 
 export default function NewServerButton() {
 
-    const active : boolean = useAppSelector(state => state.active.levelOne === "newServer", shallowEqual);
+    const active : boolean = useAppSelector(state => state.active.levelOne === "New Server", shallowEqual);
 
     const dispatch = useAppDispatch();
 
     // update active server in redux store
     function updateActive() {
-        dispatch(updateLevelOne("newServer"));
+        dispatch(updateLevelOne("New Server"));
     }
 
     function handleClick() {

@@ -6,7 +6,7 @@ interface ActiveState {
 }
 
 const initialState : ActiveState = {
-    levelOne: "discover",
+    levelOne: "Discover",
     levelTwo: "1"
 }
 

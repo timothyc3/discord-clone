@@ -5,13 +5,13 @@ import {updateLevelOne} from "../../../features/activeSlice";
 
 export default function DiscoverButton() {
 
-    const active : boolean = useAppSelector(state => state.active.levelOne === "discover", shallowEqual);
+    const active : boolean = useAppSelector(state => state.active.levelOne === "Discover", shallowEqual);
 
     const dispatch = useAppDispatch();
 
     // update active server in redux store
     function updateActive() {
-        dispatch(updateLevelOne("discover"));
+        dispatch(updateLevelOne("Discover"));
     }
 
     function handleClick() {
