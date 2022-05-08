@@ -4,28 +4,28 @@ import {Server} from "../types"
 interface ServerState {
     status: 'idle' | 'loading',
     entities: {
-        id: { [key: number]: Server },
-        allIds: number[]
+        id: { [key: string]: Server },
+        allIds: string[]
     }
 }
 
 const initialState : ServerState = {
     status: 'idle',
     entities: {id: {
-            1 : {
-                id: 1,
+            "1" : {
+                id: "1",
                 name: 'React',
-                channelIds: [1, 2],
-                userIds: [1, 2, 3, 4, 5]
+                channelIds: ["1", "2"],
+                userIds: ["1", "2", "3", "4", "5"]
             },
-            2 : {
-                id: 2,
+            "2" : {
+                id: "2",
                 name: 'Redux',
-                channelIds: [3, 4],
-                userIds: [3, 4, 5, 6]
+                channelIds: ["3", "4"],
+                userIds: ["3", "4", "5", "6"]
             }
         },
-        allIds: [1, 2]
+        allIds: ["1", "2"]
     }
 }
 
@@ -35,20 +35,20 @@ export const serverSlice = createSlice({
     reducers: {
         // adds a server to the server slice
         addServer: (state: ServerState, action: {payload: {name: string, userId: number}}) => {
-            const lastId : number = state.entities.allIds[state.entities.allIds.length - 1];
-            const newId : number = lastId + 1;
+            const lastId : string = state.entities.allIds[state.entities.allIds.length - 1];
+            const newId : string = (parseInt(lastId) + 1).toString();
 
             state.entities.id[newId] = {
                 id: newId,
                 name: action.payload.name,
                 channelIds: [],
-                userIds: [action.payload.userId]
+                userIds: [action.payload.userId.toString()]
             };
             state.entities.allIds.push(newId);
         },
 
         updateServerChannels: (state: ServerState, action: {payload: {serverId: number, channelId: number}}) => {
-            state.entities.id[action.payload.serverId].channelIds.push(action.payload.channelId)
+            state.entities.id[action.payload.serverId].channelIds.push(action.payload.channelId.toString())
         }
     }
 });

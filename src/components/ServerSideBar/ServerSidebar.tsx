@@ -3,8 +3,16 @@ import React from "react";
 import HomeButton from "./components/HomeButton";
 import NewServerButton from "./components/NewServerButton";
 import DiscoverButton from "./components/DiscoverButton";
+import {useAppSelector} from "../../hooks";
 
-export default function ServerSidebar() {
+export default function ServerSidebar(props : {
+    active: string,
+    handleButtonClick: (event: React.BaseSyntheticEvent) => void
+}) {
+
+    const servers = useAppSelector(state => state.server.entities);
+
+    console.log('here are the servers')
 
     return (
         <div className="bg-server-bar-black flex flex-col items-center pt-5">

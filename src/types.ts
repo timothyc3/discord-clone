@@ -1,26 +1,26 @@
 export interface Message {
-    id: number,
-    userId: number,
+    id: string,
+    userId: string,
     text: string
     date: Date,
 }
 
 export interface Channel {
-    id: number,
+    id: string,
     name: string,
-    messageIds: number[],
-    userIds: number[]
+    messageIds: string[],
+    userIds: string[]
 }
 
 export interface Server {
-    id: number,
+    id: string,
     name: string,
-    channelIds: number[],
-    userIds: number[]
+    channelIds: string[],
+    userIds: string[]
 }
 
 export interface User {
-    id: number,
+    id: string,
     avatar: string,
     userName: string,
 }
