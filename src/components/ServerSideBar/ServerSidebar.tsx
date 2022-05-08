@@ -3,21 +3,33 @@ import React from "react";
 import HomeButton from "./components/HomeButton";
 import NewServerButton from "./components/NewServerButton";
 import DiscoverButton from "./components/DiscoverButton";
+import ServerButton from "./components/ServerButton";
 import {useAppSelector} from "../../hooks";
+import {shallowEqual} from "react-redux";
+import {Server} from "../../types";
 
 export default function ServerSidebar(props : {
     active: string,
     handleButtonClick: (event: React.BaseSyntheticEvent) => void
 }) {
 
-    const servers = useAppSelector(state => state.server.entities);
+    const servers : { [key: string]: Server } = useAppSelector(state => state.server.entities.id, shallowEqual);
 
-    console.log('here are the servers')
+    const renderedServerButtons = Object.keys(servers).map((serverId: string ) => {
+        const targetServerObject : Server = servers[serverId];
+        return <ServerButton active={props.active}
+                             serverId={targetServerObject.id}
+                             name={targetServerObject.name}
+                             handleButtonClick={props.handleButtonClick} />;
+    });
+
+    console.log('rendered objects', renderedServerButtons)
 
     return (
         <div className="bg-server-bar-black flex flex-col items-center pt-5">
             <HomeButton />
             <span className="bg-sub-black w-8 h-0.5 rounded-3xl my-3 after:content-[''] after:text-green"></span>
+            {renderedServerButtons}
             <NewServerButton />
             <DiscoverButton />
         </div>
