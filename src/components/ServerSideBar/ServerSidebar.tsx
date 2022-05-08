@@ -8,22 +8,20 @@ import {useAppSelector} from "../../hooks";
 import {shallowEqual} from "react-redux";
 import {Server} from "../../types";
 
-export default function ServerSidebar(props : {
-    active: string,
-    handleButtonClick: (event: React.BaseSyntheticEvent) => void
-}) {
+export default function ServerSidebar() {
 
     const servers : { [key: string]: Server } = useAppSelector(state => state.server.entities.id, shallowEqual);
 
     const renderedServerButtons = Object.keys(servers).map((serverId: string ) => {
         const targetServerObject : Server = servers[serverId];
-        return <ServerButton active={props.active}
+        return <ServerButton key={targetServerObject.id}
                              serverId={targetServerObject.id}
-                             name={targetServerObject.name}
-                             handleButtonClick={props.handleButtonClick} />;
+                             name={targetServerObject.name}/>;
     });
 
-    console.log('rendered objects', renderedServerButtons)
+
+
+
 
     return (
         <div className="bg-server-bar-black flex flex-col items-center pt-5">
