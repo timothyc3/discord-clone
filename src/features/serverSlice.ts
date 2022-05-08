@@ -29,7 +29,7 @@ const initialState : ServerState = {
                 name: 'Svelte',
                 channelIds: ["5"],
                 userIds: ["1", "2"]
-            }
+            },
         },
         allIds: ["1", "2", "3"]
     }
