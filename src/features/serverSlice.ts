@@ -23,9 +23,15 @@ const initialState : ServerState = {
                 name: 'Redux',
                 channelIds: ["3", "4"],
                 userIds: ["3", "4", "5", "6"]
+            },
+            "3" : {
+                id: "3",
+                name: 'Svelte',
+                channelIds: ["5"],
+                userIds: ["1", "2"]
             }
         },
-        allIds: ["1", "2"]
+        allIds: ["1", "2", "3"]
     }
 }
 

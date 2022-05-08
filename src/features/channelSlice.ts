@@ -25,19 +25,25 @@ const initialState : ChannelState = {
                 userIds: ["3", "4", "5", "6"]
             },
             "3" : {
-                id: "2",
+                id: "3",
                 name: 'Vue',
                 messageIds: ["5", "6", "7"],
                 userIds: []
             },
-            4 : {
-                id: "2",
+            "4" : {
+                id: "4",
                 name: 'Angular',
                 messageIds: ["8", "9"],
                 userIds: []
+            },
+            "5" : {
+                id: "5",
+                name: 'Scala',
+                messageIds: ["10"],
+                userIds: []
             }
         },
-        allIds: ["1", "2", "3", "4"]
+        allIds: ["1", "2", "3", "4", "5"]
     }
 }
 
