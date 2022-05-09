@@ -1,7 +1,8 @@
 import React from "react";
 import {useAppDispatch, useAppSelector} from "../../../hooks";
-import {updateLevelOne} from "../../../features/activeSlice";
+import {updateLevelOne, updateLevelTwo} from "../../../features/activeSlice";
 import {shallowEqual} from "react-redux";
+import {store} from "../../../store";
 
 export default function ServerButton(props: {
     serverId: string
@@ -13,12 +14,21 @@ export default function ServerButton(props: {
     const dispatch = useAppDispatch();
 
     // update active server in redux store
-    function updateActive() {
-        if(!active) {dispatch(updateLevelOne(props.serverId));}
+    function updateActiveServer() {
+         dispatch(updateLevelOne(props.serverId));
+    }
+
+    // set the active channel for the server (default to the first channel)
+    function updateActiveChannel() {
+        const firstChannel = store.getState().server.entities.id[props.serverId].channelIds[0];
+        dispatch(updateLevelTwo(firstChannel));
     }
 
     function handleClick() {
-        updateActive();
+        if(!active) {
+            updateActiveServer();
+            updateActiveChannel();
+        }
     }
 
     return (
