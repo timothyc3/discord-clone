@@ -18,4 +18,5 @@
     .server-button ~ .server-button {
         @apply mt-2
     }
+
 }
