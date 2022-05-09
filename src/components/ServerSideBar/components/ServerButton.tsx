@@ -4,10 +4,11 @@ import {updateLevelOne} from "../../../features/activeSlice";
 import {shallowEqual} from "react-redux";
 
 export default function ServerButton(props: {
-    name: string, serverId: string
+    serverId: string
 }) {
 
     const active : boolean = useAppSelector(state => state.active.levelOne === props.serverId, shallowEqual);
+    const serverName: string = useAppSelector(state => state.server.entities.id[props.serverId].name, shallowEqual);
 
     const dispatch = useAppDispatch();
 
@@ -27,7 +28,7 @@ export default function ServerButton(props: {
              aria-label={props.serverId}
              onClick={handleClick}
              >
-            {props.name.charAt(0).toUpperCase()}
+            {serverName.charAt(0).toUpperCase()}
         </div>
     )
 }
