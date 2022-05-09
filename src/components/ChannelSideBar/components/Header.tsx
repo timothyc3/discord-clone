@@ -9,8 +9,7 @@ export default function Header() {
     const heading : string = useAppSelector(state => {
         if (state.active.levelOne in state.server.entities.id) {
             return state.server.entities.id[state.active.levelOne].name
-        }
-        else {
+        } else {
             return state.active.levelOne
         }
     }, shallowEqual);
