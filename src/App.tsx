@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import ServerSidebar from "./components/ServerSideBar/ServerSidebar";
 import ChannelSidebar from "./components/ChannelSideBar/ChannelSidebar";
-import Content from "./components/Content";
+import Content from "./components/Content/Content";
 // for remixicons usages
 import 'remixicon/fonts/remixicon.css';
 
