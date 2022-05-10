@@ -3,12 +3,14 @@ import {serverSlice} from "./features/serverSlice";
 import {channelSlice} from "./features/channelSlice";
 import {activeSlice} from "./features/activeSlice";
 import {messageSlice} from "./features/messageSlice";
+import {userSlice} from "./features/userSlice";
 
 export const store = configureStore({
     reducer: {
         server: serverSlice.reducer,
         channel: channelSlice.reducer,
         messages: messageSlice.reducer,
+        user: userSlice.reducer,
         active: activeSlice.reducer,
     }
 })

@@ -22,6 +22,6 @@ export interface Server {
 export interface User {
     id: string,
     avatar: string,
-    userName: string,
+    name: string,
 }
 

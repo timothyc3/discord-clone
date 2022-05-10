@@ -7,7 +7,7 @@ export default function MessageContainer() {
 
     const messageIds : string[] = useAppSelector(state => {
         if (state.active.levelTwo in state.channel.entities.id) {
-            return state.channel.entities.id[state.active.levelTwo].messageIds;
+            return state.channel.entities.id[state.active.levelTwo].messageIds
         } else {
             return []
         }
@@ -20,7 +20,7 @@ export default function MessageContainer() {
     )
 
     return (
-        <div className="flex flex-col justify-end pr-2">
+        <div className="flex flex-col justify-end pr-2 gap-y-2">
             {renderedMessages}
         </div>
     )
