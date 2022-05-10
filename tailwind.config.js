@@ -22,6 +22,9 @@ module.exports = {
         'body': ["Open Sans"]
       },
     },
+    minHeight: {
+      '48': '48px'
+    }
   },
   plugins: [],
 }

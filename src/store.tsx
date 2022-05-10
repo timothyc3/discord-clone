@@ -2,12 +2,14 @@ import {configureStore} from "@reduxjs/toolkit";
 import {serverSlice} from "./features/serverSlice";
 import {channelSlice} from "./features/channelSlice";
 import {activeSlice} from "./features/activeSlice";
+import {messageSlice} from "./features/messageSlice";
 
 export const store = configureStore({
     reducer: {
         server: serverSlice.reducer,
         channel: channelSlice.reducer,
-        active: activeSlice.reducer
+        messages: messageSlice.reducer,
+        active: activeSlice.reducer,
     }
 })
 
