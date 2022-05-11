@@ -16,7 +16,7 @@ const initialState : MessageState = {
                 id: "1",
                 userId: "1",
                 text: "this is my first message at the first user of the platform!",
-                date: new Date(2022, 4, 13, 22, 10, 13, 5)
+                date: new Date(2022, 4, 10, 22, 10, 13, 5)
             },
             "2" : {
                 id: "2",
@@ -34,13 +34,13 @@ const initialState : MessageState = {
                 id: "4",
                 userId: "3",
                 text: "It is about redux.",
-                date: new Date(2022, 4, 15, 1, 5, 12, 59)
+                date: new Date(2022, 4, 14, 1, 5, 12, 59)
             },
             "5" : {
                 id: "5",
                 userId: "1",
                 text: "I love Vue",
-                date: new Date(2022, 4, 18, 1, 20, 31, 10)
+                date: new Date(2022, 4, 17, 1, 20, 31, 10)
             },
             "6" : {
                 id: "6",
@@ -52,7 +52,7 @@ const initialState : MessageState = {
                 id: "7",
                 userId: "5",
                 text: "Why use Vue when you can just use React?",
-                date: new Date(2022, 4, 18, 8, 5, 20 ,3)
+                date: new Date(2022, 4, 18, 11, 5, 20 ,3)
             },
             "8" : {
                 id: "8",
@@ -70,7 +70,7 @@ const initialState : MessageState = {
                 id: "10",
                 userId: "2",
                 text: "No one using Scala",
-                date: new Date(2022, 4, 21, 22, 10, 49, 21)
+                date: new Date(2022, 4, 21, 23, 10, 49, 21)
             }
         },
         allIds: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
