@@ -64,10 +64,14 @@ export const channelSlice = createSlice({
                 };
                 state.entities.allIds.push(newId);
             },
+            updateChannelMessages: (state: ChannelState, action: {payload:
+                    {channelId: number, messageId: number}}) => {
+                state.entities.id[action.payload.channelId].messageIds.push(action.payload.messageId.toString())
+            }
         }
     }
 );
 
-export const { addChannel } = channelSlice.actions;
+export const { addChannel, updateChannelMessages } = channelSlice.actions;
 
 export default channelSlice.reducer;

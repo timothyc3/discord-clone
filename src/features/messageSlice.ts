@@ -132,20 +132,27 @@ export const messageSlice = createSlice({
         initialState: initialState,
         reducers: {
             // add a channel
-            addMessage: (state: MessageState, action: {payload: {userId: number, text: string, date: Date}}) => {
+            addMessage: (state: MessageState, action: {payload:
+                    {
+                        userId: number,
+                        text: string,
+                        year: number,
+                        month: number,
+                        day: number,
+                        hour: number,
+                        minute: number,
+                        second: number
+                    }}) => {
                 const lastId : string = state.entities.allIds[state.entities.allIds.length - 1];
                 const newId : string = (parseInt(lastId) + 1).toString();
 
+                console.log(newId)
+
                 state.entities.id[newId] = {
                     id: newId,
+                    ...action.payload,
                     userId: action.payload.userId.toString(),
                     text: action.payload.text,
-                    year: action.payload.date.getFullYear(),
-                    month: action.payload.date.getMonth(),
-                    day: action.payload.date.getDate(),
-                    hour: action.payload.date.getHours(),
-                    minute: action.payload.date.getMinutes(),
-                    second: action.payload.date.getSeconds()
                 };
                 state.entities.allIds.push(newId);
             },
