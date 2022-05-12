@@ -7,12 +7,7 @@ import {shallowEqual} from "react-redux";
 
 export default function MessageInput() {
 
-    const [message, setMessage] = useState<string>('');
-
     const dispatch = useAppDispatch();
-
-    const currentMessageId : string =  useAppSelector(state =>
-        state.messages.entities.allIds[state.messages.entities.allIds.length - 1], shallowEqual)
 
     const channelObject : {name: string | null, id: string | null} = useAppSelector(state => {
         if (state.active.levelTwo in state.channel.entities.id) {
@@ -30,21 +25,19 @@ export default function MessageInput() {
 
     return (
         <input type="search" placeholder={`Message #${channelObject.name}`}
-               onInput={(event : React.ChangeEvent<HTMLInputElement>) => {
-                   const target: HTMLInputElement = event.target;
-                   setMessage(target.value);
-               } }
 
-               onKeyDown={(event : React.KeyboardEvent<HTMLInputElement>) => {
+               onKeyDown={(event : React.KeyboardEvent) => {
                    if (event.key === 'Enter'
                        && channelObject.name !== null
                        && channelObject.id !== null) {
 
-                       const today = new Date()
+                       const today = new Date();
+
+                       const target = event.target as HTMLInputElement;
 
                        const messagePayload = {
                            userId: 1,
-                           text: message,
+                           text: target.value,
                            year: today.getFullYear(),
                            month: today.getMonth(),
                            day: today.getDate(),
@@ -53,14 +46,7 @@ export default function MessageInput() {
                            second: today.getSeconds()
                        };
 
-                       // dispatch(addMessage(messagePayload));
-                       //
-                       // const channelUpdatePayload = {
-                       //     channelId: parseInt(channelObject.id),
-                       //     messageId: parseInt(currentMessageId)
-                       // };
-                       //
-                       // dispatch(updateChannelMessages(channelUpdatePayload));
+                       dispatch(addMessage(messagePayload));
                    }
                }}
 

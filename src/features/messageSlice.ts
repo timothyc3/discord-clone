@@ -131,7 +131,6 @@ export const messageSlice = createSlice({
         name: 'message',
         initialState: initialState,
         reducers: {
-            // add a channel
             addMessage: (state: MessageState, action: {payload:
                     {
                         userId: number,
@@ -145,8 +144,6 @@ export const messageSlice = createSlice({
                     }}) => {
                 const lastId : string = state.entities.allIds[state.entities.allIds.length - 1];
                 const newId : string = (parseInt(lastId) + 1).toString();
-
-                console.log(newId)
 
                 state.entities.id[newId] = {
                     id: newId,
