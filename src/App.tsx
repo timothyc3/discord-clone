@@ -6,6 +6,7 @@ import ChannelSidebar from "./components/ChannelSideBar/ChannelSidebar";
 import Content from "./components/Content/Content";
 // for remixicons usages
 import 'remixicon/fonts/remixicon.css';
+import {addData} from "./firebase";
 
 
 

@@ -2,7 +2,6 @@ import {createSlice} from "@reduxjs/toolkit";
 import {Server} from "../types"
 
 interface ServerState {
-    status: 'idle' | 'loading',
     entities: {
         id: { [key: string]: Server },
         allIds: string[]
@@ -10,7 +9,6 @@ interface ServerState {
 }
 
 const initialState : ServerState = {
-    status: 'idle',
     entities: {id: {
             "1" : {
                 id: "1",
