@@ -10,25 +10,25 @@ import ChannelButton from "./components/ChannelButton";
 
 export default function ChannelSidebar() {
 
-    // get all the channels of that server
-    const channels : string[] | string = useAppSelector(state => {
-
-        if (state.active.levelOne in state.server.entities.id) {
-            return state.server.entities.id[state.active.levelOne].channelIds
-        } else {
-            return state.active.levelOne
-        }
-    }, shallowEqual);
+    // // get all the channels of that server
+    // const channels : string[] | string = useAppSelector(state => {
+    //
+    //     if (state.active.levelOne in state.server.entities.id) {
+    //         return state.server.ids[state.active.levelOne].channelIds
+    //     } else {
+    //         return state.active.levelOne
+    //     }
+    // }, shallowEqual);
 
     let renderedChannelButtons;
 
-    if (typeof channels !== "string") {
-        renderedChannelButtons = channels.map((channelId: string) => {
-            return <ChannelButton
-                key={channelId}
-                channelId={channelId}/>;
-        });
-    }
+    // if (typeof channels !== "string") {
+    //     renderedChannelButtons = channels.map((channelId: string) => {
+    //         return <ChannelButton
+    //             key={channelId}
+    //             channelId={channelId}/>;
+    //     });
+    // }
 
 
     return (

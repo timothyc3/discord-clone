@@ -55,7 +55,6 @@ const getServerData = async () => {
             const data = doc.data() as Server
             result[data.id] = data
         });
-        console.log(result)
         return result
     } catch (error) {
         console.error('error happened')

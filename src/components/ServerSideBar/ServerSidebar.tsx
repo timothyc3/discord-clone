@@ -10,7 +10,7 @@ import {Server} from "../../types";
 
 export default function ServerSidebar() {
 
-    const servers : string[] = useAppSelector(state => state.server.entities.allIds, shallowEqual);
+    const servers : string[] = useAppSelector(state => state.server.ids, shallowEqual);
 
     const renderedServerButtons = servers.map((serverId: string ) => {
         return <ServerButton key={serverId}
