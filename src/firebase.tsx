@@ -49,10 +49,18 @@ const addData = async (data: any) => {
 
 const getServerData = async () => {
     try {
-
-    } catch (e) {
-        console.error("Error fetching server data")
+        const snapshot = await getDocs(collection(firestore, "servers"));
+        let result : {[key: string] : Server}  = {};
+        snapshot.forEach((doc) => {
+            const data = doc.data() as Server
+            result[data.id] = data
+        });
+        console.log(result)
+        return result
+    } catch (error) {
+        console.error('error happened')
+        throw new Error("Error fetching server data");
     }
 }
 
-export {addData}
+export {addData, getServerData}

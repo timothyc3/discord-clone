@@ -1,5 +1,7 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {Server} from "../types"
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {Server} from "../types";
+import {getServerData} from "../firebase";
+import {useAppDispatch} from "../hooks";
 
 interface ServerState {
     entities: {
@@ -8,11 +10,20 @@ interface ServerState {
     }
 }
 
-const initialState : ServerState = {
+const fetchServerData = createAsyncThunk('servers/fetchServerData',
+    async () => {
+    const dispatch = useAppDispatch();
+    await getServerData().then(result => {
+        console.log(result);
+        dispatch(serverSlice.actions.serverLoaded(result));
+    });
+})
+
+const initialState : any = {
     entities: {id: {
             "1" : {
                 id: "1",
-                name: 'React',
+                name: 'Potato',
                 channelIds: ["1", "2"],
                 userIds: ["1", "2", "3", "4", "5"]
             },
@@ -37,6 +48,10 @@ export const serverSlice = createSlice({
     name: 'servers',
     initialState: initialState,
     reducers: {
+        // add loaded data into state
+        serverLoaded: (state: ServerState, action: {payload: {[key: string]: Server}}) => {
+            state.entities.id = action.payload
+        },
         // adds a server to the server slice
         addServer: (state: ServerState, action: {payload: {name: string, userId: number}}) => {
             const lastId : string = state.entities.allIds[state.entities.allIds.length - 1];
@@ -58,5 +73,6 @@ export const serverSlice = createSlice({
 });
 
 export const { addServer } = serverSlice.actions;
+export { fetchServerData }
 
 export default serverSlice.reducer;
