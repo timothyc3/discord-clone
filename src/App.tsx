@@ -13,15 +13,12 @@ import {store} from "./store";
 
 export default function App() {
 
-    const dispatch = useAppDispatch()
-    dispatch(fetchServerData());
-
     const servers = store.getState()
 
     return (
         <div className="h-screen w-screen grid grid-cols-[75px_240px_1fr] font-body">
 
-            {/*<ServerSidebar />*/}
+            <ServerSidebar />
             {/*<ChannelSidebar />*/}
             {/*<Content />*/}
         </div>
