@@ -13,7 +13,7 @@ const fetchServerData = createAsyncThunk('servers/fetchServerData',
 })
 
 export const serverSlice = createSlice({
-    name: 'servers',
+    name: 'server',
     initialState: createEntityAdapter().getInitialState() as ServerState,
     reducers: {
         // adds a server to the server slice
@@ -37,7 +37,8 @@ export const serverSlice = createSlice({
     extraReducers: (builder) => {
         // if fetching data from firebase is fulfilled, then we save the server data to state.entities
         builder.addCase(fetchServerData.fulfilled, (state, action) => {
-            state.entities = action.payload
+            state.entities = action.payload;
+            state.ids = Object.keys(action.payload);
         })
     }
 });

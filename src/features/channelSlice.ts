@@ -13,7 +13,7 @@ const fetchChannelData = createAsyncThunk('servers/fetchChannelData',
     })
 
 export const channelSlice = createSlice({
-    name: 'channels',
+    name: 'channel',
     initialState: createEntityAdapter().getInitialState() as ChannelState,
     reducers: {
         // add a channel
@@ -34,7 +34,8 @@ export const channelSlice = createSlice({
         // if fetching data from firebase is fulfilled, then we save the server data to state.entities
         builder.addCase(fetchChannelData.fulfilled,
             (state, action) => {
-            state.entities = action.payload
+            state.entities = action.payload;
+            state.ids = Object.keys(action.payload);
         })
     }
 
