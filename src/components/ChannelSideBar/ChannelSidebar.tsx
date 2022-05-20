@@ -18,7 +18,14 @@ export default function ChannelSidebar() {
 
     let renderedChannelButtons;
 
-    const channels : string[] = useAppSelector(state => Object.keys(state.channel.entities), shallowEqual);
+    // get the channels of the selected server
+    const channels : string[] = useAppSelector(state => {
+        // if a server button is active
+        if (state.active.levelOne in state.server.entities) {
+            return state.server.entities[state.active.levelOne].channelIds
+        }
+        else return []
+    }, shallowEqual);
 
     renderedChannelButtons = channels.map((channelId: string) => {
         return <ChannelButton
