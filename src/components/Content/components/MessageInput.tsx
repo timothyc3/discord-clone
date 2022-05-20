@@ -16,7 +16,7 @@ export default function MessageInput() {
             };
         } else {
             return {
-                name: null,
+                name: state.active.levelTwo,
                 id: null,
             }
         }

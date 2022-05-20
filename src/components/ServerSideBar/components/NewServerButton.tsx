@@ -1,7 +1,7 @@
 import React from "react";
 import {useAppDispatch, useAppSelector} from "../../../hooks";
 import {shallowEqual} from "react-redux";
-import {updateLevelOne} from "../../../features/activeSlice";
+import {updateLevelOne, updateLevelTwo} from "../../../features/activeSlice";
 
 export default function NewServerButton() {
 
@@ -12,6 +12,7 @@ export default function NewServerButton() {
     // update active server in redux store
     function updateActive() {
         dispatch(updateLevelOne("New Server"));
+        dispatch(updateLevelTwo("New Server"));
     }
 
     function handleClick() {

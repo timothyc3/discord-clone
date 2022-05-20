@@ -1,7 +1,7 @@
 import React from "react";
 import {useAppDispatch, useAppSelector} from "../../../hooks";
 import {shallowEqual} from "react-redux";
-import {updateLevelOne} from "../../../features/activeSlice";
+import {updateLevelOne, updateLevelTwo} from "../../../features/activeSlice";
 
 export default function DiscoverButton() {
 
@@ -12,6 +12,7 @@ export default function DiscoverButton() {
     // update active server in redux store
     function updateActive() {
         dispatch(updateLevelOne("Discover"));
+        dispatch(updateLevelTwo("Discover"))
     }
 
     function handleClick() {
