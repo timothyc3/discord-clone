@@ -8,7 +8,7 @@ export default function ChannelButton(props: {
 }) {
 
     const active : boolean = useAppSelector(state => state.active.levelTwo === props.channelId, shallowEqual);
-    const channelName : string = useAppSelector(state => state.channel.entities.id[props.channelId].name, shallowEqual);
+    // const channelName : string = useAppSelector(state => state.channel.entities.id[props.channelId].name, shallowEqual);
 
     const dispatch = useAppDispatch();
 
@@ -37,7 +37,7 @@ export default function ChannelButton(props: {
             </svg>
 
             <h2 className={`ml-2 text-sm font-medium duration-75 select-none
-            ${active ? 'text-white' : 'text-inactive-light-grey group-hover:text-light-grey'}`}>{channelName}</h2>
+            ${active ? 'text-white' : 'text-inactive-light-grey group-hover:text-light-grey'}`}></h2>
 
             <svg xmlns="http://www.w3.org/2000/svg"
                  className={`h-4 w-4 ml-auto text-light-grey group-hover:block duration-75

@@ -35,7 +35,7 @@ const firestore = getFirestore(app);
 const addData = async (data: any) => {
     try {
         // create an empty doc with randomly generated ID attribute that will be written to the servers collection
-        const docRef = doc(collection(firestore, "servers"));
+        const docRef = doc(collection(firestore, "channels"));
         await setDoc(docRef, {
             ...data,
             id: docRef.id,
@@ -46,6 +46,21 @@ const addData = async (data: any) => {
         console.error("Error adding document: ", e);
     }
 };
+
+const getChannelData = async () => {
+    try {
+        const snapshot = await getDocs(collection(firestore, "channels"));
+        let result : {[key: string] : Channel}  = {};
+        snapshot.forEach((doc) => {
+            const data = doc.data() as Channel
+            result[data.id] = data
+        });
+        return result
+    } catch (error) {
+        console.error('error happened')
+        throw new Error("Error fetching server data");
+    }
+}
 
 const getServerData = async () => {
     try {
@@ -62,4 +77,4 @@ const getServerData = async () => {
     }
 }
 
-export {addData, getServerData}
+export {addData, getServerData, getChannelData}

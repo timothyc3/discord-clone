@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {useAppDispatch, useAppSelector} from "../../../hooks";
 import {addMessage} from "../../../features/messageSlice";
-import {updateChannelMessages} from "../../../features/channelSlice";
 import {channel} from "diagnostics_channel";
 import {shallowEqual} from "react-redux";
 
@@ -9,46 +8,46 @@ export default function MessageInput() {
 
     const dispatch = useAppDispatch();
 
-    const channelObject : {name: string | null, id: string | null} = useAppSelector(state => {
-        if (state.active.levelTwo in state.channel.entities.id) {
-            return {
-                name: state.channel.entities.id[state.active.levelTwo].name,
-                id: state.channel.entities.id[state.active.levelTwo].id
-            };
-        } else {
-            return {
-                name: null,
-                id: null,
-            }
-        }
-    }, shallowEqual);
+    // const channelObject : {name: string | null, id: string | null} = useAppSelector(state => {
+    //     if (state.active.levelTwo in state.channel.entities.id) {
+    //         return {
+    //             name: state.channel.entities.id[state.active.levelTwo].name,
+    //             id: state.channel.entities.id[state.active.levelTwo].id
+    //         };
+    //     } else {
+    //         return {
+    //             name: null,
+    //             id: null,
+    //         }
+    //     }
+    // }, shallowEqual);
 
     return (
-        <input type="search" placeholder={`Message #${channelObject.name}`}
+        <input type="search" placeholder={`Message`}
 
-               onKeyDown={(event : React.KeyboardEvent) => {
-                   if (event.key === 'Enter'
-                       && channelObject.name !== null
-                       && channelObject.id !== null) {
-
-                       const today = new Date();
-
-                       const target = event.target as HTMLInputElement;
-
-                       const messagePayload = {
-                           userId: 1,
-                           text: target.value,
-                           year: today.getFullYear(),
-                           month: today.getMonth(),
-                           day: today.getDate(),
-                           hour: today.getHours(),
-                           minute: today.getMinutes(),
-                           second: today.getSeconds()
-                       };
-
-                       dispatch(addMessage(messagePayload));
-                   }
-               }}
+               // onKeyDown={(event : React.KeyboardEvent) => {
+               //     if (event.key === 'Enter'
+               //         && channelObject.name !== null
+               //         && channelObject.id !== null) {
+               //
+               //         const today = new Date();
+               //
+               //         const target = event.target as HTMLInputElement;
+               //
+               //         const messagePayload = {
+               //             userId: 1,
+               //             text: target.value,
+               //             year: today.getFullYear(),
+               //             month: today.getMonth(),
+               //             day: today.getDate(),
+               //             hour: today.getHours(),
+               //             minute: today.getMinutes(),
+               //             second: today.getSeconds()
+               //         };
+               //
+               //         dispatch(addMessage(messagePayload));
+               //     }
+               // }}
 
 
 
