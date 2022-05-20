@@ -9,7 +9,7 @@ import {
     doc,
 }
     from "firebase/firestore";
-import {Server, Channel} from "./types";
+import {Server, Channel, Message, User} from "./types";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -35,7 +35,7 @@ const firestore = getFirestore(app);
 const addData = async (data: any) => {
     try {
         // create an empty doc with randomly generated ID attribute that will be written to the servers collection
-        const docRef = doc(collection(firestore, "channels"));
+        const docRef = doc(collection(firestore, "users"));
         await setDoc(docRef, {
             ...data,
             id: docRef.id,
@@ -46,6 +46,36 @@ const addData = async (data: any) => {
         console.error("Error adding document: ", e);
     }
 };
+
+const getUserData = async () => {
+    try {
+        const snapshot = await getDocs(collection(firestore, "users"));
+        let result : {[key: string] : User}  = {};
+        snapshot.forEach((doc) => {
+            const data = doc.data() as User
+            result[data.id] = data
+        });
+        return result
+    } catch (error) {
+        console.error('error happened')
+        throw new Error("Error fetching server data");
+    }
+}
+
+const getMessageData = async () => {
+    try {
+        const snapshot = await getDocs(collection(firestore, "messages"));
+        let result : {[key: string] : Message}  = {};
+        snapshot.forEach((doc) => {
+            const data = doc.data() as Message
+            result[data.id] = data
+        });
+        return result
+    } catch (error) {
+        console.error('error happened')
+        throw new Error("Error fetching server data");
+    }
+}
 
 const getChannelData = async () => {
     try {
@@ -77,4 +107,4 @@ const getServerData = async () => {
     }
 }
 
-export {addData, getServerData, getChannelData}
+export {addData, getServerData, getChannelData, getMessageData, getUserData}

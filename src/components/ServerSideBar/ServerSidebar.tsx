@@ -1,21 +1,13 @@
-import React, {useEffect} from "react";
-// import ServerButton from "./components/ServerSideBar/components/ServerButton";
+import React from "react";
 import HomeButton from "./components/HomeButton";
 import NewServerButton from "./components/NewServerButton";
 import DiscoverButton from "./components/DiscoverButton";
 import ServerButton from "./components/ServerButton";
-import {useAppDispatch, useAppSelector} from "../../hooks";
+import {useAppSelector} from "../../hooks";
 import {shallowEqual} from "react-redux";
-import {Server} from "../../types";
-import {fetchServerData} from "../../features/serverSlice";
+
 
 export default function ServerSidebar() {
-
-    const dispatch = useAppDispatch()
-    useEffect(() => {
-        dispatch(fetchServerData());
-
-    }, []);
 
     const servers : string[] = useAppSelector(state => Object.keys(state.server.entities), shallowEqual);
 

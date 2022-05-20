@@ -1,6 +1,5 @@
-import React, {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "../../hooks";
-import {fetchChannelData} from "../../features/channelSlice";
+import React from "react";
+import { useAppSelector } from "../../hooks";
 import Header from "./components/Header";
 // import {Channel} from "../../types";
 // import {useAppSelector} from "../../hooks";
@@ -9,12 +8,6 @@ import ChannelButton from "./components/ChannelButton";
 import {shallowEqual} from "react-redux";
 
 export default function ChannelSidebar() {
-
-    // get all the channels of that server
-    const dispatch = useAppDispatch()
-    useEffect(() => {
-        dispatch(fetchChannelData());
-    }, []);
 
     let renderedChannelButtons;
 

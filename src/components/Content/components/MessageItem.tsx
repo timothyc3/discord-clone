@@ -6,10 +6,10 @@ import {shallowEqual} from "react-redux";
 export default function MessageItem(props: {id: string}) {
 
     const messageContent: Message = useAppSelector(state =>
-    state.messages.entities.id[props.id], shallowEqual);
+    state.messages.entities[props.id], shallowEqual);
 
     const user : User = useAppSelector(state =>
-        state.user.entities.id[messageContent.userId], shallowEqual);
+        state.user.entities[messageContent.userId], shallowEqual);
 
     function formatDate(date: Message) {
         return `${date.day}/${date.month}/${date.year}`
