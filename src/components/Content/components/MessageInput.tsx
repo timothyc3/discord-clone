@@ -35,6 +35,7 @@ export default function MessageInput() {
                        const target = event.target as HTMLInputElement;
 
                        const messagePayload = {
+                           channelId: channelObject.id,
                            userId: 1,
                            text: target.value,
                            year: today.getFullYear(),
@@ -45,9 +46,7 @@ export default function MessageInput() {
                            second: today.getSeconds()
                        };
 
-                       console.log(messagePayload)
-
-                       // dispatch(addMessage(messagePayload));
+                       dispatch(addMessage(messagePayload));
                    }
                }}
 

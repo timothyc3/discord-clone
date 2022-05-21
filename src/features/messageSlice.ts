@@ -1,6 +1,6 @@
 import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import {Message} from "../types";
-import { getMessageData } from "../firebase";
+import {getMessageData, writeMessageData} from "../firebase";
 
 interface MessageState {
     entities: { [key: string]: Message },
@@ -18,6 +18,7 @@ export const messageSlice = createSlice({
     reducers: {
         addMessage: (state: MessageState, action: {payload:
                 {
+                    channelId: string,
                     userId: number,
                     text: string,
                     year: number,
@@ -27,9 +28,7 @@ export const messageSlice = createSlice({
                     minute: number,
                     second: number
                 }}) => {
-            // const lastId : string = state.entities.allIds[state.entities.allIds.length - 1];
-            // const newId : string = (parseInt(lastId) + 1).toString();
-            //
+            writeMessageData(action.payload);
             // state.entities.id[newId] = {
             //     id: newId,
             //     ...action.payload,

@@ -77,6 +77,17 @@ const getMessageData = async () => {
     }
 }
 
+const writeMessageData = async (data: any) => {
+    try {
+        const docRefMessages = doc(collection(firestore, "messages"));
+        const docRefChannels = doc(collection(firestore, "channels"), data.channelId);
+
+        console.log(data);
+    } catch (e) {
+        console.error("Error writing message to firebase: ", e)
+    }
+}
+
 const getChannelData = async () => {
     try {
         const snapshot = await getDocs(collection(firestore, "channels"));
@@ -107,4 +118,4 @@ const getServerData = async () => {
     }
 }
 
-export {addData, getServerData, getChannelData, getMessageData, getUserData}
+export {addData, getServerData, getChannelData, getMessageData, writeMessageData, getUserData}
