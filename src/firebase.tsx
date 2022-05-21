@@ -7,9 +7,12 @@ import {
     getFirestore,
     collection,
     doc,
+    writeBatch,
+    arrayUnion
 }
     from "firebase/firestore";
 import {Server, Channel, Message, User} from "./types";
+import {store} from "./store";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -76,13 +79,36 @@ const getMessageData = async () => {
         throw new Error("Error fetching server data");
     }
 }
+// called inside writeMessage, updates the respective channel's messageId, and adds a document
+// in firebase for the new message.
+async function updateMessageFirebase(data: any) {
+    const batch = writeBatch(firestore);
 
-const writeMessageData = async (data: any) => {
+    const docRefMessages = doc(collection(firestore, "messages"));
+    const docRefChannels = doc(collection(firestore, "channels"), data.channelId);
+
+    console.log(data);
+
+    const {channelId, ...messagePayload} = data
+
+    batch.set(docRefMessages, {
+        ...messagePayload,
+        id: docRefMessages.id
+    });
+
+    batch.update(docRefChannels, {messageIds: arrayUnion(docRefMessages.id)});
+
+    await batch.commit()
+}
+
+const writeMessage = async (data: any) => {
+
     try {
-        const docRefMessages = doc(collection(firestore, "messages"));
-        const docRefChannels = doc(collection(firestore, "channels"), data.channelId);
 
-        console.log(data);
+        updateMessageFirebase(data).then(() =>
+        {console.log('done sending message to firebase')});
+
+
     } catch (e) {
         console.error("Error writing message to firebase: ", e)
     }
@@ -118,4 +144,4 @@ const getServerData = async () => {
     }
 }
 
-export {addData, getServerData, getChannelData, getMessageData, writeMessageData, getUserData}
+export {addData, getServerData, getChannelData, getMessageData, writeMessage, getUserData}

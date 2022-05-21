@@ -36,7 +36,7 @@ export default function MessageInput() {
 
                        const messagePayload = {
                            channelId: channelObject.id,
-                           userId: 1,
+                           userId: "2TyCE1Ptr22BAw3Lki5N",
                            text: target.value,
                            year: today.getFullYear(),
                            month: today.getMonth(),
