@@ -5,10 +5,10 @@ import {shallowEqual} from "react-redux";
 export default function Header() {
 
     const heading : string = useAppSelector(state => {
-        if (state.active.levelTwo in state.channel.entities.id) {
-            return state.channel.entities.id[state.active.levelTwo].name
+        if (state.active.levelOne in state.server.entities) {
+            return state.server.entities[state.active.levelOne].name
         } else {
-            return state.active.levelTwo
+            return state.active.levelOne
         }
     }, shallowEqual);
 

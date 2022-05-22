@@ -1,64 +1,49 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {Server} from "../types"
+import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
+import {Server} from "../types";
+import {getServerData} from "../firebase";
 
 interface ServerState {
-    status: 'idle' | 'loading',
-    entities: {
-        id: { [key: string]: Server },
-        allIds: string[]
-    }
+    entities: { [key: string]: Server },
+    ids: string[]
 }
 
-const initialState : ServerState = {
-    status: 'idle',
-    entities: {id: {
-            "1" : {
-                id: "1",
-                name: 'React',
-                channelIds: ["1", "2"],
-                userIds: ["1", "2", "3", "4", "5"]
-            },
-            "2" : {
-                id: "2",
-                name: 'Redux',
-                channelIds: ["3", "4"],
-                userIds: ["3", "4", "5", "6"]
-            },
-            "3" : {
-                id: "3",
-                name: 'Svelte',
-                channelIds: ["5"],
-                userIds: ["1", "2"]
-            },
-        },
-        allIds: ["1", "2", "3"]
-    }
-}
+const fetchServerData = createAsyncThunk('servers/fetchServerData',
+    async () => {
+        return await getServerData();
+})
 
 export const serverSlice = createSlice({
-    name: 'servers',
-    initialState: initialState,
+    name: 'server',
+    initialState: createEntityAdapter().getInitialState() as ServerState,
     reducers: {
         // adds a server to the server slice
         addServer: (state: ServerState, action: {payload: {name: string, userId: number}}) => {
-            const lastId : string = state.entities.allIds[state.entities.allIds.length - 1];
-            const newId : string = (parseInt(lastId) + 1).toString();
-
-            state.entities.id[newId] = {
-                id: newId,
-                name: action.payload.name,
-                channelIds: [],
-                userIds: [action.payload.userId.toString()]
-            };
-            state.entities.allIds.push(newId);
+            // const lastId : string = state.ids[state.entities.allIds.length - 1];
+            // const newId : string = (parseInt(lastId) + 1).toString();
+            //
+            // state.entities.id[newId] = {
+            //     id: newId,
+            //     name: action.payload.name,
+            //     channelIds: [],
+            //     userIds: [action.payload.userId.toString()]
+            // };
+            // state.entities.allIds.push(newId);
         },
 
         updateServerChannels: (state: ServerState, action: {payload: {serverId: number, channelId: number}}) => {
-            state.entities.id[action.payload.serverId].channelIds.push(action.payload.channelId.toString())
+            // state.entities.id[action.payload.serverId].channelIds.push(action.payload.channelId.toString())
         }
+    },
+    extraReducers: (builder) => {
+        // if fetching data from firebase is fulfilled, then we save the server data to state.entities
+        builder.addCase(fetchServerData.fulfilled, (state, action) => {
+            state.entities = action.payload;
+            state.ids = Object.keys(action.payload);
+        })
     }
 });
 
 export const { addServer } = serverSlice.actions;
+export { fetchServerData }
 
 export default serverSlice.reducer;

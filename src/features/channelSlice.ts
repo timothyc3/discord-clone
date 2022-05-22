@@ -1,73 +1,48 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import {Channel} from "../types"
+import {getChannelData} from "../firebase";
 
 interface ChannelState {
-    status: 'idle' | 'loading',
-    entities: {
-        id: { [key: string]: Channel },
-        allIds: string[]
-    }
+    entities: { [key: string]: Channel },
+    ids: string[]
 }
 
-const initialState : ChannelState = {
-    status: 'idle',
-    entities: {id: {
-            "1" : {
-                id: "1",
-                name: 'React',
-                messageIds: ["1", "2"],
-                userIds: ["1", "2", "3", "4", "5"]
-            },
-            "2" : {
-                id: "2",
-                name: 'Redux',
-                messageIds: ["3", "4"],
-                userIds: ["3", "4", "5", "6"]
-            },
-            "3" : {
-                id: "3",
-                name: 'Vue',
-                messageIds: ["5", "6", "7"],
-                userIds: []
-            },
-            "4" : {
-                id: "4",
-                name: 'Angular',
-                messageIds: ["8", "9"],
-                userIds: []
-            },
-            "5" : {
-                id: "5",
-                name: 'Scala',
-                messageIds: ["10"],
-                userIds: []
-            }
-        },
-        allIds: ["1", "2", "3", "4", "5"]
-    }
-}
+const fetchChannelData = createAsyncThunk('servers/fetchChannelData',
+    async () => {
+        return await getChannelData();
+    })
 
 export const channelSlice = createSlice({
-        name: 'channels',
-        initialState: initialState,
-        reducers: {
-            // add a channel
-            addChannel: (state: ChannelState, action: {payload: {name: string, userId: number}}) => {
-                const lastId : string = state.entities.allIds[state.entities.allIds.length - 1];
-                const newId : string = (parseInt(lastId) + 1).toString();
+    name: 'channel',
+    initialState: createEntityAdapter().getInitialState() as ChannelState,
+    reducers: {
+        // add a channel
+        addChannel: (state: ChannelState, action: {payload: {name: string, userId: number}}) => {
+            // const lastId : string = state.entities.allIds[state.entities.allIds.length - 1];
+            // const newId : string = (parseInt(lastId) + 1).toString();
+            //
+            // state.entities.id[newId] = {
+            //     id: newId,
+            //     name: action.payload.name,
+            //     messageIds: [],
+            //     userIds: [action.payload.userId.toString()]
+            // };
+            // state.entities.allIds.push(newId);
+        },
+    },
+    extraReducers: (builder) => {
+        // if fetching data from firebase is fulfilled, then we save the server data to state.entities
+        builder.addCase(fetchChannelData.fulfilled,
+            (state, action) => {
+            state.entities = action.payload;
+            state.ids = Object.keys(action.payload);
+        })
+    }
 
-                state.entities.id[newId] = {
-                    id: newId,
-                    name: action.payload.name,
-                    messageIds: [],
-                    userIds: [action.payload.userId.toString()]
-                };
-                state.entities.allIds.push(newId);
-            },
-        }
     }
 );
 
 export const { addChannel } = channelSlice.actions;
+export { fetchChannelData }
 
 export default channelSlice.reducer;

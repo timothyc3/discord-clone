@@ -1,34 +1,30 @@
 import React from "react";
+import { useAppSelector } from "../../hooks";
 import Header from "./components/Header";
-import {Channel} from "../../types";
-import {useAppSelector} from "../../hooks";
-import {shallowEqual} from "react-redux";
-import ServerButton from "../ServerSideBar/components/ServerButton";
+// import {Channel} from "../../types";
+// import {useAppSelector} from "../../hooks";
+// import {shallowEqual} from "react-redux";
 import ChannelButton from "./components/ChannelButton";
-// import ChannelButton from "./components/ChannelSideBar/components/ChannelButton";
-
+import {shallowEqual} from "react-redux";
 
 export default function ChannelSidebar() {
 
-    // get all the channels of that server
-    const channels : string[] | string = useAppSelector(state => {
-
-        if (state.active.levelOne in state.server.entities.id) {
-            return state.server.entities.id[state.active.levelOne].channelIds
-        } else {
-            return state.active.levelOne
-        }
-    }, shallowEqual);
-
     let renderedChannelButtons;
 
-    if (typeof channels !== "string") {
-        renderedChannelButtons = channels.map((channelId: string) => {
-            return <ChannelButton
-                key={channelId}
-                channelId={channelId}/>;
-        });
-    }
+    // get the channels of the selected server
+    const channels : string[] = useAppSelector(state => {
+        // if a server button is active
+        if (state.active.levelOne in state.server.entities) {
+            return state.server.entities[state.active.levelOne].channelIds
+        }
+        else return []
+    }, shallowEqual);
+
+    renderedChannelButtons = channels.map((channelId: string) => {
+        return <ChannelButton
+            key={channelId}
+            channelId={channelId}/>;
+    });
 
 
     return (

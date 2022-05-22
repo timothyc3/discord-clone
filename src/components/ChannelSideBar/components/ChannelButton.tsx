@@ -8,7 +8,7 @@ export default function ChannelButton(props: {
 }) {
 
     const active : boolean = useAppSelector(state => state.active.levelTwo === props.channelId, shallowEqual);
-    const channelName : string = useAppSelector(state => state.channel.entities.id[props.channelId].name, shallowEqual);
+    const channelName : string = useAppSelector(state => state.channel.entities[props.channelId].name, shallowEqual);
 
     const dispatch = useAppDispatch();
 

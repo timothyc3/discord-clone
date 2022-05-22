@@ -2,7 +2,12 @@ export interface Message {
     id: string,
     userId: string,
     text: string
-    date: Date,
+    year: number,
+    month: number,
+    day: number,
+    hour: number,
+    minute: number,
+    second: number
 }
 
 export interface Channel {

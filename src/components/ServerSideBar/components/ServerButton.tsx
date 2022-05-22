@@ -9,7 +9,7 @@ export default function ServerButton(props: {
 }) {
 
     const active : boolean = useAppSelector(state => state.active.levelOne === props.serverId, shallowEqual);
-    const serverName: string = useAppSelector(state => state.server.entities.id[props.serverId].name, shallowEqual);
+    const serverName: string = useAppSelector(state => state.server.entities[props.serverId].name, shallowEqual);
 
     const dispatch = useAppDispatch();
 
@@ -20,7 +20,7 @@ export default function ServerButton(props: {
 
     // set the active channel for the server (default to the first channel)
     function updateActiveChannel() {
-        const firstChannel = store.getState().server.entities.id[props.serverId].channelIds[0];
+        const firstChannel = store.getState().server.entities[props.serverId].channelIds[0];
         dispatch(updateLevelTwo(firstChannel));
     }
 

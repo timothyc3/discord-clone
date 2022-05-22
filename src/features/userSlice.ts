@@ -1,59 +1,31 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import {User} from "../types"
+import { getUserData } from "../firebase";
 
 interface UserState {
-    status: 'idle' | 'loading',
-    entities: {
-        id: { [key: string]: User },
-        allIds: string[]
-    }
+    entities: { [key: string]: User },
+    ids: string[]
 }
 
-const initialState : UserState = {
-    status: 'idle',
-    entities: {id: {
-            "1" : {
-                id: "1",
-                avatar: "",
-                name: "George"
-            },
-            "2" : {
-                id: "2",
-                avatar: "",
-                name: "Samantha"
-            },
-            "3" : {
-                id: "3",
-                avatar: "",
-                name: "Tiffany"
-            },
-            "4" : {
-                id: "4",
-                avatar: "",
-                name: "Matilda"
-            },
-            "5" : {
-                id: "5",
-                avatar: "",
-                name: "Sam"
-            },
-            "6" : {
-                id: "6",
-                avatar: "",
-                name: "Frank"
-            },
-        },
-        allIds: ["1", "2", "3", "4", "5", "6"]
-    }
-}
+const fetchUserData = createAsyncThunk('servers/fetchUserData',
+    async () => {
+        return await getUserData();
+    })
 
 export const userSlice = createSlice({
     name: 'user',
-    initialState: initialState,
+    initialState: createEntityAdapter().getInitialState() as UserState,
     reducers: {
+    },
+    extraReducers: (builder) => {
+        // if fetching data from firebase is fulfilled, then we save the server data to state.entities
+        builder.addCase(fetchUserData.fulfilled, (state, action) => {
+            state.entities = action.payload;
+            state.ids = Object.keys(action.payload);
+        })
     }
 });
 
 // export const { } = userSlice.actions;
-
+export { fetchUserData }
 export default userSlice.reducer;

@@ -7,8 +7,8 @@ export default function Header() {
     // retrieve the heading to use by seeing if it's a server ID present in server slice, if not just use
     // whatever is defined in the active slice. If it is return the name from that server object in server slice
     const heading : string = useAppSelector(state => {
-        if (state.active.levelOne in state.server.entities.id) {
-            return state.server.entities.id[state.active.levelOne].name
+        if (state.active.levelOne in state.server.entities) {
+            return state.server.entities[state.active.levelOne].name
         } else {
             return state.active.levelOne
         }

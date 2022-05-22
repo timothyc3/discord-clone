@@ -6,8 +6,8 @@ import MessageItem from "./MessageItem";
 export default function MessageContainer() {
 
     const messageIds : string[] = useAppSelector(state => {
-        if (state.active.levelTwo in state.channel.entities.id) {
-            return state.channel.entities.id[state.active.levelTwo].messageIds
+        if (state.active.levelTwo in state.channel.entities) {
+            return state.channel.entities[state.active.levelTwo].messageIds
         } else {
             return []
         }
