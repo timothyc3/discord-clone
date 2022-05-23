@@ -2,17 +2,16 @@
 import { initializeApp } from "firebase/app";
 import {
     getDocs,
-    addDoc,
     setDoc,
     getFirestore,
     collection,
     doc,
     writeBatch,
-    arrayUnion
+    arrayUnion,
 }
     from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
 import {Server, Channel, Message, User} from "./types";
-import {store} from "./store";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -32,6 +31,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
+const auth = getAuth();
 
 
 

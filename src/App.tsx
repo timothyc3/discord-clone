@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import ServerSidebar from "./components/ServerSideBar/ServerSidebar";
 import ChannelSidebar from "./components/ChannelSideBar/ChannelSidebar";
 import Content from "./components/Content/Content";
@@ -23,11 +23,20 @@ export default function App() {
         dispatch(fetchUserData());
     }, []);
 
+    const [loggedIn, setLoggedIn] = useState(true);
+
     return (
         <div className="h-screen w-screen grid grid-cols-[75px_240px_1fr] font-body">
-            <ServerSidebar />
-            <ChannelSidebar />
-            <Content />
+            { loggedIn ? <>
+                    <ServerSidebar />
+                    <ChannelSidebar />
+                    <Content />
+                </> :
+                <div>
+                    not logged in
+                </div>
+            }
+
         </div>
     );
 }
