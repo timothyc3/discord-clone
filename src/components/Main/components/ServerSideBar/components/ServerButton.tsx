@@ -1,8 +1,8 @@
 import React from "react";
-import {useAppDispatch, useAppSelector} from "../../../hooks";
-import {updateLevelOne, updateLevelTwo} from "../../../features/activeSlice";
+import {useAppDispatch, useAppSelector} from "../../../../../hooks";
+import {updateLevelOne, updateLevelTwo} from "../../../../../features/activeSlice";
 import {shallowEqual} from "react-redux";
-import {store} from "../../../store";
+import {store} from "../../../../../store";
 
 export default function ServerButton(props: {
     serverId: string

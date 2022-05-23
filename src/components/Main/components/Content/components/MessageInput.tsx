@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import {useAppDispatch, useAppSelector} from "../../../hooks";
-import {addMessage} from "../../../features/messageSlice";
+import {useAppDispatch, useAppSelector} from "../../../../../hooks";
+import {addMessage} from "../../../../../features/messageSlice";
 import {channel} from "diagnostics_channel";
 import {shallowEqual} from "react-redux";
 

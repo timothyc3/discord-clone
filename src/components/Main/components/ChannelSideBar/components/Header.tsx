@@ -1,5 +1,5 @@
 import React from "react";
-import {useAppSelector} from "../../../hooks";
+import {useAppSelector} from "../../../../../hooks";
 import {shallowEqual} from "react-redux";
 
 export default function Header() {

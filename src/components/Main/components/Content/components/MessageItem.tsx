@@ -1,6 +1,6 @@
 import React from "react";
-import {useAppSelector} from "../../../hooks";
-import { Message, User } from "../../../types";
+import {useAppSelector} from "../../../../../hooks";
+import { Message, User } from "../../../../../types";
 import {shallowEqual} from "react-redux";
 
 export default function MessageItem(props: {id: string}) {

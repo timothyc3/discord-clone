@@ -21,6 +21,9 @@ module.exports = {
         'sans': ["Sans Serif"],
         'body': ["Open Sans"]
       },
+      spacing: {
+        '192': '48rem'
+      }
     },
     minHeight: {
       '48': '48px'

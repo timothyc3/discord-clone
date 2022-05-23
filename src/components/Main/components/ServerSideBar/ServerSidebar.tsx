@@ -3,7 +3,7 @@ import HomeButton from "./components/HomeButton";
 import NewServerButton from "./components/NewServerButton";
 import DiscoverButton from "./components/DiscoverButton";
 import ServerButton from "./components/ServerButton";
-import {useAppSelector} from "../../hooks";
+import {useAppSelector} from "../../../../hooks";
 import {shallowEqual} from "react-redux";
 
 

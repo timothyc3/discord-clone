@@ -1,7 +1,7 @@
 import React from "react";
-import {useAppDispatch, useAppSelector} from "../../../hooks";
+import {useAppDispatch, useAppSelector} from "../../../../../hooks";
 import {shallowEqual} from "react-redux";
-import {updateLevelOne, updateLevelTwo} from "../../../features/activeSlice";
+import {updateLevelOne, updateLevelTwo} from "../../../../../features/activeSlice";
 
 export default function DiscoverButton() {
 

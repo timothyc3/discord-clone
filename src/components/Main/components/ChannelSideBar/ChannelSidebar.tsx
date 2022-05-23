@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppSelector } from "../../hooks";
+import { useAppSelector } from "../../../../hooks";
 import Header from "./components/Header";
 // import {Channel} from "../../types";
 // import {useAppSelector} from "../../hooks";
