@@ -1,17 +1,8 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import {
-    getDocs,
-    setDoc,
-    getFirestore,
-    collection,
-    doc,
-    writeBatch,
-    arrayUnion,
-}
-    from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
-import {Server, Channel, Message, User} from "./types";
+import {initializeApp} from "firebase/app";
+import {arrayUnion, collection, doc, getDocs, getFirestore, setDoc, writeBatch,} from "firebase/firestore";
+import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth"
+import {Channel, Message, Server, User} from "./types";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -33,7 +24,37 @@ const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 const auth = getAuth();
 
+const createNewUser = (email: string, password: string) => {
+    createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+        const user = userCredential.user;
+        console.log("sign up complete", user);
+    }).catch((e) => {
+        console.error(e.code, e.message);
+    })
+}
 
+const login = async (email: string, password: string) => {
+    return signInWithEmailAndPassword(auth, email, password)
+}
+
+const logOut = () => {
+    signOut(auth)
+        .then(() => {
+        console.log("sign out successful")
+    })
+        .catch((e) => {
+            console.error(e)
+        });
+}
+
+// get information on the user. Returns user information if exists, if not signed in, return false.
+const getCurrentUser = () => {
+    const user = auth.currentUser
+    if (user) {
+        return user
+    }
+    else {return false}
+}
 
 const addData = async (data: any) => {
     try {
@@ -144,4 +165,5 @@ const getServerData = async () => {
     }
 }
 
-export {addData, getServerData, getChannelData, getMessageData, writeMessage, getUserData}
+export {addData, getServerData, getChannelData, getMessageData,
+    writeMessage, getUserData, createNewUser, login, logOut, getCurrentUser}
