@@ -9,8 +9,6 @@ import {logOut} from "./firebase";
 
 export default function App() {
 
-    logOut();
-
     const user = getCurrentUser() !== false
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(user)
 
