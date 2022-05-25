@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useAppSelector} from "../../../../../hooks";
 import {shallowEqual} from "react-redux";
 import MessageItem from "./MessageItem";
 
 export default function MessageContainer() {
 
+    // listens to redux store for messageIds of the channel the user is interacting with
     const messageIds : string[] = useAppSelector(state => {
         if (state.active.levelTwo in state.channel.entities) {
             return state.channel.entities[state.active.levelTwo].messageIds
