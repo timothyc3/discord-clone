@@ -24,6 +24,8 @@ module.exports = {
         'body': ["Open Sans"]
       },
       spacing: {
+        '120': '30rem',
+        '144': '36rem',
         '192': '48rem'
       }
     },
