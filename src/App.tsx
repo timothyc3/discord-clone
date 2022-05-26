@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState} from "react";
+import React, {　useState } from "react";
 import Main from "./components/Main/Main";
 // for remixicons usages
 import 'remixicon/fonts/remixicon.css';
@@ -8,12 +8,20 @@ import {getCurrentUser} from "./firebase";
 
 export default function App() {
 
-    const user = getCurrentUser() !== false
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(user)
+    const user = getCurrentUser() !== false;
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(user);
+
+    function handleLogIn() {
+        if(!isLoggedIn) {
+            setIsLoggedIn(true);
+        }
+    }
 
     return (
         <>
-            { isLoggedIn ? <Main /> : <LoginScreen handleLogIn={() => {setIsLoggedIn(true)}}/>
+            { isLoggedIn ? <Main /> : <LoginScreen
+                loginState={isLoggedIn}
+                handleLogIn={handleLogIn}/>
             }
         </>
     );

@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { createNewUser, login, getCurrentUser } from "../../../firebase";
+import { login } from "../../../firebase";
 
-export default function SignUpForm(props: {handleLogIn: () => void}) {
+export default function LoginForm(props: {
+    loginState: boolean ,
+    handleLogIn: () => void,
+    registerEnter: () => void,
+}) {
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -15,13 +19,13 @@ export default function SignUpForm(props: {handleLogIn: () => void}) {
         setPassword(event.target.value);
     }
 
+    // checks submitted credentials against firebase to see if user has signed in successfully
     async function onSubmit(event: React.MouseEvent<HTMLInputElement>) {
         event.preventDefault();
         login(email, password)
             .then(
             (userCreds) => {
                 setLoginFailed(false);
-                console.log('output', userCreds);
                 props.handleLogIn()
             }
         )
@@ -55,11 +59,16 @@ export default function SignUpForm(props: {handleLogIn: () => void}) {
                         {loginFailed && failMessage}<br/>
                         <input className="w-full h-8 my-2 pl-2 text-sm text-white rounded-md bg-server-bar-black outline-0"
                                type="password" id="password" name="password" autoComplete="off" onChange={onPasswordChange}/><br/>
-                        <a href="">Forgot your password?</a><br/>
-                        <input
-                            className="mt-4 mb-2 text-base text-white font-semibold w-full h-10 bg-blue rounded-sm"
+                        <button className="text-unclicked-links-blue inline-block" >Forgot your password?</button><br/>
+                        <input disabled={props.loginState}
+                            className="mt-4 mb-2 text-base text-white font-semibold w-full h-10 bg-blue rounded-sm
+                           disabled:text-inactive-light-grey"
                             type="submit" value="Login" onClick={onSubmit}/><br/>
-                        <p className="text-inactive-light-grey">Need an account? <a href="">Register</a></p>
+                        <p className="text-inactive-light-grey">Need an account? <button
+                            className="text-unclicked-links-blue inline-block"
+                            onClick={props.registerEnter}>
+                            Register
+                        </button></p>
                     </form>
                 </div>
             </div>

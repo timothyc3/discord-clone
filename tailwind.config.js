@@ -6,6 +6,7 @@ module.exports = {
         'green': '#399658',
         'bright-green': '#39B558',
         'blue': '#5C73F2',
+        'unclicked-links-blue': '#2596be',
         'main-content-black': '#32363B',
         'chat-box-search-bar-main': '#42474D',
         'sub-black': '#2F3136',
