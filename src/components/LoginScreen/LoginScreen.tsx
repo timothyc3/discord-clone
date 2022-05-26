@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import LoginForm from "./components/LoginForm";
+import SignUpForm from "./components/SignUpForm";
 
-export default function LoginScreen(props: {loginState: boolean, handleLogIn: () => void}) {
+export default function LoginScreen(props: { loginState: boolean, handleLogIn: () => void }) {
 
     const [isRegistering, setIsRegistering] = useState<boolean>(false);
 
@@ -15,10 +16,13 @@ export default function LoginScreen(props: {loginState: boolean, handleLogIn: ()
     return (
         <div className="h-screen w-screen font-body bg-blue flex items-center
         justify-center">
-            <LoginForm loginState={props.loginState}
-                       handleLogIn={props.handleLogIn}
-                       registerEnter={handleRegisterEnter}
-            />
-        </div>
-    )
+            {
+                isRegistering ? <SignUpForm /> :
+                    <LoginForm loginState={props.loginState}
+                               handleLogIn={props.handleLogIn}
+                               registerEnter={handleRegisterEnter}
+                    />
+                    }
+                </div>
+                )
 }
