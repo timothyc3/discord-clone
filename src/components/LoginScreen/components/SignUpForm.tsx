@@ -1,6 +1,34 @@
 import React from "react";
+import {current} from "@reduxjs/toolkit";
 
 export default function SignUpForm() {
+
+    const dayOptions = (() => {
+       const dateRangeArray = Array.from({length: 31}, (v, k) => k + 1);
+        return dateRangeArray.map(day => <option value={day}>{day}</option>);
+    })();
+
+    const monthOptions = (() => {
+        const monthRangeArray = ['January', 'February', 'March', 'April', 'May',
+        'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return monthRangeArray.map(month => <option value={month}>{month}</option>);
+    })();
+
+    const yearOptions = (() => {
+        const currentYear = new Date().getFullYear();
+        // get current year - 130
+        const minYear = currentYear - 130;
+        
+        // initialize year array
+        const yearArray = [];
+        
+        // max is 12 years before current year.
+        for (let i = currentYear - 12; i >= minYear; i--) {
+            yearArray.push(i);
+        }
+
+        return yearArray.map(year => <option value={year}>{year}</option>);
+    })();
 
     return (
         <div className="bg-main-content-black w-108 h-132 rounded-md shadow-2xl p-8">
@@ -27,9 +55,19 @@ export default function SignUpForm() {
                     <div className="grid grid-cols-3 gap-x-2 mt-2 h-9">
                         <select
                             className=""
-                            name="" id=""></select>
-                        <select name="" id=""></select>
-                        <select name="" id=""></select>
+                            name="day" id="day">
+                            {dayOptions}
+                        </select>
+                        <select
+                            className=""
+                            name="month" id="month">
+                            {monthOptions}
+                        </select>
+                        <select
+                            className=""
+                            name="year" id="year">
+                            {yearOptions}
+                        </select>
                     </div>
                 </fieldset>
 
