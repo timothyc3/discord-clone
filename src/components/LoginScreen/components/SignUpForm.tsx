@@ -30,8 +30,8 @@ export default function SignUpForm() {
         return yearArray.map(year => <option value={year}>{year}</option>);
     })();
 
-    const selectClassName = "bg-sub-black border-2 border-server-bar-black/60 rounded text-inactive-light-grey" +
-        " text-sm pl-2 font-medium";
+    const selectClassName = "w-full h-full bg-sub-black border-[1px] border-server-bar-black/60 rounded text-inactive-light-grey" +
+        " text-sm pl-2 font-medium focus:outline-none hover:border-server-bar-black appearance-none box-border";
 
     return (
         <div className="bg-main-content-black w-108 h-132 rounded-md shadow-2xl p-8">
@@ -56,24 +56,51 @@ export default function SignUpForm() {
                 <fieldset className="grid grid-rows-[auto_1fr] mb-6">
                     <h2 className="font-semibold">DATE OF BIRTH</h2>
                     <div className="grid grid-cols-3 gap-x-2 mt-2 h-9">
-                        <select
-                            className={selectClassName}
-                            name="day" id="day" >
-                            <option value="" disabled selected>Select</option>
-                            {dayOptions}
-                        </select>
-                        <select
-                            className={selectClassName}
-                            name="month" id="month">
-                            <option value="" disabled selected>Select</option>
-                            {monthOptions}
-                        </select>
-                        <select
-                            className={selectClassName}
-                            name="year" id="year">
-                            <option value="" disabled selected>Select</option>
-                            {yearOptions}
-                        </select>
+                        <div className="relative">
+                            <select
+                                className={selectClassName}
+                                name="day" id="day" >
+                                <option value="" disabled selected>Select</option>
+                                {dayOptions}
+                            </select>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 className="h-4 w-4 absolute right-0 top-2/4 -translate-y-2/4 -translate-x-2/4
+                                 pointer-events-none"
+                                 fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor" stroke-width="3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div className="relative">
+                            <select
+                                className={selectClassName}
+                                name="month" id="month">
+                                <option value="" disabled selected>Select</option>
+                                {monthOptions}
+                            </select>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 className="h-4 w-4 absolute right-0 top-2/4 -translate-y-2/4 -translate-x-2/4
+                                 pointer-events-none"
+                                 fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor" stroke-width="3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                        <div className="relative">
+                            <select
+                                className={selectClassName}
+                                name="year" id="year">
+                                <option value="" disabled selected>Select</option>
+                                {yearOptions}
+                            </select>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 className="h-4 w-4 absolute right-0 top-2/4 -translate-y-2/4 -translate-x-2/4
+                                 pointer-events-none"
+                                 fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor" stroke-width="3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
                     </div>
                 </fieldset>
 
