@@ -30,6 +30,9 @@ export default function SignUpForm() {
         return yearArray.map(year => <option value={year}>{year}</option>);
     })();
 
+    const selectClassName = "bg-sub-black border-2 border-server-bar-black/60 rounded text-inactive-light-grey" +
+        " text-sm pl-2 font-medium";
+
     return (
         <div className="bg-main-content-black w-108 h-132 rounded-md shadow-2xl p-8">
             <h1 className="text-white font-bold text-center text-xl">Create an account</h1>
@@ -54,18 +57,21 @@ export default function SignUpForm() {
                     <h2 className="font-semibold">DATE OF BIRTH</h2>
                     <div className="grid grid-cols-3 gap-x-2 mt-2 h-9">
                         <select
-                            className=""
-                            name="day" id="day">
+                            className={selectClassName}
+                            name="day" id="day" >
+                            <option value="" disabled selected>Select</option>
                             {dayOptions}
                         </select>
                         <select
-                            className=""
+                            className={selectClassName}
                             name="month" id="month">
+                            <option value="" disabled selected>Select</option>
                             {monthOptions}
                         </select>
                         <select
-                            className=""
+                            className={selectClassName}
                             name="year" id="year">
+                            <option value="" disabled selected>Select</option>
                             {yearOptions}
                         </select>
                     </div>
