@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import {current} from "@reduxjs/toolkit";
 
 export default function SignUpForm() {
+
+    const [monthInput, setMonthInput] = useState<string>("");
 
     const dayOptions = (() => {
        const dateRangeArray = Array.from({length: 31}, (v, k) => k + 1);
@@ -13,6 +15,10 @@ export default function SignUpForm() {
         'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         return monthRangeArray.map(month => <option value={month}>{month}</option>);
     })();
+
+    function onMonthChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setMonthInput(event.target.value);
+    }
 
     const yearOptions = (() => {
         const currentYear = new Date().getFullYear();
@@ -56,16 +62,20 @@ export default function SignUpForm() {
                 <fieldset className="grid grid-rows-[auto_1fr] mb-6">
                     <h2 className="font-semibold">DATE OF BIRTH</h2>
                     <div className="grid grid-cols-3 gap-x-2 mt-2 h-9">
-                        <div className="relative">
-                            <select
-                                className={selectClassName}
-                                name="day" id="day" >
-                                <option value="" disabled selected>Select</option>
-                                {dayOptions}
-                            </select>
+                        <div
+                            className="h-full flex items-center text-sm bg-sub-black
+                            border-[1px] border-server-bar-black/60 relative"
+                        >
+                            <div className="pl-2 w-full absolute focus:outline-none bg-transparent"
+                                 onChange={onMonthChange}
+                                 contentEditable
+                            >test</div>
+                            <div className={`pl-2 pointer-events-none 
+                            ${monthInput === "" ? "text-inactive-light-grey" : "text-white"}`}>
+                                {monthInput === "" ? "Select" : ""}</div>
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  className="h-4 w-4 absolute right-0 top-2/4 -translate-y-2/4 -translate-x-2/4
-                                 pointer-events-none"
+                             pointer-events-none"
                                  fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor" stroke-width="3">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
