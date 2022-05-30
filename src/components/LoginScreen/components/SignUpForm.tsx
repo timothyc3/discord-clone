@@ -18,12 +18,14 @@ export default function SignUpForm() {
         return monthRangeArray.map(month => <option value={month} key={month}>{month}</option>);
     })();
 
-    function onMonthChange(event: React.ChangeEvent<HTMLInputElement>) {
+    function onMonthInputEdit(event: React.ChangeEvent<HTMLInputElement>) {
         setMonthInput(event.target.innerHTML);
     }
 
     useEffect(() => {
-        console.log("something", monthInput)
+        if (monthInput !== "") {
+            setMonthSelection("");
+        } else {setMonthSelection("Select")}
     }, [monthInput])
 
     const yearOptions = (() => {
@@ -74,15 +76,17 @@ export default function SignUpForm() {
                             className="h-full flex items-center text-sm bg-sub-black
                             border-[1px] border-server-bar-black/60 relative"
                         >
-                            <div className="peer pl-2 w-full absolute focus:outline-none bg-transparent whitespace-nowrap overflow-hidden"
-                                 onInput={onMonthChange}
+                            <div className="peer pl-2 w-full absolute focus:outline-none bg-transparent whitespace-nowrap
+                             overflow-hidden"
+                                 onInput={onMonthInputEdit}
                                  contentEditable
                             ></div>
                             <div className={`pl-2 pointer-events-none
                             ${monthInput === "" ? "text-inactive-light-grey" : "text-white"}`}>
                                 {monthSelection}</div>
                             {/*hidden peer-focus:block*/}
-                            <div className=" absolute w-full h-52 overflow-y-scroll overflow-x-hidden -top-52 bg-sub-black">
+                            <div className="rounded border-[1px] border-server-bar-black/60 absolute w-full h-52
+                             overflow-y-scroll overflow-x-hidden -top-52 bg-sub-black">
                                 {dayOptions}
                             </div>
                             <svg xmlns="http://www.w3.org/2000/svg"
