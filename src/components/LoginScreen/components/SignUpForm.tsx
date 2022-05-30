@@ -2,14 +2,18 @@ import React, {useEffect, useState} from "react";
 
 export default function SignUpForm() {
 
-    const [monthInput, setMonthInput] = useState<string>("");
-    const [monthSelection, setMonthSelection] = useState<string>("Select");
+    const [dayInput, setDayInput] = useState<string>("");
+    const [daySelection, setDaySelection] = useState<string>("Select");
 
     const dayOptions = (() => {
        const dateRangeArray = Array.from({length: 31}, (v, k) => k + 1);
-        return dateRangeArray.map(day =>
-            <div className="h-8 pl-2"
-        >{day}</div>);
+        return dateRangeArray.map((day) => {
+            if (day.toString().includes(dayInput)) {
+                return <div className="h-8 pl-2"
+                >{day}</div>;
+            }
+            else {return <></>}
+        });
     })();
 
     const monthOptions = (() => {
@@ -18,15 +22,15 @@ export default function SignUpForm() {
         return monthRangeArray.map(month => <option value={month} key={month}>{month}</option>);
     })();
 
-    function onMonthInputEdit(event: React.ChangeEvent<HTMLInputElement>) {
-        setMonthInput(event.target.innerHTML);
+    function onDayInputEdit(input: string) {
+        setDayInput(input);
     }
 
     useEffect(() => {
-        if (monthInput !== "") {
-            setMonthSelection("");
-        } else {setMonthSelection("Select")}
-    }, [monthInput])
+        if (dayInput !== "") {
+            setDaySelection("");
+        } else {setDaySelection("Select")}
+    }, [dayInput]);
 
     const yearOptions = (() => {
         const currentYear = new Date().getFullYear();
@@ -78,15 +82,15 @@ export default function SignUpForm() {
                         >
                             <div className="peer pl-2 w-full absolute focus:outline-none bg-transparent whitespace-nowrap
                              overflow-hidden"
-                                 onInput={onMonthInputEdit}
+                                 onInput={(event: React.ChangeEvent<HTMLInputElement>) => {onDayInputEdit(event.target.innerHTML)}}
                                  contentEditable
                             ></div>
                             <div className={`pl-2 pointer-events-none
-                            ${monthInput === "" ? "text-inactive-light-grey" : "text-white"}`}>
-                                {monthSelection}</div>
+                            ${dayInput === "" ? "text-inactive-light-grey" : "text-white"}`}>
+                                {daySelection}</div>
                             {/*hidden peer-focus:block*/}
-                            <div className="rounded border-[1px] border-server-bar-black/60 absolute w-full h-52
-                             overflow-y-scroll overflow-x-hidden -top-52 bg-sub-black">
+                            <div className="rounded border-[1px] border-server-bar-black/60 absolute w-full max-h-52
+                             overflow-y-scroll overflow-x-hidden bottom-9 bg-sub-black">
                                 {dayOptions}
                             </div>
                             <svg xmlns="http://www.w3.org/2000/svg"
