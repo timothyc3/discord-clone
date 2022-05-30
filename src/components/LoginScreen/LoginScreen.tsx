@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import LoginForm from "./components/LoginForm";
-import SignUpForm from "./components/SignUpForm";
+import SignUpForm from "./components/SignUpForm/SignUpForm";
 
 export default function LoginScreen(props: { loginState: boolean, handleLogIn: () => void }) {
 
