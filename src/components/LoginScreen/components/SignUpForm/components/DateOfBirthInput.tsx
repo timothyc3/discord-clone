@@ -10,13 +10,10 @@ export default (props: {
     const [input, setInput] = useState("");
 
     // turns true only once when the user mouse overs the selection
-    const [userEnteredSelection, setUserEnteredSelection] = useState<boolean>(false);
+    const [userEnteredSelection, setUserEnteredSelection] = useState<boolean | string>(false);
 
-    // called when the user first enters the selection list
-    function handleUserEnterSelection() {
-        if(!userEnteredSelection) {
-            setUserEnteredSelection(true);
-        }
+    function handleUserEnterSelection(input: string) {
+        setUserEnteredSelection(input);
     }
 
     function handleInput(event: React.ChangeEvent<HTMLDivElement>) {
@@ -38,14 +35,14 @@ export default (props: {
         console.log("exit detected")
     }
 
-    let options = props.options.filter((day) => day.includes(input));
+    let options = props.options.filter((day) => day.toLowerCase().includes(input));
 
     // renders the first option individually, so we can apply additional styling
     const firstOptionRendered = <div
         key={options[0]}
-        className={`h-8 flex items-center pl-2 rounded hover:bg-server-bar-black/60 
-        ${userEnteredSelection ? "" : "bg-server-bar-black/60"}`}
-        onMouseEnter={handleUserEnterSelection}
+        className={`h-8 flex items-center pl-2 rounded
+        ${!userEnteredSelection || userEnteredSelection === options[0] ? "bg-server-bar-black/60" : ""}`}
+        onMouseEnter={() => {handleUserEnterSelection(options[0])}}
     >
         {options[0]}
     </div>
@@ -53,11 +50,14 @@ export default (props: {
     // renders all options after the first one
     const optionsRendered = options.slice(1).map(day => <div
         key={day}
-        className="h-8 flex items-center pl-2 rounded hover:bg-server-bar-black/60"
-        onMouseEnter={handleUserEnterSelection}
+            className={`h-8 flex items-center pl-2 rounded
+            ${userEnteredSelection === day ? "bg-server-bar-black/60" : ""}`}
+        onMouseEnter={() => {handleUserEnterSelection(day)}}
     >
         {day}
     </div>);
+
+    useEffect(() => {console.log(userEnteredSelection)}, [userEnteredSelection])
 
 
     return (
