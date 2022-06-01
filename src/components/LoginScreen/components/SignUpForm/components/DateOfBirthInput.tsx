@@ -2,8 +2,6 @@ import React, {useEffect, useRef, useState} from "react";
 import {findAllByDisplayValue} from "@testing-library/react";
 
 export default (props: {
-    active: boolean
-    setActive: () => void,
     options: string[],
     selection: string,
     selectionEdit: (input: string) => void
@@ -14,7 +12,33 @@ export default (props: {
     // turns true only once when the user mouse overs the selection
     const [userEnteredSelection, setUserEnteredSelection] = useState<boolean>(false);
 
-    const options = props.options.filter((day) => day.toString().includes(input));
+    // called when the user first enters the selection list
+    function handleUserEnterSelection() {
+        if(!userEnteredSelection) {
+            setUserEnteredSelection(true);
+        }
+    }
+
+    function handleInput(event: React.ChangeEvent<HTMLDivElement>) {
+
+        const text = event.target as HTMLElement;
+        setInput(text.innerHTML);
+        console.log('called', text.innerHTML)
+    }
+
+    function handleEnterInput(event: React.KeyboardEvent<HTMLDivElement>) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+
+        }
+    }
+
+    //  called inside handleInput when 'enter' key is pressed or onBlur
+    function handleMouseExit(event: React.FocusEvent<HTMLDivElement>) {
+        console.log("exit detected")
+    }
+
+    let options = props.options.filter((day) => day.includes(input));
 
     // renders the first option individually, so we can apply additional styling
     const firstOptionRendered = <div
@@ -28,38 +52,12 @@ export default (props: {
 
     // renders all options after the first one
     const optionsRendered = options.slice(1).map(day => <div
-            key={day}
-            className="h-8 flex items-center pl-2 rounded hover:bg-server-bar-black/60"
-            onMouseEnter={handleUserEnterSelection}
-        >
-            {day}
-        </div>);
-
-    // called when the user first enters the selection list
-    function handleUserEnterSelection() {
-        if(!userEnteredSelection) {
-            setUserEnteredSelection(true);
-        }
-    }
-
-    function handleInput(event: React.KeyboardEvent<HTMLElement>) {
-
-        if (event.key === "Enter") {
-            event.preventDefault();
-            handleInputExit();
-        }
-        else {
-            const input = event.target as HTMLElement;
-            setInput(input.innerHTML);
-        }
-    }
-
-    //  called inside handleInput when 'enter' key is pressed or onBlur
-    function handleInputExit() {
-        console.log("exit detected")
-    }
-
-
+        key={day}
+        className="h-8 flex items-center pl-2 rounded hover:bg-server-bar-black/60"
+        onMouseEnter={handleUserEnterSelection}
+    >
+        {day}
+    </div>);
 
 
     return (
@@ -69,8 +67,9 @@ export default (props: {
         >
             <div className="peer pl-2 w-full absolute focus:outline-none bg-transparent whitespace-nowrap
                              overflow-hidden"
-                 onKeyDown={handleInput}
-                 onBlur={handleInputExit}
+                 onInput={handleInput}
+                 onKeyDown={handleEnterInput}
+                 onBlur={handleMouseExit}
                  contentEditable
             ></div>
             <div className={`pl-2 pointer-events-none
@@ -79,7 +78,7 @@ export default (props: {
             </div>
             <div className={`rounded border-[1px] border-server-bar-black/60 absolute w-full max-h-52
                              overflow-y-scroll overflow-x-hidden bottom-9 bg-sub-black first:bg-blue
-                             ${props.active ? "" : "hidden peer-focus:block"}`}>
+                             hidden peer-focus:block`}>
                 {firstOptionRendered}
                 {optionsRendered}
             </div>

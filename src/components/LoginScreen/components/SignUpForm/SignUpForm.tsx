@@ -3,14 +3,10 @@ import DateOfBirthInput from "./components/DateOfBirthInput";
 
 export default function SignUpForm() {
 
-    const [activeSelection, setActiveSelection] = useState<"" | "day" | "month" | "year">("");
     const [daySelection, setDaySelection] = useState<string>("");
     const [monthSelection, setMonthSelection] = useState<string>("");
     const [yearSelection, setYearSelection] = useState<string>("");
 
-    function setActive(input: "day" | "month" | "year")  {
-        setActiveSelection(input)
-    }
 
     function selectionDayInputEdit(input: string) {
         setDaySelection(input);
@@ -68,8 +64,6 @@ export default function SignUpForm() {
                     <div className="grid grid-cols-3 gap-x-2 mt-2 h-9">
 
                         <DateOfBirthInput
-                            active={activeSelection === "day"}
-                            setActive={() => {setActive("day")}}
                             options={
                             Array.from({length: 31}, (v, k) => k + 1).map(number => number.toString())
                         }
@@ -78,8 +72,6 @@ export default function SignUpForm() {
                         />
 
                         <DateOfBirthInput
-                            active={activeSelection === "month"}
-                            setActive={() => {setActive("month")}}
                             options={
                                 ['January', 'February', 'March', 'April', 'May',
                                     'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -89,8 +81,7 @@ export default function SignUpForm() {
                         />
 
                         <DateOfBirthInput
-                            active={activeSelection === "year"}
-                            setActive={() => {setActive("year")}}
+
                             options={yearOptions.map(number => number.toString())}
                             selection={yearSelection}
                             selectionEdit={selectionYearInputEdit}
