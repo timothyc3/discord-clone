@@ -8,33 +8,53 @@ export default (props: {
 }) => {
 
     const [input, setInput] = useState("");
+    const [userEnteredSelection, setUserEnteredSelection] = useState<boolean>(false);
 
-    function handleInput(event: React.ChangeEvent<HTMLInputElement>) {
-        setInput(event.target.innerHTML);
+    const options = props.options.filter((day) => day.toString().includes(input));
+
+    // renders the first option individually, so we can apply additional styling
+    const firstOptionRendered = <div
+        key={options[0]}
+        className={`h-8 flex items-center pl-2 rounded hover:bg-server-bar-black/60 
+        ${userEnteredSelection ? "" : "bg-server-bar-black/60"}`}
+        onMouseEnter={handleUserEnterSelection}
+    >
+        {options[0]}
+    </div>
+
+    // renders all options after the first one
+    const optionsRendered = options.slice(1).map(day => <div
+            key={day}
+            className="h-8 flex items-center pl-2 rounded hover:bg-server-bar-black/60"
+            onMouseEnter={handleUserEnterSelection}
+        >
+            {day}
+        </div>);
+
+    // called when the user first enters the selection list
+    function handleUserEnterSelection() {
+        if(!userEnteredSelection) {
+            setUserEnteredSelection(true);
+        }
     }
 
-    const options = useRef(props.options);
+    function handleInput(event: React.KeyboardEvent<HTMLElement>) {
 
+        if (event.key === "Enter") {
+            event.preventDefault();
+            handleInputExit();
+        }
+        else {
+            const input = event.target as HTMLElement;
+            setInput(input.innerHTML);
+        }
+    }
 
-        // .filter
-
-    useEffect(() => {
-
-        optionsRendered.current = props.options.filter((day) => day.toString().includes(input))
-            .map(day => <div
-                key={day}
-                className="h-8 flex items-center pl-2 rounded hover:bg-server-bar-black/60"
-            >
-                {day}
-            </div>);
-    }, [input]);
-
-    const optionsRendered = useRef(options.current.map(day => <div
-        key={day}
-        className="h-8 flex items-center pl-2 rounded hover:bg-server-bar-black/60"
-    >
-        {day}
-    </div>));
+    //  called inside handleInput when 'enter' key is pressed or onBlur
+    function handleInputExit() {
+        console.log("exit detected")
+        console.log(optionsRendered[0])
+    }
 
 
 
@@ -46,7 +66,8 @@ export default (props: {
         >
             <div className="peer pl-2 w-full absolute focus:outline-none bg-transparent whitespace-nowrap
                              overflow-hidden"
-                 onInput={handleInput}
+                 onKeyDown={handleInput}
+                 onBlur={handleInputExit}
                  contentEditable
             ></div>
             <div className={`pl-2 pointer-events-none
@@ -56,7 +77,8 @@ export default (props: {
             {/*hidden peer-focus:block*/}
             <div className="rounded border-[1px] border-server-bar-black/60 absolute w-full max-h-52
                              overflow-y-scroll overflow-x-hidden bottom-9 bg-sub-black first:bg-blue">
-                {optionsRendered.current}
+                {firstOptionRendered}
+                {optionsRendered}
             </div>
             <svg xmlns="http://www.w3.org/2000/svg"
                  className="h-4 w-4 absolute right-0 top-2/4 -translate-y-2/4 -translate-x-2/4
