@@ -2,12 +2,16 @@ import React, {useEffect, useRef, useState} from "react";
 import {findAllByDisplayValue} from "@testing-library/react";
 
 export default (props: {
+    active: boolean
+    setActive: () => void,
     options: string[],
     selection: string,
     selectionEdit: (input: string) => void
 }) => {
 
     const [input, setInput] = useState("");
+
+    // turns true only once when the user mouse overs the selection
     const [userEnteredSelection, setUserEnteredSelection] = useState<boolean>(false);
 
     const options = props.options.filter((day) => day.toString().includes(input));
@@ -53,7 +57,6 @@ export default (props: {
     //  called inside handleInput when 'enter' key is pressed or onBlur
     function handleInputExit() {
         console.log("exit detected")
-        console.log(optionsRendered[0])
     }
 
 
@@ -74,9 +77,9 @@ export default (props: {
                             ${props.selection === "" ? "text-inactive-light-grey" : "text-white"}`}>
                 {input === "" ? "Select" : ""}
             </div>
-            {/*hidden peer-focus:block*/}
-            <div className="rounded border-[1px] border-server-bar-black/60 absolute w-full max-h-52
-                             overflow-y-scroll overflow-x-hidden bottom-9 bg-sub-black first:bg-blue">
+            <div className={`rounded border-[1px] border-server-bar-black/60 absolute w-full max-h-52
+                             overflow-y-scroll overflow-x-hidden bottom-9 bg-sub-black first:bg-blue
+                             ${props.active ? "" : "hidden peer-focus:block"}`}>
                 {firstOptionRendered}
                 {optionsRendered}
             </div>
