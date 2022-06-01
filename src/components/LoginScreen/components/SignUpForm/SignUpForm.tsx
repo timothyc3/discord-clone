@@ -3,17 +3,21 @@ import DateOfBirthInput from "./components/DateOfBirthInput";
 
 export default function SignUpForm() {
 
+    const [activeSelection, setActiveSelection] = useState<"" | "day" | "month" | "year">("");
     const [daySelection, setDaySelection] = useState<string>("");
-
-
-    const monthOptions = (() => {
-        const monthRangeArray = ['January', 'February', 'March', 'April', 'May',
-        'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        return monthRangeArray.map(month => <option value={month} key={month}>{month}</option>);
-    })();
+    const [monthSelection, setMonthSelection] = useState<string>("");
+    const [yearSelection, setYearSelection] = useState<string>("");
 
     function selectionDayInputEdit(input: string) {
         setDaySelection(input);
+    }
+
+    function selectionMonthInputEdit(input: string) {
+        setMonthSelection(input);
+    }
+
+    function selectionYearInputEdit(input: string) {
+        setYearSelection(input);
     }
 
     const yearOptions = (() => {
@@ -29,7 +33,7 @@ export default function SignUpForm() {
             yearArray.push(i);
         }
 
-        return yearArray.map(year => <option value={year} key={year}>{year}</option>);
+        return yearArray
     })();
 
     const selectClassName = "w-full h-full bg-sub-black border-[1px] border-server-bar-black/60 rounded text-inactive-light-grey" +
@@ -67,37 +71,21 @@ export default function SignUpForm() {
                             selectionEdit={selectionDayInputEdit}
                         />
 
+                        <DateOfBirthInput
+                            options={
+                                ['January', 'February', 'March', 'April', 'May',
+                                    'June', 'July', 'August', 'September', 'October', 'November', 'December']
+                        }
+                            selection={monthSelection}
+                            selectionEdit={selectionMonthInputEdit}
+                        />
 
-                        <div className="relative">
-                            <select
-                                className={selectClassName}
-                                name="month" id="month" defaultValue="selected">
-                                {monthOptions}
-                            </select>
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 className="h-4 w-4 absolute right-0 top-2/4 -translate-y-2/4 -translate-x-2/4
-                                 pointer-events-none"
-                                 fill="none" viewBox="0 0 24 24"
-                                 stroke="currentColor" strokeWidth="3">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                        </div>
+                        <DateOfBirthInput
+                            options={yearOptions.map(number => number.toString())}
+                            selection={yearSelection}
+                            selectionEdit={selectionYearInputEdit}
+                        />
 
-
-                        <div className="relative">
-                            <select
-                                className={selectClassName}
-                                name="year" id="year" defaultValue="selected">
-                                {yearOptions}
-                            </select>
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 className="h-4 w-4 absolute right-0 top-2/4 -translate-y-2/4 -translate-x-2/4
-                                 pointer-events-none"
-                                 fill="none" viewBox="0 0 24 24"
-                                 stroke="currentColor" strokeWidth="3">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                        </div>
                     </div>
                 </fieldset>
 
