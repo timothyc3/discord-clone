@@ -7,12 +7,7 @@ export default function SignUpForm() {
     const [monthSelection, setMonthSelection] = useState<string>("");
     const [yearSelection, setYearSelection] = useState<string>("");
 
-    useEffect(() => {
-        console.log(daySelection, 'dayselection')
-    }, [daySelection])
-
     function selectionDayInputEdit(input: string) {
-        console.log('setting called')
         setDaySelection(input);
     }
 
