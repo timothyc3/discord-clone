@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import DateOfBirthInput from "./components/DateOfBirthInput";
+import {Input} from "postcss";
 
-export default function SignUpForm() {
+export default function SignUpForm(props: {registerExit: () => void,}) {
 
     const [daySelection, setDaySelection] = useState<string>("");
     const [monthSelection, setMonthSelection] = useState<string>("");
@@ -17,6 +18,10 @@ export default function SignUpForm() {
 
     function selectionYearInputEdit(input: string) {
         setYearSelection(input);
+    }
+
+    function handleRegistration(event: React.MouseEvent<HTMLInputElement>) {
+        event.preventDefault();
     }
 
     const yearOptions = (() => {
@@ -88,6 +93,17 @@ export default function SignUpForm() {
 
                     </div>
                 </fieldset>
+
+                <input className="mb-2 text-base text-white font-semibold w-full h-10 bg-blue rounded-sm
+                           disabled:text-inactive-light-grey hover:bg-dimmed-blue active:bg-darker-blue
+                           transition-colors"
+                       type="submit" value="Continue" onClick={handleRegistration} /><br/>
+
+                <button
+                    className="text-unclicked-links-blue inline-block"
+                    onClick={props.registerExit}>
+                    Already have an account?
+                </button>
 
             </form>
 

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+ import React, {useState} from "react";
 import {login} from "../../../firebase";
 
 export default function LoginForm(props: {
@@ -63,7 +63,8 @@ export default function LoginForm(props: {
                     <br/>
                     <input disabled={props.loginState}
                            className="mt-4 mb-2 text-base text-white font-semibold w-full h-10 bg-blue rounded-sm
-                           disabled:text-inactive-light-grey"
+                           disabled:text-inactive-light-grey hover:bg-dimmed-blue active:bg-darker-blue
+                           transition-colors"
                            type="submit" value="Login" onClick={onSubmit}/><br/>
                     <p className="text-inactive-light-grey">Need an account? <button
                         className="text-unclicked-links-blue inline-block"
