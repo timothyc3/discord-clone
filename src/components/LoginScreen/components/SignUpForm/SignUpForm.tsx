@@ -11,6 +11,18 @@ export default function SignUpForm(props: {registerExit: () => void,}) {
     const [monthSelection, setMonthSelection] = useState<string>("");
     const [yearSelection, setYearSelection] = useState<string>("");
 
+    function onEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setEmail(event.target.value);
+    }
+
+    function onPasswordChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setPassword(event.target.value);
+    }
+
+    function onUsernameChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setUsername(event.target.value);
+    }
+
     function selectionDayInputEdit(input: string) {
         setDaySelection(input);
     }
