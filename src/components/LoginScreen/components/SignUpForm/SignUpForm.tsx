@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from "react";
 import DateOfBirthInput from "./components/DateOfBirthInput";
-import {Input} from "postcss";
+import {createNewUser} from "../../../../firebase";
 
 export default function SignUpForm(props: {registerExit: () => void,}) {
 
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [username, setUsername] = useState<string>('');
     const [daySelection, setDaySelection] = useState<string>("");
     const [monthSelection, setMonthSelection] = useState<string>("");
     const [yearSelection, setYearSelection] = useState<string>("");
@@ -22,6 +25,7 @@ export default function SignUpForm(props: {registerExit: () => void,}) {
 
     function handleRegistration(event: React.MouseEvent<HTMLInputElement>) {
         event.preventDefault();
+        // createNewUser()
     }
 
     const yearOptions = (() => {

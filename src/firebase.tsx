@@ -24,10 +24,44 @@ const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 const auth = getAuth();
 
-const createNewUser = (email: string, password: string) => {
+const createNewUser = async (
+    email: string,
+    password: string,
+    username: string,
+    dayDOB: string,
+    monthDOB: string,
+    yearDOB: string
+    ) => {
     createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
         const user = userCredential.user;
         console.log("sign up complete", user);
+
+        const newUserData: User = {
+            id: userCredential.user.uid,
+            avatar: "",
+            name: username,
+            dayBirthday: dayDOB,
+            monthBirthday: monthDOB,
+            yearBirthday: yearDOB
+        }
+
+        async function addNewUserToFirebase(data: User) {
+            try {
+                // create an empty doc with randomly generated ID attribute that will be written to the servers collection
+                const docRef = doc(collection(firestore, "users"));
+                await setDoc(docRef, {
+                    ...data,
+                    id: docRef.id,
+                });
+
+                console.log("Document written with ID: ", docRef.id);
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+        }
+
+        addNewUserToFirebase(newUserData);
+
     }).catch((e) => {
         console.error(e.code, e.message);
     })
@@ -84,7 +118,7 @@ const getUserData = async () => {
         console.error('error happened')
         throw new Error("Error fetching server data");
     }
-}
+};
 
 const getMessageData = async () => {
     try {
@@ -165,5 +199,5 @@ const getServerData = async () => {
     }
 }
 
-export {addData, getServerData, getChannelData, getMessageData,
-    writeMessage, getUserData, createNewUser, login, logOut, getCurrentUser}
+export {addData, getServerData, getChannelData, getMessageData, getUserData,
+    writeMessage, createNewUser, login, logOut, getCurrentUser}

@@ -7,6 +7,7 @@ import {fetchMessageData} from "../../features/messageSlice";
 import {fetchServerData} from "../../features/serverSlice";
 import {fetchChannelData} from "../../features/channelSlice";
 import {fetchUserData} from "../../features/userSlice";
+import { getAuth, onAuthStateChanged} from "firebase/auth";
 
 export default function Main() {
 
@@ -17,6 +18,17 @@ export default function Main() {
         dispatch(fetchChannelData());
         dispatch(fetchUserData());
     }, []);
+
+    const auth = getAuth()
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const uid = user.uid;
+            console.log('user id found', uid)
+        } else {
+
+        }
+    })
 
     // listens to redux store for the channel that the user is interacting with, returning "null"
     // if the ui that the user is interacting with is not a valid channel

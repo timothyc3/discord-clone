@@ -24,9 +24,9 @@ export default function LoginForm(props: {
         event.preventDefault();
         login(email, password)
             .then(
-                (userCreds) => {
+                (userCredential) => {
                     setLoginFailed(false);
-                    props.handleLogIn()
+                    props.handleLogIn();
                 }
             )
             .catch((e) => {
