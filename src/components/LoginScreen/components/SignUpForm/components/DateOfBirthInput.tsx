@@ -55,9 +55,9 @@ export default (props: {
     return (
         <div
             className="h-full flex items-center text-sm bg-sub-black
-                            border-[1px] border-server-bar-black/60 relative"
+                            border-[1px] border-server-bar-black/60 relative cursor-default"
         >
-            <div className="absolute w-full h-full flex items-center">
+            <div className="absolute w-full h-full flex items-center ">
                 <div className="peer pl-2 w-full focus:outline-none bg-transparent whitespace-nowrap
                              overflow-hidden"
                      onInput={handleInput}
