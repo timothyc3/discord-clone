@@ -67,17 +67,17 @@ export default function SignUpForm(props: {registerExit: () => void,}) {
                 <label className="font-semibold" htmlFor="email">EMAIL</label>
                 <input
                     className="w-full h-8 mt-2 mb-6 pl-2 text-sm text-white rounded bg-server-bar-black outline-0"
-                    type="email" id="email" name="email" autoComplete="off" /><br/>
+                    type="email" id="email" name="email" autoComplete="off" onChange={onEmailChange}/><br/>
 
                 <label className="font-semibold" htmlFor="username">USERNAME</label>
                 <input
                     className="w-full h-8 mt-2 mb-6 pl-2 text-sm text-white rounded bg-server-bar-black outline-0"
-                    type="text" id="username" name="username" autoComplete="off" /><br/>
+                    type="text" id="username" name="username" autoComplete="off" onChange={onUsernameChange}/><br/>
 
                 <label className="font-semibold" htmlFor="password">PASSWORD</label>
                 <input
                     className="w-full h-8 mt-2 mb-6 pl-2 text-sm text-white rounded bg-server-bar-black outline-0"
-                    type="password" id="password" name="password" autoComplete="off" /><br/>
+                    type="password" id="password" name="password" autoComplete="off" onChange={onPasswordChange}/><br/>
 
                 <fieldset className="grid grid-rows-[auto_1fr] mb-6">
                     <h2 className="font-semibold">DATE OF BIRTH</h2>
