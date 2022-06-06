@@ -13,22 +13,21 @@ export default function Main() {
 
     const dispatch = useAppDispatch();
     useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const uid = user.uid;
+                console.log('user id found', uid);
+                dispatch(fetchServerData(uid));
+            } else {
+
+            }
+        });
         dispatch(fetchMessageData());
-        dispatch(fetchServerData());
         dispatch(fetchChannelData());
         dispatch(fetchUserData());
     }, []);
 
     const auth = getAuth()
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const uid = user.uid;
-            console.log('user id found', uid)
-        } else {
-
-        }
-    })
 
     // listens to redux store for the channel that the user is interacting with, returning "null"
     // if the ui that the user is interacting with is not a valid channel

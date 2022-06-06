@@ -35,9 +35,9 @@ export default function SignUpForm(props: {registerExit: () => void,}) {
         setYearSelection(input);
     }
 
-    function handleRegistration(event: React.MouseEvent<HTMLInputElement>) {
+    async function handleRegistration(event: React.MouseEvent<HTMLInputElement>) {
         event.preventDefault();
-        // createNewUser()
+        await createNewUser(email, password, username, daySelection, monthSelection, yearSelection);
     }
 
     const yearOptions = (() => {

@@ -19,6 +19,22 @@ export default function LoginForm(props: {
         setPassword(event.target.value);
     }
 
+    function onEnterPress(event: React.KeyboardEvent<HTMLInputElement>) {
+        event.preventDefault();
+        if (event.key === "Enter") {
+            login(email, password)
+                .then(
+                    (userCredential) => {
+                        setLoginFailed(false);
+                        props.handleLogIn();
+                    }
+                )
+                .catch((e) => {
+                    setLoginFailed(true);
+                });
+        }
+    }
+
     // checks submitted credentials against firebase to see if user has signed in successfully
     async function onSubmit(event: React.MouseEvent<HTMLInputElement>) {
         event.preventDefault();
@@ -53,12 +69,12 @@ export default function LoginForm(props: {
                     {loginFailed && failMessage}<br/>
                     <input
                         className="w-full h-8 mt-2 mb-6 pl-2 text-sm text-white rounded-md bg-server-bar-black outline-0"
-                        type="email" id="email" name="email" autoComplete="off" onChange={onEmailChange}/><br/>
+                        type="email" id="email" name="email" autoComplete="off" onChange={onEmailChange} onKeyDown={onEnterPress}/><br/>
                     <label className={labelClass} htmlFor="password">PASSWORD</label>
                     {loginFailed && failMessage}<br/>
                     <input className="w-full h-8 my-2 pl-2 text-sm text-white rounded-md bg-server-bar-black outline-0"
                            type="password" id="password" name="password" autoComplete="off"
-                           onChange={onPasswordChange}/><br/>
+                           onChange={onPasswordChange} onKeyDown={onEnterPress}/><br/>
                     <button className="text-unclicked-links-blue inline-block">Forgot your password?</button>
                     <br/>
                     <input disabled={props.loginState}

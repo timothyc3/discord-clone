@@ -14,6 +14,7 @@ export default function App() {
     function handleLogIn() {
         if(!isLoggedIn) {
             setIsLoggedIn(true);
+            console.log("login complete")
         }
     }
 
