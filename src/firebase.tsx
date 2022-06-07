@@ -184,7 +184,7 @@ const getServerData = async (uid: string) => {
     console.log("getServerData:", uid)
     try {
         const snapshot = await getDocs(query(
-            collection(firestore, "channels"),
+            collection(firestore, "servers"),
             where("userIds", "array-contains", uid)
         ));
         let result : {[key: string] : Server}  = {};
