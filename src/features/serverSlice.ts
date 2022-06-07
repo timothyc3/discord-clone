@@ -8,8 +8,8 @@ interface ServerState {
 }
 
 const fetchServerData = createAsyncThunk('servers/fetchServerData',
-    async () => {
-        return await getServerData();
+    async (uid: string) => {
+        return await getServerData(uid);
 })
 
 export const serverSlice = createSlice({

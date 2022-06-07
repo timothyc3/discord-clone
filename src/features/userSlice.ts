@@ -7,10 +7,14 @@ interface UserState {
     ids: string[]
 }
 
-const fetchUserData = createAsyncThunk('servers/fetchUserData',
+const fetchUserData = createAsyncThunk('users/fetchUserData',
     async () => {
         return await getUserData();
-    })
+    });
+
+const sendUserData = createAsyncThunk('users/sendUserData', async() => {
+    
+})
 
 export const userSlice = createSlice({
     name: 'user',

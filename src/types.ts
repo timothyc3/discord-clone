@@ -28,5 +28,8 @@ export interface User {
     id: string,
     avatar: string,
     name: string,
+    dayBirthday: string,
+    monthBirthday: string,
+    yearBirthday: string
 }
 

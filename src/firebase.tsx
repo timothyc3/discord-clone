@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import {initializeApp} from "firebase/app";
-import {arrayUnion, collection, doc, getDocs, getFirestore, setDoc, writeBatch,} from "firebase/firestore";
+import {arrayUnion, collection, doc, getDocs, getFirestore, setDoc, writeBatch, query, where} from "firebase/firestore";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth"
 import {Channel, Message, Server, User} from "./types";
 
@@ -24,10 +24,40 @@ const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 const auth = getAuth();
 
-const createNewUser = (email: string, password: string) => {
+const createNewUser = async (
+    email: string,
+    password: string,
+    username: string,
+    dayDOB: string,
+    monthDOB: string,
+    yearDOB: string
+    ) => {
+    console.log(email, password)
     createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
         const user = userCredential.user;
         console.log("sign up complete", user);
+
+        const newUserData: User = {
+            id: userCredential.user.uid,
+            avatar: "",
+            name: username,
+            dayBirthday: dayDOB,
+            monthBirthday: monthDOB,
+            yearBirthday: yearDOB
+        }
+
+        async function addNewUserToFirebase(data: User) {
+            try {
+                // create an empty doc with randomly generated ID attribute that will be written to the servers collection
+                const docRef = doc(firestore, "users", data.id);
+                await setDoc(docRef, data);
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+        }
+
+        addNewUserToFirebase(newUserData);
+
     }).catch((e) => {
         console.error(e.code, e.message);
     })
@@ -84,7 +114,7 @@ const getUserData = async () => {
         console.error('error happened')
         throw new Error("Error fetching server data");
     }
-}
+};
 
 const getMessageData = async () => {
     try {
@@ -150,9 +180,13 @@ const getChannelData = async () => {
     }
 }
 
-const getServerData = async () => {
+const getServerData = async (uid: string) => {
+    console.log("getServerData:", uid)
     try {
-        const snapshot = await getDocs(collection(firestore, "servers"));
+        const snapshot = await getDocs(query(
+            collection(firestore, "channels"),
+            where("userIds", "array-contains", uid)
+        ));
         let result : {[key: string] : Server}  = {};
         snapshot.forEach((doc) => {
             const data = doc.data() as Server
@@ -165,5 +199,5 @@ const getServerData = async () => {
     }
 }
 
-export {addData, getServerData, getChannelData, getMessageData,
-    writeMessage, getUserData, createNewUser, login, logOut, getCurrentUser}
+export {addData, getServerData, getChannelData, getMessageData, getUserData,
+    writeMessage, createNewUser, login, logOut, getCurrentUser}
