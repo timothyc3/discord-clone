@@ -18,12 +18,12 @@ export default function Main() {
                 const uid = user.uid;
                 console.log('user id found', uid);
                 dispatch(fetchServerData(uid));
+                dispatch(fetchChannelData(uid));
             } else {
 
             }
         });
         dispatch(fetchMessageData());
-        dispatch(fetchChannelData());
         dispatch(fetchUserData());
     }, []);
 

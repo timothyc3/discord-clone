@@ -165,9 +165,12 @@ const writeMessage = async (data: any) => {
     }
 }
 
-const getChannelData = async () => {
+const getChannelData = async (uid: string) => {
     try {
-        const snapshot = await getDocs(collection(firestore, "channels"));
+        const snapshot = await getDocs(query(
+            collection(firestore, "channels"),
+            where("userIds", "array-contains", uid)
+        ));
         let result : {[key: string] : Channel}  = {};
         snapshot.forEach((doc) => {
             const data = doc.data() as Channel

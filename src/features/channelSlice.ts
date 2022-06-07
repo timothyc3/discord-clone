@@ -8,8 +8,8 @@ interface ChannelState {
 }
 
 const fetchChannelData = createAsyncThunk('servers/fetchChannelData',
-    async () => {
-        return await getChannelData();
+    async (uid: string) => {
+        return await getChannelData(uid);
     })
 
 export const channelSlice = createSlice({
