@@ -8,8 +8,8 @@ interface MessageState {
 }
 
 const fetchMessageData = createAsyncThunk('servers/fetchMessageData',
-    async () => {
-        return await getMessageData();
+    async (messageIdArray: string[]) => {
+        return await getMessageData(messageIdArray);
     })
 
 export const messageSlice = createSlice({

@@ -116,9 +116,12 @@ const getUserData = async () => {
     }
 };
 
-const getMessageData = async () => {
+const getMessageData = async (messageIdArray: string[]) => {
     try {
-        const snapshot = await getDocs(collection(firestore, "messages"));
+        const snapshot = await getDocs(query(
+            collection(firestore, "messages"),
+
+        ));
         let result : {[key: string] : Message}  = {};
         snapshot.forEach((doc) => {
             const data = doc.data() as Message

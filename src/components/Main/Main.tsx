@@ -8,22 +8,32 @@ import {fetchServerData} from "../../features/serverSlice";
 import {fetchChannelData} from "../../features/channelSlice";
 import {fetchUserData} from "../../features/userSlice";
 import { getAuth, onAuthStateChanged} from "firebase/auth";
+import {Channel} from "../../types";
 
 export default function Main() {
 
     const dispatch = useAppDispatch();
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const uid = user.uid;
                 console.log('user id found', uid);
                 dispatch(fetchServerData(uid));
-                dispatch(fetchChannelData(uid));
-            } else {
+                await dispatch(fetchChannelData(uid))
+                    .then((result) => {
+                        // the result.payload is a nested object of {...channelId: {Channel Object}}
+                        const channelsObject = result.payload as { [key: string]: Channel }
+                        // iterate over each channel and collect all messages
+                        const initialArray = [] as string[];
+                        const messageIds = Object.keys(channelsObject).reduce((prev: string[], current: string) => {
+                            const currentChannelObject = channelsObject[current];
+                            return [...prev, ...currentChannelObject.messageIds]
+                        }, initialArray);
+                        fetchMessageData(messageIds)
+                    });
 
             }
         });
-        dispatch(fetchMessageData());
         dispatch(fetchUserData());
     }, []);
 
