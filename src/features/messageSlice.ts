@@ -9,6 +9,7 @@ interface MessageState {
 
 const fetchMessageData = createAsyncThunk('servers/fetchMessageData',
     async (messageIdArray: string[]) => {
+        console.log("fetching message data")
         return await getMessageData(messageIdArray);
     })
 
@@ -42,8 +43,8 @@ export const messageSlice = createSlice({
         // if fetching data from firebase is fulfilled, then we save the server data to state.entities
         builder.addCase(fetchMessageData.fulfilled,
             (state, action) => {
-                state.entities = action.payload;
-                state.ids = Object.keys(action.payload);
+                state.entities = {...state.entities, ...action.payload};
+                state.ids = {...state.ids ,...Object.keys(action.payload)};
             })
     }
     }

@@ -17,10 +17,9 @@ export default function Main() {
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const uid = user.uid;
-                console.log('user id found', uid);
                 dispatch(fetchServerData(uid));
-                await dispatch(fetchChannelData(uid))
-                    .then((result) => {
+                dispatch(fetchChannelData(uid)).then((result) => {
+                        console.log("fetching user data");
                         // the result.payload is a nested object of {...channelId: {Channel Object}}
                         const channelsObject = result.payload as { [key: string]: Channel }
                         // iterate over each channel and collect all messages
@@ -29,7 +28,8 @@ export default function Main() {
                             const currentChannelObject = channelsObject[current];
                             return [...prev, ...currentChannelObject.messageIds]
                         }, initialArray);
-                        fetchMessageData(messageIds)
+                        console.log("fetching complete", messageIds);
+                        dispatch(fetchMessageData(messageIds));
                     });
 
             }

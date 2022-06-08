@@ -117,17 +117,25 @@ const getUserData = async () => {
 };
 
 const getMessageData = async (messageIdArray: string[]) => {
-    try {
-        const snapshot = await getDocs(query(
-            collection(firestore, "messages"),
 
-        ));
+    try {
         let result : {[key: string] : Message}  = {};
-        snapshot.forEach((doc) => {
-            const data = doc.data() as Message
-            result[data.id] = data
-        });
-        return result
+
+        // we need to split messageIdArray into chunks of 10, to batch fetch from firebase within its limit
+        const chunkSize = 10;
+        for (let i = 0; i < messageIdArray.length; i += chunkSize) {
+            const messageIdChunk = messageIdArray.slice(i, i + chunkSize);
+            const snapshot = await getDocs(query(
+                collection(firestore, "messages"),
+                where( "id", "in", messageIdChunk)
+            ));
+
+            snapshot.forEach((doc) => {
+                const data = doc.data() as Message
+                result[data.id] = data
+            });
+        }
+        return result;
     } catch (error) {
         console.error('error happened')
         throw new Error("Error fetching server data");
@@ -187,7 +195,6 @@ const getChannelData = async (uid: string) => {
 }
 
 const getServerData = async (uid: string) => {
-    console.log("getServerData:", uid)
     try {
         const snapshot = await getDocs(query(
             collection(firestore, "servers"),
