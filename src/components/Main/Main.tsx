@@ -9,6 +9,8 @@ import {fetchChannelData} from "../../features/channelSlice";
 import {fetchUserData} from "../../features/userSlice";
 import { getAuth, onAuthStateChanged} from "firebase/auth";
 import {Channel} from "../../types";
+import {listenChannel} from "../../firebase";
+
 
 export default function Main() {
 
@@ -31,13 +33,14 @@ export default function Main() {
                         console.log("fetching complete", messageIds);
                         dispatch(fetchMessageData(messageIds));
                     });
-
+                return listenChannel(uid)
             }
         });
         dispatch(fetchUserData());
     }, []);
 
     const auth = getAuth()
+
 
     // listens to redux store for the channel that the user is interacting with, returning "null"
     // if the ui that the user is interacting with is not a valid channel

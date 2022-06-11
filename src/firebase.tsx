@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import {initializeApp} from "firebase/app";
-import {arrayUnion, collection, doc, getDocs, getFirestore, setDoc, writeBatch, query, where} from "firebase/firestore";
+import {arrayUnion, collection, doc, getDocs, getFirestore, setDoc, writeBatch, query, where, onSnapshot} from "firebase/firestore";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth"
 import {Channel, Message, Server, User} from "./types";
 
@@ -141,6 +141,21 @@ const getMessageData = async (messageIdArray: string[]) => {
         throw new Error("Error fetching server data");
     }
 }
+
+const listenChannel = (userId: string) => {
+    const q = query(collection(firestore, "channels"),
+        where("userIds", "array-contains", userId));
+
+    return onSnapshot(q, (querySnapshot) => {
+        const result : any = [];
+        querySnapshot.forEach((doc) => {
+            result.push(doc.data())
+        });
+        console.log("listener result: ", result)
+    })
+
+}
+
 // called inside writeMessage, updates the respective channel's messageId, and adds a document
 // in firebase for the new message.
 async function updateMessageFirebase(data: any) {
@@ -213,4 +228,4 @@ const getServerData = async (uid: string) => {
 }
 
 export {addData, getServerData, getChannelData, getMessageData, getUserData,
-    writeMessage, createNewUser, login, logOut, getCurrentUser}
+    writeMessage, createNewUser, login, logOut, getCurrentUser, listenChannel}
