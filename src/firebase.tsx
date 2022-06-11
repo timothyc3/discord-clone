@@ -3,6 +3,8 @@ import {initializeApp} from "firebase/app";
 import {arrayUnion, collection, doc, getDocs, getFirestore, setDoc, writeBatch, query, where, onSnapshot} from "firebase/firestore";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth"
 import {Channel, Message, Server, User} from "./types";
+import {useAppDispatch} from "./hooks";
+import {updateChannels} from "./features/channelSlice";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -142,7 +144,9 @@ const getMessageData = async (messageIdArray: string[]) => {
     }
 }
 
-const listenChannel = (userId: string) => {
+const listenChannel = (userId: string,
+                       handler: (payload: {[key: string]: Channel}) => void) => {
+
     const q = query(collection(firestore, "channels"),
         where("userIds", "array-contains", userId));
 
@@ -151,7 +155,7 @@ const listenChannel = (userId: string) => {
         querySnapshot.forEach((doc) => {
             result.push(doc.data())
         });
-        console.log("listener result: ", result)
+        handler(result)
     })
 
 }

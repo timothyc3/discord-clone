@@ -22,7 +22,7 @@ export default function MessageContainer() {
 
     return (
         <div className="flex flex-col justify-end pr-2 gap-y-2">
-            {renderedMessages}
+            {/*{renderedMessages}*/}
         </div>
     )
 }

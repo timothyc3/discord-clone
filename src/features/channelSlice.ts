@@ -12,22 +12,23 @@ const fetchChannelData = createAsyncThunk('servers/fetchChannelData',
         return await getChannelData(uid);
     })
 
+
 export const channelSlice = createSlice({
     name: 'channel',
     initialState: createEntityAdapter().getInitialState() as ChannelState,
     reducers: {
         // add a channel
-        addChannel: (state: ChannelState, action: {payload: {name: string, userId: number}}) => {
-            // const lastId : string = state.entities.allIds[state.entities.allIds.length - 1];
-            // const newId : string = (parseInt(lastId) + 1).toString();
-            //
-            // state.entities.id[newId] = {
-            //     id: newId,
-            //     name: action.payload.name,
-            //     messageIds: [],
-            //     userIds: [action.payload.userId.toString()]
-            // };
-            // state.entities.allIds.push(newId);
+        updateChannels: (state: ChannelState, action: {payload: {[key: string]: Channel}}) => {
+            console.log("updateChannels called", action.payload)
+            const newState: ChannelState = {entities: {}, ids: []}
+            // populate the entities and ids of newState
+            Object.keys(action.payload).forEach(key => {
+                const channelId = action.payload[key].id;
+                newState.ids.push(channelId);
+                newState.entities[channelId] = action.payload[key];
+            });
+            state.ids = newState.ids;
+            state.entities = newState.entities;
         },
     },
     extraReducers: (builder) => {
@@ -42,7 +43,7 @@ export const channelSlice = createSlice({
     }
 );
 
-export const { addChannel } = channelSlice.actions;
+export const { updateChannels } = channelSlice.actions;
 export { fetchChannelData }
 
 export default channelSlice.reducer;

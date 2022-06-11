@@ -9,10 +9,10 @@ import {fetchChannelData} from "../../features/channelSlice";
 import {fetchUserData} from "../../features/userSlice";
 import { getAuth, onAuthStateChanged} from "firebase/auth";
 import {Channel} from "../../types";
-import {listenChannel} from "../../firebase";
-
 
 export default function Main() {
+
+    const auth = getAuth()
 
     const dispatch = useAppDispatch();
     useEffect(() => {
@@ -20,26 +20,23 @@ export default function Main() {
             if (user) {
                 const uid = user.uid;
                 dispatch(fetchServerData(uid));
-                dispatch(fetchChannelData(uid)).then((result) => {
-                        console.log("fetching user data");
-                        // the result.payload is a nested object of {...channelId: {Channel Object}}
-                        const channelsObject = result.payload as { [key: string]: Channel }
-                        // iterate over each channel and collect all messages
-                        const initialArray = [] as string[];
-                        const messageIds = Object.keys(channelsObject).reduce((prev: string[], current: string) => {
-                            const currentChannelObject = channelsObject[current];
-                            return [...prev, ...currentChannelObject.messageIds]
-                        }, initialArray);
-                        console.log("fetching complete", messageIds);
-                        dispatch(fetchMessageData(messageIds));
-                    });
-                return listenChannel(uid)
+                // dispatch(fetchChannelData(uid)).then((result) => {
+                //         console.log("fetching user data");
+                //         // the result.payload is a nested object of {...channelId: {Channel Object}}
+                //         const channelsObject = result.payload as { [key: string]: Channel }
+                //         // iterate over each channel and collect all messages
+                //         const initialArray = [] as string[];
+                //         const messageIds = Object.keys(channelsObject).reduce((prev: string[], current: string) => {
+                //             const currentChannelObject = channelsObject[current];
+                //             return [...prev, ...currentChannelObject.messageIds]
+                //         }, initialArray);
+                //         console.log("fetching complete", messageIds);
+                //         dispatch(fetchMessageData(messageIds));
+                //     });
             }
         });
         dispatch(fetchUserData());
     }, []);
-
-    const auth = getAuth()
 
 
     // listens to redux store for the channel that the user is interacting with, returning "null"
