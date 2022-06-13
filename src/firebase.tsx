@@ -160,6 +160,8 @@ const listenChannel = (userId: string,
 
 }
 
+
+
 // called inside writeMessage, updates the respective channel's messageId, and adds a document
 // in firebase for the new message.
 async function updateMessageFirebase(data: any) {

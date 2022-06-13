@@ -7,12 +7,6 @@ interface ChannelState {
     ids: string[]
 }
 
-const fetchChannelData = createAsyncThunk('servers/fetchChannelData',
-    async (uid: string) => {
-        return await getChannelData(uid);
-    })
-
-
 export const channelSlice = createSlice({
     name: 'channel',
     initialState: createEntityAdapter().getInitialState() as ChannelState,
@@ -30,20 +24,10 @@ export const channelSlice = createSlice({
             state.ids = newState.ids;
             state.entities = newState.entities;
         },
-    },
-    extraReducers: (builder) => {
-        // if fetching data from firebase is fulfilled, then we save the server data to state.entities
-        builder.addCase(fetchChannelData.fulfilled,
-            (state, action) => {
-            state.entities = action.payload;
-            state.ids = Object.keys(action.payload);
-        })
     }
-
     }
 );
 
 export const { updateChannels } = channelSlice.actions;
-export { fetchChannelData }
 
 export default channelSlice.reducer;

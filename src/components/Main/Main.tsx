@@ -5,37 +5,47 @@ import Content from "./components/Content/Content";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {fetchMessageData} from "../../features/messageSlice";
 import {fetchServerData} from "../../features/serverSlice";
-import {fetchChannelData} from "../../features/channelSlice";
+import {updateChannels} from "../../features/channelSlice";
 import {fetchUserData} from "../../features/userSlice";
-import { getAuth, onAuthStateChanged} from "firebase/auth";
+import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {Channel} from "../../types";
+import {listenChannel} from "../../firebase";
+import {shallowEqual} from "react-redux";
 
 export default function Main() {
 
     const auth = getAuth()
-
     const dispatch = useAppDispatch();
+
+    // const messageIds = useAppSelector(state => {
+    //     const result: Array<Array<string>> = [];
+    //     Object.keys(state.channel.entities).forEach(id => {
+    //         result.push(state.channel.entities[id].messageIds);
+    //     });
+    //     console.log("new message", result)
+    //     return result;
+    // }, shallowEqual);
+
     useEffect(() => {
-        onAuthStateChanged(auth, async (user) => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const uid = user.uid;
                 dispatch(fetchServerData(uid));
-                // dispatch(fetchChannelData(uid)).then((result) => {
-                //         console.log("fetching user data");
-                //         // the result.payload is a nested object of {...channelId: {Channel Object}}
-                //         const channelsObject = result.payload as { [key: string]: Channel }
-                //         // iterate over each channel and collect all messages
-                //         const initialArray = [] as string[];
-                //         const messageIds = Object.keys(channelsObject).reduce((prev: string[], current: string) => {
-                //             const currentChannelObject = channelsObject[current];
-                //             return [...prev, ...currentChannelObject.messageIds]
-                //         }, initialArray);
-                //         console.log("fetching complete", messageIds);
-                //         dispatch(fetchMessageData(messageIds));
-                //     });
+
+                listenChannel(
+                    user.uid,
+                    (payload: { [key: string]: Channel }) => {
+                        dispatch(updateChannels(payload))
+                    }
+                )
+
+
+
             }
         });
         dispatch(fetchUserData());
+
+        return unsubscribe()
     }, []);
 
 
@@ -55,9 +65,9 @@ export default function Main() {
 
     return (
         <div className="h-screen w-screen grid grid-cols-[75px_240px_1fr] font-body">
-            <ServerSidebar />
+            <ServerSidebar/>
             <ChannelSidebar/>
-            <Content />
+            <Content/>
         </div>
     )
 }
