@@ -10,7 +10,7 @@ import {fetchUserData} from "../../features/userSlice";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {Channel} from "../../types";
 import {listenChannel} from "../../firebase";
-import {shallowEqual} from "react-redux";
+import _ from "lodash";
 
 export default function Main() {
 
@@ -22,28 +22,25 @@ export default function Main() {
     //     Object.keys(state.channel.entities).forEach(id => {
     //         result.push(state.channel.entities[id].messageIds);
     //     });
-    //     console.log("new message", result)
-    //     return result;
-    // }, shallowEqual);
+    //     console.log("new message", result.flat())
+    //     return result.flat();
+    // }, _.isEqual);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const uid = user.uid;
                 dispatch(fetchServerData(uid));
+                dispatch(fetchUserData());
 
                 listenChannel(
                     user.uid,
                     (payload: { [key: string]: Channel }) => {
                         dispatch(updateChannels(payload))
                     }
-                )
-
-
-
+                );
             }
         });
-        dispatch(fetchUserData());
 
         return unsubscribe()
     }, []);

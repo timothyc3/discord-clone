@@ -4,7 +4,7 @@ import {arrayUnion, collection, doc, getDocs, getFirestore, setDoc, writeBatch, 
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth"
 import {Channel, Message, Server, User} from "./types";
 import {useAppDispatch} from "./hooks";
-import {updateChannels} from "./features/channelSlice";
+// import {updateChannels} from "./features/channelSlice";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries

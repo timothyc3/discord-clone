@@ -6,6 +6,7 @@ import Header from "./components/Header";
 // import {shallowEqual} from "react-redux";
 import ChannelButton from "./components/ChannelButton";
 import {shallowEqual} from "react-redux";
+import _ from "lodash"
 
 export default function ChannelSidebar() {
 
@@ -13,16 +14,19 @@ export default function ChannelSidebar() {
 
     // get the channels of the selected server
     const channels : string[] = useAppSelector(state => {
-        console.log("channels log within");
+
         // if a server button is active, return a list of channels that the user has access to
         if (state.active.levelOne in state.server.entities) {
-            return state.server.entities[state.active.levelOne].channelIds
+            const result = state.server.entities[state.active.levelOne].channelIds
                 // filter for channelIds that are in our redux store, as only ones that users have
                 // access to are retrieved from firebase
-                 .filter(channelId => state.channel.ids.includes(channelId))
+                 .filter(channelId => state.channel.ids.includes(channelId));
+
+            console.log("something:", result);
+            return result;
         }
         else return []
-    }, shallowEqual);
+    }, _.isEqual);
 
     useEffect(() => {
         console.log("channels log", channels)
