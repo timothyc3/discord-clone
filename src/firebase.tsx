@@ -134,9 +134,30 @@ const getMessageData = async (messageIdArray: string[]) => {
 
             snapshot.forEach((doc) => {
                 const data = doc.data() as Message
-                result[data.id] = data
+                result[data.id] = {...data, found: true}
             });
         }
+
+
+        // create a data piece for every messageId that does not exist in firebase
+        const NonExistingMessages = messageIdArray.filter(id => !Object.keys(result)
+            .map(key => result[key].id).includes(id));
+
+        NonExistingMessages.forEach(id => {
+            result[id] = {
+                id: "",
+                userId: "",
+                text: "",
+                year: 0,
+                month: 0,
+                day: 0,
+                hour: 0,
+                minute: 0,
+                second: 0,
+                found: false
+            } as Message
+        })
+
         return result;
     } catch (error) {
         console.error('error happened')

@@ -8,6 +8,7 @@ export interface Message {
     hour: number,
     minute: number,
     second: number
+    found: boolean
 }
 
 export interface Channel {

@@ -9,13 +9,17 @@ interface MessageState {
 
 const fetchMessageData = createAsyncThunk('servers/fetchMessageData',
     async (messageIdArray: string[]) => {
-        console.log("fetching message data")
         return await getMessageData(messageIdArray);
-    })
+    });
+
+const messagesAdapter = createEntityAdapter<Message>({
+    sortComparer: (a, b) =>
+        new Date(a.year, a.month, a.day).valueOf() - new Date(b.year, b.month, b.day).valueOf()
+})
 
 export const messageSlice = createSlice({
     name: 'message',
-    initialState: createEntityAdapter().getInitialState() as MessageState,
+    initialState: messagesAdapter.getInitialState() as MessageState,
     reducers: {
         addMessage: (state: MessageState, action: {payload:
                 {
@@ -44,7 +48,7 @@ export const messageSlice = createSlice({
         builder.addCase(fetchMessageData.fulfilled,
             (state, action) => {
                 state.entities = {...state.entities, ...action.payload};
-                state.ids = {...state.ids ,...Object.keys(action.payload)};
+                state.ids = [...state.ids ,...Object.keys(action.payload)];
             })
     }
     }
