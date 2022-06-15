@@ -11,6 +11,13 @@ export default function MessageItem(props: {id: string}) {
         return state.messages.entities[props.id]
     }, shallowEqual);
 
+    const username: string = useAppSelector( state => {
+        if (messageLoaded && state.messages.entities[props.id].userId !== "") {
+            return state.user.entities[state.messages.entities[props.id].userId].name
+        }
+        else return ""
+    })
+
     function formatDate(date: Message) {
         return `${date.day}/${date.month}/${date.year}`
     }
@@ -19,7 +26,7 @@ export default function MessageItem(props: {id: string}) {
             {messageLoaded ?
                 <div className="w-full h-auto min-h-48 grid grid-cols-[70px_1fr] grid-rows-[auto_1fr]">
                     <div className="row-span-2">avatar</div>
-                    <h5 className="h-full text-white text-sm font-semibold">{""}
+                    <h5 className="h-full text-white text-sm font-semibold">{username}
                         <span className="pl-2 text-light-grey text-xs font-normal pt-10">{formatDate(messageContent)}</span>
                     </h5>
                     <p className="text-white text-sm">{messageContent.text}</p>
