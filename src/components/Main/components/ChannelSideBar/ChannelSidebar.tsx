@@ -1,9 +1,6 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {useAppSelector} from "../../../../hooks";
 import Header from "./components/Header";
-// import {Channel} from "../../types";
-// import {useAppSelector} from "../../hooks";
-// import {shallowEqual} from "react-redux";
 import ChannelButton from "./components/ChannelButton";
 import _ from "lodash"
 
