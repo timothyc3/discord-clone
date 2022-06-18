@@ -1,6 +1,6 @@
- import React, {useState} from "react";
+ import React, {useEffect, useState} from "react";
 import {handleLogin} from "../../../features/loginSlice";
- import {useAppDispatch} from "../../../hooks";
+ import {useAppDispatch, useAppSelector} from "../../../hooks";
 
 export default function LoginForm(props: {
     loginState: boolean,
@@ -12,6 +12,9 @@ export default function LoginForm(props: {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [loginAttempted, setLoginAttempted] = useState<boolean>(false);
+
+    // check if uid has been loaded
+    const uidLoaded: boolean = useAppSelector(state => state.login.uid === "" && !state.login.loading);
 
     function onEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(event.target.value);
@@ -29,8 +32,8 @@ export default function LoginForm(props: {
     }
 
     function onEnterPress(event: React.KeyboardEvent<HTMLInputElement>) {
-        event.preventDefault();
         if (event.key === "Enter") {
+            event.preventDefault();
             onLogin();
         }
     }
@@ -41,7 +44,7 @@ export default function LoginForm(props: {
         onLogin();
     }
 
-    const labelClass = `font-bold ${loginAttempted ? "text-error-orange" : ""}`;
+    const labelClass = `font-bold ${loginAttempted && uidLoaded ? "text-error-orange" : ""}`;
     const failMessage = <span className="text-error-orange"><em> - Login or password is invalid.</em></span>;
 
     return (
@@ -57,12 +60,12 @@ export default function LoginForm(props: {
                 <form action=""
                       className="w-full text-light-grey text-xs mt-4">
                     <label className={labelClass} htmlFor="email">EMAIL</label>
-                    {loginAttempted && failMessage}<br/>
+                    {loginAttempted && uidLoaded &&failMessage}<br/>
                     <input
                         className="w-full h-8 mt-2 mb-6 pl-2 text-sm text-white rounded-md bg-server-bar-black outline-0"
                         type="email" id="email" name="email" autoComplete="off" onChange={onEmailChange} onKeyDown={onEnterPress}/><br/>
                     <label className={labelClass} htmlFor="password">PASSWORD</label>
-                    {loginAttempted && failMessage}<br/>
+                    {loginAttempted && uidLoaded && failMessage}<br/>
                     <input className="w-full h-8 my-2 pl-2 text-sm text-white rounded-md bg-server-bar-black outline-0"
                            type="password" id="password" name="password" autoComplete="off"
                            onChange={onPasswordChange} onKeyDown={onEnterPress}/><br/>
