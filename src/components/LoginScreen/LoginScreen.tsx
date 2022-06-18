@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import LoginForm from "./components/LoginForm";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
 
-export default function LoginScreen(props: { loginState: boolean, handleLogIn: () => void }) {
+export default function LoginScreen(props: { loginState: boolean}) {
 
     const [isRegistering, setIsRegistering] = useState<boolean>(false);
 
@@ -25,7 +25,6 @@ export default function LoginScreen(props: { loginState: boolean, handleLogIn: (
             {
                 isRegistering ? <SignUpForm registerExit={handleRegisterExit} /> :
                     <LoginForm loginState={props.loginState}
-                               handleLogIn={props.handleLogIn}
                                registerEnter={handleRegisterEnter}
                     />
                     }

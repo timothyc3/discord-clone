@@ -66,7 +66,7 @@ const createNewUser = async (
 }
 
 const login = async (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password)
+    return await signInWithEmailAndPassword(auth, email, password)
 }
 
 const logOut = () => {
@@ -255,4 +255,4 @@ const getServerData = async (uid: string) => {
 }
 
 export {addData, getServerData, getChannelData, getMessageData, getUserData,
-    writeMessage, createNewUser, login, logOut, getCurrentUser, listenChannel}
+    writeMessage, createNewUser, logOut, getCurrentUser, listenChannel, login}

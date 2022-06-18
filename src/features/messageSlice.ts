@@ -47,8 +47,10 @@ export const messageSlice = createSlice({
         // if fetching data from firebase is fulfilled, then we save the server data to state.entities
         builder.addCase(fetchMessageData.fulfilled,
             (state, action) => {
-                state.entities = {...state.entities, ...action.payload};
-                state.ids = [...state.ids ,...Object.keys(action.payload)];
+                if (typeof action.payload !== "undefined") {
+                    state.entities = {...state.entities, ...action.payload};
+                    state.ids = [...state.ids ,...Object.keys(action.payload)];
+                }
             })
     }
     }
