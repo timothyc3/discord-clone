@@ -7,42 +7,33 @@ import {fetchMessageData} from "../../features/messageSlice";
 import {fetchServerData} from "../../features/serverSlice";
 import {updateChannels} from "../../features/channelSlice";
 import {fetchUserData} from "../../features/userSlice";
-import {getAuth, onAuthStateChanged} from "firebase/auth";
+import {getAuth} from "firebase/auth";
 import {Channel} from "../../types";
 import {listenChannel} from "../../firebase";
-import _ from "lodash";
+import {useStore} from "react-redux";
 
 export default function Main() {
 
-    const auth = getAuth()
     const dispatch = useAppDispatch();
-
-    // const messageIds = useAppSelector(state => {
-    //     const result: Array<Array<string>> = [];
-    //     Object.keys(state.channel.entities).forEach(id => {
-    //         result.push(state.channel.entities[id].messageIds);
-    //     });
-    //     console.log("new message", result.flat())
-    //     return result.flat();
-    // }, _.isEqual);
+    // get the user id from store once
+    const uid: string = useAppSelector(state => state.login.uid, () => true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const uid = user.uid;
+        const unsubscribe = (uid: string) => {
+            if (uid) {
                 dispatch(fetchServerData(uid));
                 dispatch(fetchUserData());
 
                 listenChannel(
-                    user.uid,
+                    uid,
                     (payload: { [key: string]: Channel }) => {
                         dispatch(updateChannels(payload))
                     }
                 );
             }
-        });
+        };
 
-        return unsubscribe()
+        return unsubscribe(uid)
     }, []);
 
 

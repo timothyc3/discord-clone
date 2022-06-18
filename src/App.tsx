@@ -10,6 +10,7 @@ import {useAppSelector} from "./hooks";
 export default function App() {
 
     const user = getCurrentUser() !== false;
+    // create a boolean where we return false if the string is empty, that is if login id has not been retrieved
     const loginStatus = useAppSelector(state => {
         return state.login.uid !== "";
     })

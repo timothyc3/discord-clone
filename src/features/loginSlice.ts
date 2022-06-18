@@ -7,7 +7,7 @@ interface MessageState {
     settings: {}
 }
 
-const handleLogin = createAsyncThunk('servers/fetchLoginData',
+const handleLogin = createAsyncThunk('servers/fetchLoginuData',
     async (loginInfo: {email: string, password: string}) => {
     const result = await login(loginInfo.email, loginInfo.password);
     return result.user.uid;
