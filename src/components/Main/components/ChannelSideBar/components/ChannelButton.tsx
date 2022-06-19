@@ -10,6 +10,7 @@ export default function ChannelButton(props: {
     const active : boolean = useAppSelector(state => state.active.levelTwo === props.channelId, shallowEqual);
     const channelName : string = useAppSelector(state => state.channel.entities[props.channelId].name, shallowEqual);
 
+    console.log("channelName", channelName)
     const dispatch = useAppDispatch();
 
     // update active server in redux store

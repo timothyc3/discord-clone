@@ -4,6 +4,7 @@ import {channelSlice} from "./features/channelSlice";
 import {activeSlice} from "./features/activeSlice";
 import {messageSlice} from "./features/messageSlice";
 import {userSlice} from "./features/userSlice";
+import {loginSlice} from "./features/loginSlice";
 
 export const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
         messages: messageSlice.reducer,
         user: userSlice.reducer,
         active: activeSlice.reducer,
+        login: loginSlice.reducer
     }
 })
 

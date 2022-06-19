@@ -1,8 +1,10 @@
 // Import the functions you need from the SDKs you need
 import {initializeApp} from "firebase/app";
-import {arrayUnion, collection, doc, getDocs, getFirestore, setDoc, writeBatch, query, where} from "firebase/firestore";
+import {arrayUnion, collection, doc, getDocs, getFirestore, setDoc, writeBatch, query, where, onSnapshot} from "firebase/firestore";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth"
-import {Channel, Message, Server, User} from "./types";
+import {Channel, Message, MessagePayload, Server, User} from "./types";
+import {useAppDispatch} from "./hooks";
+// import {updateChannels} from "./features/channelSlice";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -64,7 +66,7 @@ const createNewUser = async (
 }
 
 const login = async (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password)
+    return await signInWithEmailAndPassword(auth, email, password)
 }
 
 const logOut = () => {
@@ -116,58 +118,99 @@ const getUserData = async () => {
     }
 };
 
-const getMessageData = async () => {
+const getMessageData = async (messageIdArray: string[]) => {
+
     try {
-        const snapshot = await getDocs(collection(firestore, "messages"));
         let result : {[key: string] : Message}  = {};
-        snapshot.forEach((doc) => {
-            const data = doc.data() as Message
-            result[data.id] = data
-        });
-        return result
+
+        // we need to split messageIdArray into chunks of 10, to batch fetch from firebase within its limit
+        const chunkSize = 10;
+        for (let i = 0; i < messageIdArray.length; i += chunkSize) {
+            const messageIdChunk = messageIdArray.slice(i, i + chunkSize);
+            const snapshot = await getDocs(query(
+                collection(firestore, "messages"),
+                where( "id", "in", messageIdChunk)
+            ));
+
+            snapshot.forEach((doc) => {
+                const data = doc.data() as Message
+                result[data.id] = {...data, found: true}
+            });
+        }
+
+
+        // create a data piece for every messageId that does not exist in firebase
+        const NonExistingMessages = messageIdArray.filter(id => !Object.keys(result)
+            .map(key => result[key].id).includes(id));
+
+        NonExistingMessages.forEach(id => {
+            result[id] = {
+                id: "",
+                userId: "",
+                text: "",
+                year: 0,
+                month: 0,
+                day: 0,
+                hour: 0,
+                minute: 0,
+                second: 0,
+                found: false
+            } as Message
+        })
+
+        return result;
     } catch (error) {
         console.error('error happened')
         throw new Error("Error fetching server data");
     }
 }
+
+const listenChannel = (userId: string,
+                       handler: (payload: {[key: string]: Channel}) => void) => {
+
+    const q = query(collection(firestore, "channels"),
+        where("userIds", "array-contains", userId));
+
+    return onSnapshot(q, (querySnapshot) => {
+        const result : any = [];
+        querySnapshot.forEach((doc) => {
+            result.push(doc.data())
+        });
+        handler(result)
+    })
+
+}
+
 // called inside writeMessage, updates the respective channel's messageId, and adds a document
 // in firebase for the new message.
-async function updateMessageFirebase(data: any) {
+async function writeMessage(data: MessagePayload) {
     const batch = writeBatch(firestore);
 
+    // set target collections to addDoc to
     const docRefMessages = doc(collection(firestore, "messages"));
     const docRefChannels = doc(collection(firestore, "channels"), data.channelId);
 
-    console.log(data);
-
+    // split channelId from the messagePayload as it was only required for docRefChannels
     const {channelId, ...messagePayload} = data
 
+    // add docRefMessages to the batch write
     batch.set(docRefMessages, {
         ...messagePayload,
         id: docRefMessages.id
     });
 
+    // add docRefChannels to the batch write
     batch.update(docRefChannels, {messageIds: arrayUnion(docRefMessages.id)});
 
     await batch.commit()
 }
 
-const writeMessage = async (data: any) => {
-
+const getChannelData = async (uid: string) => {
     try {
-
-        updateMessageFirebase(data).then(() =>
-        {console.log('done sending message to firebase')});
-
-
-    } catch (e) {
-        console.error("Error writing message to firebase: ", e)
-    }
-}
-
-const getChannelData = async () => {
-    try {
-        const snapshot = await getDocs(collection(firestore, "channels"));
+        const snapshot = await getDocs(query(
+            collection(firestore, "channels"),
+            where("userIds", "array-contains", uid)
+        ));
         let result : {[key: string] : Channel}  = {};
         snapshot.forEach((doc) => {
             const data = doc.data() as Channel
@@ -181,7 +224,6 @@ const getChannelData = async () => {
 }
 
 const getServerData = async (uid: string) => {
-    console.log("getServerData:", uid)
     try {
         const snapshot = await getDocs(query(
             collection(firestore, "servers"),
@@ -200,4 +242,4 @@ const getServerData = async (uid: string) => {
 }
 
 export {addData, getServerData, getChannelData, getMessageData, getUserData,
-    writeMessage, createNewUser, login, logOut, getCurrentUser}
+    writeMessage, createNewUser, logOut, getCurrentUser, listenChannel, login}

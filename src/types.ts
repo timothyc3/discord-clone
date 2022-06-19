@@ -8,6 +8,7 @@ export interface Message {
     hour: number,
     minute: number,
     second: number
+    found: boolean
 }
 
 export interface Channel {
@@ -31,5 +32,17 @@ export interface User {
     dayBirthday: string,
     monthBirthday: string,
     yearBirthday: string
+}
+
+export interface MessagePayload {
+    channelId: string
+    userId: string,
+    text: string,
+    year: number,
+    month: number,
+    day: number,
+    hour: number,
+    minute: number,
+    second: number
 }
 
