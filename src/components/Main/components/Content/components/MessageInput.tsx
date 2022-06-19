@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import {useAppDispatch, useAppSelector} from "../../../../../hooks";
-import {addMessage} from "../../../../../features/messageSlice";
-import {channel} from "diagnostics_channel";
+import React from "react";
+import {useAppSelector} from "../../../../../hooks";
 import {shallowEqual} from "react-redux";
+import {writeMessage} from "../../../../../firebase";
 
 export default function MessageInput() {
 
-    const dispatch = useAppDispatch();
+    const userId = useAppSelector(state => state.login.uid)
 
     const channelObject : {name: string | null, id: string | null} = useAppSelector(state => {
         if (state.active.levelTwo in state.channel.entities) {
@@ -25,7 +24,7 @@ export default function MessageInput() {
     return (
         <input type="search" placeholder={`Message #${channelObject.name}`}
 
-               onKeyDown={(event : React.KeyboardEvent) => {
+               onKeyDown={(event : React.KeyboardEvent<HTMLInputElement>) => {
                    if (event.key === 'Enter'
                        && channelObject.name !== null
                        && channelObject.id !== null) {
@@ -36,7 +35,7 @@ export default function MessageInput() {
 
                        const messagePayload = {
                            channelId: channelObject.id,
-                           userId: "2TyCE1Ptr22BAw3Lki5N",
+                           userId: userId,
                            text: target.value,
                            year: today.getFullYear(),
                            month: today.getMonth(),
@@ -46,7 +45,11 @@ export default function MessageInput() {
                            second: today.getSeconds()
                        };
 
-                       dispatch(addMessage(messagePayload));
+                       writeMessage(messagePayload).then(() => {
+                           console.log('done sending message to firebase')
+                           target.value = "";
+                       }).catch((e) => console.error(e));
+
                    }
                }}
 

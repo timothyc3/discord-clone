@@ -2,7 +2,7 @@
 import {initializeApp} from "firebase/app";
 import {arrayUnion, collection, doc, getDocs, getFirestore, setDoc, writeBatch, query, where, onSnapshot} from "firebase/firestore";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth"
-import {Channel, Message, Server, User} from "./types";
+import {Channel, Message, MessagePayload, Server, User} from "./types";
 import {useAppDispatch} from "./hooks";
 // import {updateChannels} from "./features/channelSlice";
 
@@ -181,41 +181,28 @@ const listenChannel = (userId: string,
 
 }
 
-
-
 // called inside writeMessage, updates the respective channel's messageId, and adds a document
 // in firebase for the new message.
-async function updateMessageFirebase(data: any) {
+async function writeMessage(data: MessagePayload) {
     const batch = writeBatch(firestore);
 
+    // set target collections to addDoc to
     const docRefMessages = doc(collection(firestore, "messages"));
     const docRefChannels = doc(collection(firestore, "channels"), data.channelId);
 
-    console.log(data);
-
+    // split channelId from the messagePayload as it was only required for docRefChannels
     const {channelId, ...messagePayload} = data
 
+    // add docRefMessages to the batch write
     batch.set(docRefMessages, {
         ...messagePayload,
         id: docRefMessages.id
     });
 
+    // add docRefChannels to the batch write
     batch.update(docRefChannels, {messageIds: arrayUnion(docRefMessages.id)});
 
     await batch.commit()
-}
-
-const writeMessage = async (data: any) => {
-
-    try {
-
-        updateMessageFirebase(data).then(() =>
-        {console.log('done sending message to firebase')});
-
-
-    } catch (e) {
-        console.error("Error writing message to firebase: ", e)
-    }
 }
 
 const getChannelData = async (uid: string) => {

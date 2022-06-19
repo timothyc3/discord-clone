@@ -36,7 +36,7 @@ export default function MessageContainer() {
     )
 
     return (
-        <div className="flex flex-col justify-end pr-2 gap-y-2">
+        <div className="flex flex-col justify-end pr-2 gap-y-2 auto max-h-full overflow-hidden">
             {renderedMessages}
         </div>
     )

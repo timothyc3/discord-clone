@@ -17,11 +17,9 @@ export default function App() {
 
     return (
         <>
-            {/*{ loginStatus ? <Main /> : <LoginScreen*/}
-            {/*    loginState={loginStatus}/>*/}
-            {/*}*/}
-            <LoginScreen
+            { loginStatus ? <Main /> : <LoginScreen
                 loginState={loginStatus}/>
+            }
         </>
     );
 }

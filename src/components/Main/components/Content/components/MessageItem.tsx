@@ -1,6 +1,6 @@
 import React from "react";
 import {useAppSelector} from "../../../../../hooks";
-import { Message, User } from "../../../../../types";
+import { Message } from "../../../../../types";
 import {shallowEqual} from "react-redux";
 
 export default function MessageItem(props: {id: string}) {
@@ -24,7 +24,7 @@ export default function MessageItem(props: {id: string}) {
 
     return (<>
             {messageLoaded ?
-                <div className="w-full h-auto min-h-48 grid grid-cols-[70px_1fr] grid-rows-[auto_1fr]">
+                <div className=" min-h-48 grid grid-cols-[70px_1fr] grid-rows-[auto_1fr]">
                     <div className="row-span-2">avatar</div>
                     <h5 className="h-full text-white text-sm font-semibold">{username}
                         <span className="pl-2 text-light-grey text-xs font-normal pt-10">{formatDate(messageContent)}</span>
