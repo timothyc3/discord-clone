@@ -11,7 +11,9 @@ export default function MessageContainer() {
     // listens to redux store for messageIds of the channel the user is interacting with
     const channelMessageIds : string[] = useAppSelector(state => {
         if (state.active.levelTwo in state.channel.entities) {
-            return state.channel.entities[state.active.levelTwo].messageIds
+            // reverse array of ids so as we are using flex: column-reverse, use slice to keep
+            // the state immutable.
+            return state.channel.entities[state.active.levelTwo].messageIds.slice().reverse();
         } else {
             return []
         }
@@ -36,7 +38,7 @@ export default function MessageContainer() {
     )
 
     return (
-        <div className="flex flex-col justify-end pr-2 gap-y-2 auto max-h-full overflow-hidden">
+        <div className="flex flex-auto flex-col-reverse gap-y-2 overflow-x-hidden overflow-y-scroll">
             {renderedMessages}
         </div>
     )
