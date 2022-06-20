@@ -22,41 +22,50 @@ export default function MessageInput() {
     }, shallowEqual);
 
     return (
-        <input type="search" placeholder={`Message #${channelObject.name}`}
+        <textarea placeholder={`Message_#${channelObject.name}`}
+               // onKeyDown={(event : React.KeyboardEvent<HTMLTextAreaElement>) => {
+               //
+               //     const target = event.target as HTMLTextAreaElement;
+               //
+               //     if (event.key === 'Enter' && !event.shiftKey
+               //         && channelObject.name !== null
+               //         && channelObject.id !== null
+               //     ) {
+               //
+               //         const today = new Date();
+               //
+               //         const messagePayload = {
+               //             channelId: channelObject.id,
+               //             userId: userId,
+               //             text: target.value,
+               //             year: today.getFullYear(),
+               //             month: today.getMonth(),
+               //             day: today.getDate(),
+               //             hour: today.getHours(),
+               //             minute: today.getMinutes(),
+               //             second: today.getSeconds()
+               //         };
+               //
+               //         writeMessage(messagePayload).then(() => {
+               //             console.log('done sending message to firebase')
+               //             target.value = "";
+               //         }).catch((e) => console.error(e));
+               //
+               //     }
+               // }}
 
-               onKeyDown={(event : React.KeyboardEvent<HTMLInputElement>) => {
-                   if (event.key === 'Enter'
-                       && channelObject.name !== null
-                       && channelObject.id !== null) {
+                  onInput={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+                      const target = event.target as HTMLTextAreaElement;
 
-                       const today = new Date();
-
-                       const target = event.target as HTMLInputElement;
-
-                       const messagePayload = {
-                           channelId: channelObject.id,
-                           userId: userId,
-                           text: target.value,
-                           year: today.getFullYear(),
-                           month: today.getMonth(),
-                           day: today.getDate(),
-                           hour: today.getHours(),
-                           minute: today.getMinutes(),
-                           second: today.getSeconds()
-                       };
-
-                       writeMessage(messagePayload).then(() => {
-                           console.log('done sending message to firebase')
-                           target.value = "";
-                       }).catch((e) => console.error(e));
-
-                   }
-               }}
+                      target.style.height = "";
+                      target.style.height = `calc(${target.scrollHeight}px - 1rem)`;
+                  }}
 
 
 
-               className="bg-chat-box-search-bar-main m-5 rounded-lg px-5 text-white
-               text-sm placeholder-inactive-light-grey focus:outline-0"/>
+               className='bg-chat-box-search-bar-main m-5 min-h-[2.5rem]
+               rounded-lg px-5 text-white text-sm placeholder-inactive-light-grey focus:outline-0
+               overflow-hidden resize-none inline-block align-middle py-2.5'/>
     )
 
 
