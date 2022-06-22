@@ -63,7 +63,7 @@ export default function MessageInput() {
 
                   className='bg-chat-box-search-bar-main m-5 min-h-[2.5rem] max-h-[50vh] h-[2.5rem] box-border
                rounded-lg px-5 text-white text-sm placeholder-inactive-light-grey focus:outline-0
-               overflow-hidden resize-none py-2'></textarea>
+               overflow-hidden resize-none py-2.5'></textarea>
     )
 
 
