@@ -15,12 +15,12 @@ export default function CreateServerWindow() {
                         <h2 className="text-channel-hover-grey font-light text-sm text-center px-4 mt-2">
                             Your server is where you and our friends hang out. Make yours and start talking
                         </h2>
-                        <div className="w-full h-16 mt-3 rounded-md border border-light-grey/50 py-2 px-4 box-border
-                        grid grid-cols-[50px_1fr_20px] items-center">
+                        <div className="w-full h-16 mt-3 rounded-md border border-light-grey py-2 px-4 box-border
+                        grid grid-cols-[60px_1fr_20px] items-center hover:bg-inactive-light-grey/20">
                             <div></div>
                             <h2 className="font-bold text-sm">Create My Own</h2>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
-                                 viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-channel-hover-grey/80" fill="none"
+                                 viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                             </svg>
                         </div>
