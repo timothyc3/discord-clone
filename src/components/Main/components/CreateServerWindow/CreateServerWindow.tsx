@@ -1,20 +1,29 @@
 import React from "react";
-import {useAppSelector} from "../../../../hooks";
+import {useAppDispatch, useAppSelector} from "../../../../hooks";
 import CreateServerButton from "./components/CreateServerButton";
+import {toggleCreateServer} from "../../../../features/activeSlice";
 
 export default function CreateServerWindow() {
 
     // check if the button active on serverBar is "newServer", if so this will return true instead of false
-    const createServerOpen = useAppSelector(state => state.active.levelOne === "New Server");
+    const active = useAppSelector(state => state.active.createServer);
+
+    const dispatch = useAppDispatch();
+
+    // update active server in redux store
+    function updateActive() {
+        dispatch(toggleCreateServer(''));
+    }
 
     return (
         <>
             {
-                createServerOpen && <div className="bg-black/70 w-full h-full fixed flex justify-center items-center">
+                active && <div className="bg-black/70 w-full h-full fixed flex justify-center items-center">
                     <div className="relative bg-white w-108 h-144 rounded-md pt-6 grid grid-rows-[auto_auto_1fr_auto]">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              className="h-7 w-7 absolute right-3.5 top-3.5 text-inactive-light-grey hover:text-server-bar-black
                              transition-colors"
+                             onClick={updateActive}
                              fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>

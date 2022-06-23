@@ -1,18 +1,17 @@
 import React from "react";
 import {useAppDispatch, useAppSelector} from "../../../../../hooks";
 import {shallowEqual} from "react-redux";
-import {updateLevelOne, updateLevelTwo} from "../../../../../features/activeSlice";
+import {toggleCreateServer} from "../../../../../features/activeSlice";
 
 export default function NewServerButton() {
 
-    const active : boolean = useAppSelector(state => state.active.levelOne === "New Server", shallowEqual);
+    const active : boolean = useAppSelector(state => state.active.createServer, shallowEqual);
 
     const dispatch = useAppDispatch();
 
     // update active server in redux store
     function updateActive() {
-        dispatch(updateLevelOne("New Server"));
-        dispatch(updateLevelTwo("New Server"));
+        dispatch(toggleCreateServer(''));
     }
 
     function handleClick() {

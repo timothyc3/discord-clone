@@ -30,6 +30,6 @@ export const activeSlice = createSlice(
     }
 );
 
-export const {updateLevelOne, updateLevelTwo} = activeSlice.actions;
+export const {updateLevelOne, updateLevelTwo, toggleCreateServer} = activeSlice.actions;
 
 export default activeSlice.reducer;
