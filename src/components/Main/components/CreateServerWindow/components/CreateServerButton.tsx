@@ -2,7 +2,7 @@ import React from "react";
 
 export default function CreateServerButton(props: {name: string}) {
     return (
-        <div className="w-full h-16 mt-2 rounded-md border border-light-grey py-2 px-4 box-border
+        <div className="w-full h-16 mt-3 rounded-md border border-light-grey py-2 px-4 box-border
                         grid grid-cols-[60px_1fr_20px] items-center hover:bg-inactive-light-grey/20
                         ">
             <div></div>
