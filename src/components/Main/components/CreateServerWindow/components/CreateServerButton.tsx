@@ -4,7 +4,7 @@ export default function CreateServerButton(props: {name: string}) {
     return (
         <div className="w-full h-16 mt-3 rounded-md border border-light-grey py-2 px-4 box-border
                         grid grid-cols-[60px_1fr_20px] items-center hover:bg-inactive-light-grey/20
-                        ">
+                        transition-all">
             <div></div>
             <h2 className="font-bold text-sm">{props.name}</h2>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-channel-hover-grey/80" fill="none"
