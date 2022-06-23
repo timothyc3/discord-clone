@@ -2,12 +2,14 @@ import {createSlice} from "@reduxjs/toolkit";
 
 interface ActiveState {
     levelOne: string,
-    levelTwo: string
+    levelTwo: string,
+    createServer: boolean
 }
 
-const initialState : ActiveState = {
+const initialState: ActiveState = {
     levelOne: "Discover",
-    levelTwo: "1"
+    levelTwo: "1",
+    createServer: false
 }
 
 export const activeSlice = createSlice(
@@ -15,16 +17,19 @@ export const activeSlice = createSlice(
         name: "active",
         initialState: initialState,
         reducers: {
-            updateLevelOne: (state, action: {payload: string}) => {
+            updateLevelOne: (state, action: { payload: string }) => {
                 state.levelOne = action.payload
             },
-            updateLevelTwo: (state, action: {payload: string}) => {
+            updateLevelTwo: (state, action: { payload: string }) => {
                 state.levelTwo = action.payload
+            },
+            toggleCreateServer: (state, action) => {
+                state.createServer = !state.createServer
             }
         }
     }
 );
 
-export const { updateLevelOne, updateLevelTwo } = activeSlice.actions;
+export const {updateLevelOne, updateLevelTwo, toggleCreateServer} = activeSlice.actions;
 
 export default activeSlice.reducer;

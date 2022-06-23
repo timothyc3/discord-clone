@@ -8,6 +8,7 @@ import {updateChannels} from "../../features/channelSlice";
 import {fetchUserData} from "../../features/userSlice";
 import {Channel} from "../../types";
 import {listenChannel} from "../../firebase";
+import CreateServerWindow from "./components/CreateServerWindow/CreateServerWindow";
 
 export default function Main() {
 
@@ -38,6 +39,7 @@ export default function Main() {
             <ServerSidebar/>
             <ChannelSidebar/>
             <Content/>
+            <CreateServerWindow />
         </div>
     )
 }

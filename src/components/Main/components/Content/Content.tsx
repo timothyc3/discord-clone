@@ -6,7 +6,7 @@ import MessageInput from "./components/MessageInput";
 export default function Content() {
 
     return (
-        <div className="bg-main-content-black grid grid-rows-[3rem_1fr_5rem] w-full h-screen max-h-full">
+        <div className="bg-main-content-black grid grid-rows-[3rem_1fr_auto] w-full h-screen max-h-full">
             <Header />
             <MessageContainer />
             <MessageInput />
