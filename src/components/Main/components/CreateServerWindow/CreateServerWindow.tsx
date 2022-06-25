@@ -3,6 +3,7 @@ import {useAppDispatch, useAppSelector} from "../../../../hooks";
 import {toggleCreateServer} from "../../../../features/activeSlice";
 import ServerTemplateSelection from "./components/ServerTemplateSelection";
 import ServerGroupTypeSelection from "./components/ServerGroupTypeSelection";
+import ServerNamePhotoSelection from "./components/ServerNamePhotoSelection";
 
 export default function CreateServerWindow() {
 
@@ -38,13 +39,15 @@ export default function CreateServerWindow() {
             {active && <div className="bg-black/70 w-full h-full fixed flex justify-center items-center"
                             onClick={onExit}>
 
-                {serverTemplate === '' ?
+                {serverTemplate === '' && serverGroupType === '' ?
                     <ServerTemplateSelection updateActive={onExit}
                                              onServerTemplateSubmit={(input: string) => onServerTemplateSubmit(input)}/> :
-                    <ServerGroupTypeSelection updateActive={onExit}
-                                              onServerGroupTypeSubmit={(input: string) => onServerGroupTypeSubmit(input)}
-                                              onServerTemplateSubmit={(input: string) => onServerTemplateSubmit(input)}
-                    />
+                    serverGroupType === '' ?
+                        <ServerGroupTypeSelection updateActive={onExit}
+                                                  onServerGroupTypeSubmit={(input: string) => onServerGroupTypeSubmit(input)}
+                                                  onServerTemplateSubmit={(input: string) => onServerTemplateSubmit(input)}
+                        /> :
+                        <ServerNamePhotoSelection/>
                 }
             </div>
             }

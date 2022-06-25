@@ -21,9 +21,7 @@ export default function ServerGroupTypeSelection(
 
     return (
         <div className="relative bg-white w-108 h-auto rounded-md pt-6 grid grid-rows-[auto_auto_200px_65px]"
-             onClick={(event) => {
-                 event.stopPropagation();
-             }}>
+             onClick={(event) => {event.stopPropagation();}}>
             <svg xmlns="http://www.w3.org/2000/svg"
                  className="h-7 w-7 absolute right-3.5 top-3.5 text-inactive-light-grey hover:text-server-bar-black
                              transition-colors"
