@@ -43,13 +43,17 @@ export default function ServerNamePhotoSelection(
                 />
 
             </div>
-            <div className="bg-light-grey/30 w-full h-full p-4 flex items-center">
+            <div className="bg-light-grey/30 w-full h-full px-4 flex items-center justify-between">
                 <h3 className="text-xs font-semibold cursor-default"
                     onClick={() => {
                         props.onServerGroupTypeSubmit('');
                     }}>
                     Back
                 </h3>
+                <div className="bg-blue h-10 w-24 rounded flex justify-center items-center text-white
+                text-sm font-semibold cursor-default hover:bg-darker-blue">
+                    Create
+                </div>
             </div>
         </div>
     )
