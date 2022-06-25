@@ -25,11 +25,26 @@ export default function ServerNamePhotoSelection(
                 Give your new server a personality with a name and an icon. You can always change it later.
             </h2>
             <div className="flex flex-col">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     className="h-10 w-10 text-channel-hover-grey self-center h-24"
-                     viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
-                </svg>
+                <div className="w-20 h-20 border-channel-hover-grey flex flex-col items-center justify-center
+                 self-center border-dashed border-2 rounded-full my-2 relative cursor-default">
+                    <div className="absolute top-0 right-0 bg-blue w-6 h-6 flex justify-center items-center
+                    rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             className="h-3.5 w-3.5 text-white"
+                             fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         className=" h-8 w-8 text-channel-hover-grey self-center"
+                         viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+                    </svg>
+                    <h3 className="text-xs font-bold text-channel-hover-grey">
+                        UPLOAD
+                    </h3>
+
+                </div>
                 <label className="font-semibold self-center w-[90%] text-xs text-channel-hover-grey"
                        htmlFor="serverName">
                     SERVER NAME
