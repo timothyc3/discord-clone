@@ -6,7 +6,7 @@ export default function CreateServerButton(props: {name: string}) {
                         grid grid-cols-[60px_1fr_20px] items-center hover:bg-inactive-light-grey/20
                         transition-all">
             <div></div>
-            <h2 className="font-bold text-sm">{props.name}</h2>
+            <h2 className="font-bold text-sm pointer-events-none">{props.name}</h2>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-channel-hover-grey/80" fill="none"
                  viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
