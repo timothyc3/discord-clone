@@ -34,7 +34,7 @@ export default function ServerTemplateSelection(props:
                         pointer-events-none">
                 Your server is where you and our friends hang out. Make yours and start talking
             </h2>
-            <div className="w-full h-full px-4 py-4 box-border overflow-y-scroll">
+            <div className="w-full h-full px-4 pb-4 box-border overflow-y-scroll">
                 <CreateServerButton name="Make Your Own" handleClick={() => {props.onServerTemplateSubmit("Make Your Own" )}}/>
                 <h3 className="text-xs font-bold text-channel-hover-grey/90 mt-6
                             pointer-events-none">START FROM A TEMPLATE</h3>

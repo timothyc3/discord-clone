@@ -2,9 +2,11 @@ import React from "react";
 import CreateServerButton from "./CreateServerButton";
 
 export default function ServerGroupTypeSelection(
-    props: {updateActive: () => void,
+    props: {
+        updateActive: () => void,
         onServerGroupTypeSubmit: (input: string) => void
-        onServerTemplateSubmit: (input: string) => void}) {
+        onServerTemplateSubmit: (input: string) => void
+    }) {
 
     const groupTypes = [
         'For me and my friends',
@@ -19,7 +21,9 @@ export default function ServerGroupTypeSelection(
 
     return (
         <div className="relative bg-white w-108 h-auto rounded-md pt-6 grid grid-rows-[auto_auto_200px_65px]"
-             onClick={(event) => {event.stopPropagation()}}>
+             onClick={(event) => {
+                 event.stopPropagation();
+             }}>
             <svg xmlns="http://www.w3.org/2000/svg"
                  className="h-7 w-7 absolute right-3.5 top-3.5 text-inactive-light-grey hover:text-server-bar-black
                              transition-colors"
@@ -36,12 +40,17 @@ export default function ServerGroupTypeSelection(
             <div className="w-full h-full px-4 flex flex-col">
                 {groupTypeButtons}
                 <div className="text-xs text-center my-auto cursor-default">
-                    Not sure? You can <span className="text-blue">skip this question</span> for now.
+                    Not sure? You can <span className="text-blue" onClick={() => props.onServerGroupTypeSubmit('skip')}>
+                    skip this question
+                </span> for now.
                 </div>
             </div>
             <div className="bg-light-grey/30 w-full h-full p-4 flex items-center">
                 <h3 className="text-xs font-semibold cursor-default"
-                    onClick={() => {props.onServerTemplateSubmit(''); console.log('called')}}>
+                    onClick={() => {
+                        props.onServerTemplateSubmit('');
+                        console.log('called')
+                    }}>
                     Back</h3>
             </div>
         </div>
