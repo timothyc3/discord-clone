@@ -1,29 +1,52 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../../hooks";
-import CreateServerButton from "./components/CreateServerButton";
 import {toggleCreateServer} from "../../../../features/activeSlice";
 import ServerTemplateSelection from "./components/ServerTemplateSelection";
+import ServerGroupTypeSelection from "./components/ServerGroupTypeSelection";
 
 export default function CreateServerWindow() {
 
     // check if the button active on serverBar is "newServer", if so this will return true instead of false
     const active = useAppSelector(state => state.active.createServer);
 
+    const [serverTemplate, setServerTemplate] = useState<string>('');
+    const [serverGroupType, setServerGroupType] = useState<string>('');
+
+    function onServerTemplateSubmit(input: string) {
+        setServerTemplate(input);
+    }
+
+    function onServerGroupTypeSubmit(input: string) {
+        setServerGroupType(input);
+    }
+
     const dispatch = useAppDispatch();
 
     // update active server in redux store
-    function updateActive() {
+    function onExit() {
         dispatch(toggleCreateServer(''));
+        if (serverTemplate !== '') {
+            setServerTemplate('')
+        }
+        if (serverGroupType !== '') {
+            setServerGroupType('')
+        }
     }
 
     return (
         <>
-            {
-                active && <div className="bg-black/70 w-full h-full fixed flex justify-center items-center"
-                    onClick={updateActive}
-                >
-                    <ServerTemplateSelection updateActive={updateActive}/>
-                </div>
+            {active && <div className="bg-black/70 w-full h-full fixed flex justify-center items-center"
+                            onClick={onExit}>
+
+                {serverTemplate === '' ?
+                    <ServerTemplateSelection updateActive={onExit}
+                                             onServerTemplateSubmit={(input: string) => onServerTemplateSubmit(input)}/> :
+                    <ServerGroupTypeSelection updateActive={onExit}
+                                              onServerGroupTypeSubmit={(input: string) => onServerGroupTypeSubmit(input)}
+                                              onServerTemplateSubmit={(input: string) => onServerTemplateSubmit(input)}
+                    />
+                }
+            </div>
             }
         </>
     )
