@@ -31,6 +31,7 @@ export default function MessageInput() {
                           && channelObject.name !== null
                           && channelObject.id !== null
                       ) {
+                          event.preventDefault();
 
                           const today = new Date();
 
