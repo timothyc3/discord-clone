@@ -36,7 +36,6 @@ export default function CreateServerWindow() {
     }
 
     function onServerNameChange(event: React.ChangeEvent<HTMLInputElement>) {
-        console.log(defaultServerName)
         setServerName(event.target.value);
     }
 

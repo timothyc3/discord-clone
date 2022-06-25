@@ -27,8 +27,8 @@ export default function ServerNamePhotoSelection(
                 Give your new server a personality with a name and an icon. You can always change it later.
             </h2>
             <div className="flex flex-col">
-                <div className="w-20 h-20 border-channel-hover-grey flex flex-col items-center justify-center
-                 self-center border-dashed border-2 rounded-full my-2 relative cursor-default">
+                <button className="w-20 h-20 border-channel-hover-grey flex flex-col items-center justify-center
+                 self-center border-dashed border-2 rounded-full my-2 relative">
                     <div className="absolute top-0 right-0 bg-blue w-6 h-6 flex justify-center items-center
                     rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,7 @@ export default function ServerNamePhotoSelection(
                         UPLOAD
                     </h3>
 
-                </div>
+                </button>
                 <label className="font-semibold self-center w-[90%] text-xs text-channel-hover-grey"
                        htmlFor="serverName">
                     SERVER NAME
@@ -74,7 +74,7 @@ export default function ServerNamePhotoSelection(
                     className={`${props.defaultServerName === '' ? "bg-blue/50" :
                         "hover:bg-darker-blue bg-blue"} h-10 w-24 
                     rounded flex justify-center items-center text-white
-                        text-sm font-semibold cursor-default`}>
+                        text-sm font-semibold`}>
                     Create
                 </button>
             </div>
