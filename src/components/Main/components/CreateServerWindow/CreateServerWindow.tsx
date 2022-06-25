@@ -9,9 +9,23 @@ export default function CreateServerWindow() {
 
     // check if the button active on serverBar is "newServer", if so this will return true instead of false
     const active = useAppSelector(state => state.active.createServer);
+    // retrieve the username once, provided it does not return empty string. Will stop refreshing
+    // once it no longer returns an empty string as seen in equalityFn
+    const defaultServerName = useAppSelector(state => {
+            if (state.login.uid in state.user.entities) {
+                return `${state.user.entities[state.login.uid].name}'s Server`
+            }
+            else {return ''}
+        }, (a, b) => a !== '');
+
+    // when defaultServerName does not return empty string, this will trigger once after mount.
+    useEffect(() => {
+        setServerName(defaultServerName);
+    }, [defaultServerName])
 
     const [serverTemplate, setServerTemplate] = useState<string>('');
     const [serverGroupType, setServerGroupType] = useState<string>('');
+    const [serverName, setServerName] = useState<string>('');
 
     function onServerTemplateSubmit(input: string) {
         setServerTemplate(input);
@@ -21,17 +35,23 @@ export default function CreateServerWindow() {
         setServerGroupType(input);
     }
 
+    function onServerNameChange(event: React.ChangeEvent<HTMLInputElement>) {
+        console.log(defaultServerName)
+        setServerName(event.target.value);
+    }
+
     const dispatch = useAppDispatch();
 
     // update active server in redux store
     function onExit() {
         dispatch(toggleCreateServer(''));
         if (serverTemplate !== '') {
-            setServerTemplate('')
+            setServerTemplate('');
         }
         if (serverGroupType !== '') {
-            setServerGroupType('')
+            setServerGroupType('');
         }
+        setServerName(defaultServerName);
     }
 
     return (
@@ -47,7 +67,12 @@ export default function CreateServerWindow() {
                                                   onServerGroupTypeSubmit={(input: string) => onServerGroupTypeSubmit(input)}
                                                   onServerTemplateSubmit={(input: string) => onServerTemplateSubmit(input)}
                         /> :
-                        <ServerNamePhotoSelection/>
+                        <ServerNamePhotoSelection updateActive={onExit}
+                                                  onServerGroupTypeSubmit={(input: string) => onServerGroupTypeSubmit(input)}
+                                                  onServerTemplateSubmit={(input: string) => onServerTemplateSubmit(input)}
+                                                  defaultServerName={serverName}
+                                                  onServerNameChange={onServerNameChange}
+                        />
                 }
             </div>
             }
