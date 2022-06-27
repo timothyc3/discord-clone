@@ -44,11 +44,11 @@ export default function ServerGroupTypeSelection(
                 </div>
             </div>
             <div className="bg-light-grey/30 w-full h-full p-4 flex items-center">
-                <h3 className="text-xs font-semibold cursor-default"
+                <button className="text-xs font-semibold"
                     onClick={() => {
                         props.onServerTemplateSubmit('');
                     }}>
-                    Back</h3>
+                    Back</button>
             </div>
         </div>
     )

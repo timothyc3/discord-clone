@@ -1,10 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import {useAppSelector} from "../../../../hooks";
 import Header from "./components/Header";
 import ChannelButton from "./components/ChannelButton";
 import _ from "lodash"
 
 export default function ChannelSidebar() {
+
+    const [headerActive, setHeaderActive] = useState<boolean>(false);
+
+    function toggleHeaderActive() {
+        setHeaderActive(!headerActive);
+    }
 
     let renderedChannelButtons;
 
@@ -30,7 +36,7 @@ export default function ChannelSidebar() {
 
     return (
         <div className="bg-sub-black grid grid-rows-[3rem_1fr_5rem] w-full h-full">
-            <Header />
+            <Header handleHeaderClick={toggleHeaderActive} headerActive={headerActive}/>
             <div className="w-full h-full py-5 px-2 flex flex-col gap-0.5">
                 {renderedChannelButtons}
             </div>

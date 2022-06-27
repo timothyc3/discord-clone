@@ -64,12 +64,12 @@ export default function ServerNamePhotoSelection(
 
             </div>
             <div className="bg-light-grey/30 w-full h-full px-4 flex items-center justify-between">
-                <h3 className="text-xs font-semibold cursor-default"
+                <button className="text-xs font-semibold"
                     onClick={() => {
                         props.onServerGroupTypeSubmit('');
                     }}>
                     Back
-                </h3>
+                </button>
                 <button disabled={props.defaultServerName === ''}
                     className={`${props.defaultServerName === '' ? "bg-blue/50" :
                         "hover:bg-darker-blue bg-blue"} h-10 w-24 
