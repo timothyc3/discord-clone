@@ -41,7 +41,6 @@ export default function ChannelSidebar() {
                 {renderedChannelButtons}
             </div>
 
-
         </div>
     )
 }

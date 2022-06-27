@@ -19,7 +19,7 @@ export default function Header(props: {
 
     return (
         <div className={`box-border ${props.headerActive ? "bg-channel-hover-grey" : "bg-sub-black"} 
-            w-full h-full shadow-md flex items-center py-3 px-5
+            w-full h-full shadow-md flex items-center py-3 px-5 relative
             hover:bg-channel-hover-grey duration-75 select-none`}
              onClick={props.handleHeaderClick}
         >
@@ -30,14 +30,20 @@ export default function Header(props: {
                 <svg xmlns="http://www.w3.org/2000/svg"
                      className="h-4 w-4 ml-auto text-light-grey"
                      fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
                 :
                 <svg xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 ml-auto text-light-grey"
-                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/>
-            </svg>}
+                     className="h-4 w-4 ml-auto text-light-grey"
+                     fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/>
+                </svg>}
+
+            {props.headerActive &&
+                <div className="bg-server-bar-black absolute left-1/2 box-border -bottom-3
+                w-11/12 -translate-x-1/2 translate-y-full">
+                    hello
+                </div>}
         </div>
 
     )
