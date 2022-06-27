@@ -15,6 +15,7 @@ module.exports = {
         'channel-hover-grey': '#3A3C42',
         'channel-active-grey': '#42474D',
         'server-bar-black': '#212429',
+        'darker-black': '#14161A',
         'light-grey': '#B4BBCF',
         'inactive-light-grey': '#838896',
         'white': '#EDEDED',
