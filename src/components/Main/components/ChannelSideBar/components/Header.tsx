@@ -49,7 +49,9 @@ export default function Header(props: {
                     }
                 >
                     <li className="flex justify-between items-center p-2 rounded my-1
-                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue">
+                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue"
+                        onClick={props.handleHeaderClick}
+                    >
                         <h2 className="group-hover:text-white">Server Boost</h2>
                         <svg xmlns="http://www.w3.org/2000/svg"
                              className="h-5 w-5 text-purple-500 group-hover:text-white"
@@ -59,7 +61,9 @@ export default function Header(props: {
                     </li>
                     <hr className="mx-1 h-[1px] border-none bg-channel-active-grey" />
                     <li className="flex justify-between items-center p-2 rounded my-1
-                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue">
+                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue"
+                        onClick={props.handleHeaderClick}
+                    >
                         <h2 className="text-blue group-hover:text-white">Invite People</h2>
                         <svg xmlns="http://www.w3.org/2000/svg"
                              className="h-5 w-5 text-blue group-hover:text-white"
@@ -69,7 +73,9 @@ export default function Header(props: {
                         </svg>
                     </li>
                     <li className="flex justify-between items-center p-2 rounded my-1
-                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue">
+                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue"
+                        onClick={props.handleHeaderClick}
+                    >
                         <h2 className="group-hover:text-white">Server Settings</h2>
                         <svg xmlns="http://www.w3.org/2000/svg"
                              className="h-5 w-5 group-hover:text-white"
@@ -78,7 +84,9 @@ export default function Header(props: {
                         </svg>
                     </li>
                     <li className="flex justify-between items-center p-2 rounded my-1
-                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue">
+                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue"
+                        onClick={props.handleHeaderClick}
+                    >
                         <h2 className="group-hover:text-white">Create Channel</h2>
                         <svg xmlns="http://www.w3.org/2000/svg"
                              className="h-5 w-5 group-hover:text-white"
@@ -88,7 +96,9 @@ export default function Header(props: {
                     </li>
                     <hr className="mx-1 h-[1px] border-none bg-channel-active-grey" />
                     <li className="flex justify-between items-center p-2 rounded my-1
-                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue">
+                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue"
+                        onClick={props.handleHeaderClick}
+                    >
                         <h2 className="group-hover:text-white">Notification Settings</h2>
                         <svg xmlns="http://www.w3.org/2000/svg"
                              className="h-5 w-5 group-hover:text-white"
@@ -97,7 +107,9 @@ export default function Header(props: {
                         </svg>
                     </li>
                     <li className="flex justify-between items-center p-2 rounded my-1
-                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue">
+                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue"
+                        onClick={props.handleHeaderClick}
+                    >
                         <h2 className="group-hover:text-white">Privacy Settings</h2>
                         <svg xmlns="http://www.w3.org/2000/svg"
                              className="h-5 w-5 group-hover:text-white"
@@ -107,7 +119,9 @@ export default function Header(props: {
                     </li>
                     <hr className="mx-1 h-[1px] border-none bg-channel-active-grey" />
                     <li className="flex justify-between items-center p-2 rounded my-1
-                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue">
+                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue"
+                        onClick={props.handleHeaderClick}
+                    >
                         <h2 className="group-hover:text-white">Edit Server Profile</h2>
                         <svg xmlns="http://www.w3.org/2000/svg"
                              className="h-5 w-5 group-hover:text-white"
@@ -116,7 +130,9 @@ export default function Header(props: {
                         </svg>
                     </li>
                     <li className="flex justify-between items-center p-2 rounded my-1
-                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue">
+                    first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue"
+                        onClick={props.handleHeaderClick}
+                    >
                         <h2 className="group-hover:text-white">Hide Muted Channels</h2>
                         <svg xmlns="http://www.w3.org/2000/svg"
                              className="h-6 w-6 group-hover:text-white"
@@ -126,7 +142,9 @@ export default function Header(props: {
                     </li>
                     <hr className="mx-1 h-[1px] border-none bg-channel-active-grey" />
                     <li className="flex justify-between items-center p-2 rounded my-1
-                    first:mt-0 last:mb-0 group transition-all hover:bg-red-500">
+                    first:mt-0 last:mb-0 group transition-all hover:bg-red-500"
+                        onClick={props.handleHeaderClick}
+                    >
                         <h2 className="text-red-500 group-hover:text-white">Leave Server</h2>
                         <svg xmlns="http://www.w3.org/2000/svg"
                              className="h-5 w-5 text-red-500 group-hover:text-white"
