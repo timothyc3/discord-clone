@@ -24,10 +24,10 @@ export default function CreateChannelWindow() {
                              onClick={onExit}>
                 <div
                     className="relative bg-channel-active-grey w-108 h-auto
-                    rounded-xl flex flex-col p-4"
+                    rounded-xl grid grid-rows-[auto_auto_auto_65px] overflow-y-hidden"
                     onClick={(event) => event.stopPropagation()}
                 >
-                    <h1 className="text-white font-semibold text-xl mb-4">Create Channel</h1>
+                    <h1 className="text-white font-semibold text-xl mb-4 m-4">Create Channel</h1>
                     <svg xmlns="http://www.w3.org/2000/svg"
                          className="h-7 w-7 absolute right-3.5 top-3.5 text-inactive-light-grey hover:text-server-bar-black
                              transition-colors"
@@ -36,9 +36,9 @@ export default function CreateChannelWindow() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                     <label htmlFor="serverName"
-                           className="text-white font-bold text-xs mb-2"
+                           className="text-white font-bold text-xs mx-4"
                     >CHANNEL NAME</label>
-                    <div className="relative">
+                    <div className="relative mx-4 mt-2 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              className="h-5 w-5 absolute text-white top-1/2 left-3.5
                              -translate-x-1/2 -translate-y-1/2"
@@ -55,7 +55,14 @@ export default function CreateChannelWindow() {
                             onChange={handleChannelNameTextInput}
                         />
                     </div>
-
+                    <div className="bg-channel-hover-grey w-full h-[65px] px-4
+                        flex items-center justify-between"
+                    >
+                        <button className={`rounded flex justify-center items-center text-white
+                                text-sm font-semibold`}>
+                            Create
+                        </button>
+                    </div>
 
                 </div>
 
