@@ -98,14 +98,24 @@ export default function CreateChannelWindow() {
                                 </div>
                             </label>
                         </div>
+                        <p className="col-span-3 text-light-grey text-xs">
+                            Only selected members and roles will be able to view this channel.
+                        </p>
 
                     </div>
                     <div className="bg-channel-hover-grey w-full h-[65px] px-4
-                        flex items-center justify-between"
+                        flex items-center flex-row-reverse gap-6"
                     >
+                        <button disabled={channelName === ''}
+                                className={`${channelName === '' ? "bg-blue/50 text-light-grey/80" : 
+                                    "hover:bg-darker-blue bg-blue text-white"} h-10 w-32 
+                                rounded flex justify-center items-center
+                        text-xs font-semibold`}>
+                            Create Channel
+                        </button>
                         <button className={`rounded flex justify-center items-center text-white
-                                text-sm font-semibold`}>
-                            Create
+                                text-xs font-semibold`}>
+                            Cancel
                         </button>
                     </div>
                 </div>
