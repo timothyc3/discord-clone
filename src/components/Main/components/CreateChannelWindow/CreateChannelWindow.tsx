@@ -7,11 +7,17 @@ export default function CreateChannelWindow() {
 
     const active = useAppSelector(state => state.active.createChannel);
 
-    const [channelName, setChannelName] = useState<string>('')
+    const [channelName, setChannelName] = useState<string>('');
+    const [isPrivateChannel, setIsPrivateChannel] = useState<boolean>(false);
 
     // update active server in redux store
     function onExit() {
         dispatch(toggleCreateChannel(''));
+        setIsPrivateChannel(false);
+    }
+
+    function handlePrivateChannelToggle() {
+        setIsPrivateChannel(!isPrivateChannel);
     }
 
     function handleChannelNameTextInput(event: React.ChangeEvent<HTMLInputElement>) {
@@ -65,14 +71,30 @@ export default function CreateChannelWindow() {
                         <h3 className="text-white text-sm font-semibold">Private Channel</h3>
                         <div className="flex items-center justify-center">
                             <label htmlFor="toggle" className="relative flex items-center cursor-pointer">
-                                <input type="checkbox" id="toggle" className="sr-only peer"/>
+                                <input type="checkbox" id="toggle" className="sr-only"
+                                    onClick={handlePrivateChannelToggle}
+                                />
                                 <div
-                                    className="h-6 bg-inactive-light-grey border-2 border-inactive-light-grey
-                                    rounded-full w-11 peer-checked:bg-bright-green peer-checked:border-bright-green
-                                    transition-all duration-300">
+                                    className={`h-6 border-2 rounded-full w-11 
+                                        ${isPrivateChannel ? "bg-bright-green border-bright-green" : "bg-inactive-light-grey border-inactive-light-grey"}
+                                        transition-all duration-300`}>
                                 </div>
-                                <div className="absolute top-0.7 left-1 bg-white h-[1.125rem] w-[1.125rem]
-                                    shadow-sm rounded-full peer-checked:translate-x-full transition-all duration-300">
+                                <div className={`absolute top-0.7 left-1 bg-white h-[1.125rem] w-[1.125rem]
+                                    shadow-sm rounded-full ${isPrivateChannel && "translate-x-full"} transition-all duration-300
+                                    flex items-center justify-center`}>
+                                    {isPrivateChannel ?
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             className="h-3.5 w-3.5 text-bright-green"
+                                             fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        :
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             className="h-3.5 w-3.5 text-inactive-light-grey"
+                                             fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3.5}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    }
                                 </div>
                             </label>
                         </div>
