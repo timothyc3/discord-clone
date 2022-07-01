@@ -55,12 +55,29 @@ export default function CreateChannelWindow() {
                             onChange={handleChannelNameTextInput}
                         />
                     </div>
-                    <div className="grid grid-rows-[2fr_3fr]">
+                    <div className="grid grid-rows-[2fr_3fr] grid-cols-[auto_1fr_50px] mx-4
+                    items-center gap-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              className="h-5 w-5 text-light-grey"
                              viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                         </svg>
+                        <h3 className="text-white text-sm font-semibold">Private Channel</h3>
+                        <div className="flex items-center justify-center">
+                            <label htmlFor="toggle" className="relative flex items-center cursor-pointer">
+                                <input type="checkbox" id="toggle" className="sr-only peer"/>
+                                <div
+                                    className="h-6 bg-inactive-light-grey border-2 border-inactive-light-grey
+                                    rounded-full w-11 peer-checked:bg-bright-green peer-checked:border-bright-green
+                                    transition-all duration-300">
+                                </div>
+                                <div className="absolute top-0.5 left-0.5 bg-white border border-light-grey
+                                    h-5 w-5 shadow-sm rounded-full peer-checked:translate-x-full
+                                    transition-all duration-300">
+                                </div>
+                            </label>
+                        </div>
+
                     </div>
                     <div className="bg-channel-hover-grey w-full h-[65px] px-4
                         flex items-center justify-between"
