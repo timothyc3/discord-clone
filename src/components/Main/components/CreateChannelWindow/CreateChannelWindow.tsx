@@ -71,9 +71,8 @@ export default function CreateChannelWindow() {
                                     rounded-full w-11 peer-checked:bg-bright-green peer-checked:border-bright-green
                                     transition-all duration-300">
                                 </div>
-                                <div className="absolute top-0.5 left-0.5 bg-white border border-light-grey
-                                    h-5 w-5 shadow-sm rounded-full peer-checked:translate-x-full
-                                    transition-all duration-300">
+                                <div className="absolute top-0.7 left-1 bg-white h-[1.125rem] w-[1.125rem]
+                                    shadow-sm rounded-full peer-checked:translate-x-full transition-all duration-300">
                                 </div>
                             </label>
                         </div>
