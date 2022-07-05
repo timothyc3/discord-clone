@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../../hooks";
 import {toggleCreateChannel} from "../../../../features/activeSlice";
 import { ChannelPayload } from "../../../../types";
+import { createChannel } from "../../../../firebase";
 
 export default function CreateChannelWindow() {
     const dispatch = useAppDispatch();
@@ -9,9 +10,11 @@ export default function CreateChannelWindow() {
     const active = useAppSelector(state => state.active.createChannel);
     const serverId = useAppSelector(state => state.active.levelOne);
     const userId = useAppSelector(state => state.login.uid)
+    const nonServerActive = useAppSelector(state => ['Home', 'Discover'].includes(state.active.levelOne));
 
     const [channelName, setChannelName] = useState<string>('');
     const [isPrivateChannel, setIsPrivateChannel] = useState<boolean>(false);
+    const [createServerInitiated, setCreateServerInitiated] = useState<boolean>(false);
 
     // update active server in redux store
     function onExit() {
@@ -36,7 +39,7 @@ export default function CreateChannelWindow() {
             private: isPrivateChannel
         }
 
-        console.log(channelPayload);
+        createChannel(channelPayload).then(() => {setCreateServerInitiated(true)})
     }
 
     return (
@@ -121,8 +124,8 @@ export default function CreateChannelWindow() {
                     <div className="bg-channel-hover-grey w-full h-[65px] px-4
                         flex items-center flex-row-reverse gap-6"
                     >
-                        <button disabled={channelName === ''}
-                                className={`${channelName === '' ? "bg-blue/50 text-light-grey/80" : 
+                        <button disabled={channelName === '' || nonServerActive || createServerInitiated}
+                                className={`${channelName === '' || nonServerActive || createServerInitiated ? "bg-blue/50 text-light-grey/80" : 
                                     "hover:bg-darker-blue bg-blue text-white"} h-10 w-32 
                                 rounded flex justify-center items-center
                         text-xs font-semibold`}
@@ -131,7 +134,9 @@ export default function CreateChannelWindow() {
                             Create Channel
                         </button>
                         <button className={`rounded flex justify-center items-center text-white
-                                text-xs font-semibold`}>
+                                text-xs font-semibold`}
+                                onClick={onExit}
+                        >
                             Cancel
                         </button>
                     </div>

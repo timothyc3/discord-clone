@@ -4,6 +4,7 @@ import {arrayUnion, collection, doc, getDocs, getFirestore, setDoc, writeBatch, 
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth"
 import {Channel, ChannelPayload, Message, MessagePayload, Server, User} from "./types";
 import {useAppDispatch} from "./hooks";
+import {channel} from "diagnostics_channel";
 // import {updateChannels} from "./features/channelSlice";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -212,7 +213,7 @@ async function createChannel(data: ChannelPayload) {
 
     const {serverId, ...channelPayload} = data;
 
-    batch.set(docRefChannels, {...channelPayload, id: docRefChannels.id});
+    batch.set(docRefChannels, {name: channelPayload.name, messageIds: [], userIds: [channelPayload.creatorUserId], id: docRefChannels.id});
     batch.update(docRefServer, {channelIds: arrayUnion(docRefChannels.id)});
 
     await batch.commit();
@@ -255,4 +256,5 @@ const getServerData = async (uid: string) => {
 }
 
 export {addData, getServerData, getChannelData, getMessageData, getUserData,
-    writeMessage, createNewUser, logOut, getCurrentUser, listenChannel, login}
+    writeMessage, createNewUser, logOut, getCurrentUser, listenChannel, login,
+    createChannel}
