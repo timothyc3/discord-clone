@@ -1,11 +1,14 @@
 import React, {useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../../hooks";
 import {toggleCreateChannel} from "../../../../features/activeSlice";
+import { ChannelPayload } from "../../../../types";
 
 export default function CreateChannelWindow() {
     const dispatch = useAppDispatch();
 
     const active = useAppSelector(state => state.active.createChannel);
+    const serverId = useAppSelector(state => state.active.levelOne);
+    const userId = useAppSelector(state => state.login.uid)
 
     const [channelName, setChannelName] = useState<string>('');
     const [isPrivateChannel, setIsPrivateChannel] = useState<boolean>(false);
@@ -22,6 +25,18 @@ export default function CreateChannelWindow() {
 
     function handleChannelNameTextInput(event: React.ChangeEvent<HTMLInputElement>) {
         setChannelName(event.target.value);
+    }
+
+    function handleCreateChannelSubmit(event: React.MouseEvent<HTMLButtonElement>) {
+
+        const channelPayload: ChannelPayload = {
+            serverId: serverId,
+            creatorUserId: userId,
+            name: channelName,
+            private: isPrivateChannel
+        }
+
+        console.log(channelPayload);
     }
 
     return (
@@ -110,7 +125,9 @@ export default function CreateChannelWindow() {
                                 className={`${channelName === '' ? "bg-blue/50 text-light-grey/80" : 
                                     "hover:bg-darker-blue bg-blue text-white"} h-10 w-32 
                                 rounded flex justify-center items-center
-                        text-xs font-semibold`}>
+                        text-xs font-semibold`}
+                                onClick={handleCreateChannelSubmit}
+                        >
                             Create Channel
                         </button>
                         <button className={`rounded flex justify-center items-center text-white
