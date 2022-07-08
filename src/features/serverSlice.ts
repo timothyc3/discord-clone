@@ -32,7 +32,19 @@ export const serverSlice = createSlice({
 
         updateServerChannels: (state: ServerState, action: {payload: {serverId: number, channelId: number}}) => {
             // state.entities.id[action.payload.serverId].channelIds.push(action.payload.channelId.toString())
-        }
+        },
+        updateServers: (state: ServerState, action: {payload: {[key: string]: Server}}) => {
+            console.log("updateServer called", action.payload)
+            const newState: ServerState = {entities: {}, ids: []}
+            // populate the entities and ids of newState
+            Object.keys(action.payload).forEach(key => {
+                const serverId = action.payload[key].id;
+                newState.ids.push(serverId);
+                newState.entities[serverId] = action.payload[key];
+            });
+            state.ids = newState.ids;
+            state.entities = newState.entities;
+        },
     },
     extraReducers: (builder) => {
         // if fetching data from firebase is fulfilled, then we save the server data to state.entities
@@ -43,7 +55,7 @@ export const serverSlice = createSlice({
     }
 });
 
-export const { addServer } = serverSlice.actions;
+export const { updateServers } = serverSlice.actions;
 export { fetchServerData }
 
 export default serverSlice.reducer;

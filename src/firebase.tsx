@@ -182,6 +182,22 @@ const listenChannel = (userId: string,
 
 }
 
+const listenServer = (userId: string,
+                       handler: (payload: {[key: string]: Server}) => void) => {
+
+    const q = query(collection(firestore, "servers"),
+        where("userIds", "array-contains", userId));
+
+    return onSnapshot(q, (querySnapshot) => {
+        const result : any = [];
+        querySnapshot.forEach((doc) => {
+            result.push(doc.data())
+        });
+        handler(result)
+    })
+
+}
+
 // adds documents in firebase for the new message.
 async function writeMessage(data: MessagePayload) {
     const batch = writeBatch(firestore);
@@ -257,4 +273,4 @@ const getServerData = async (uid: string) => {
 
 export {addData, getServerData, getChannelData, getMessageData, getUserData,
     writeMessage, createNewUser, logOut, getCurrentUser, listenChannel, login,
-    createChannel}
+    createChannel, listenServer}
