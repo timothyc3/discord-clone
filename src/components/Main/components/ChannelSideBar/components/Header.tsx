@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../../../../hooks";
 import {shallowEqual} from "react-redux";
 import {toggleCreateChannel} from "../../../../../features/activeSlice";
 
 export default function Header(props: {
     handleHeaderClick: () => void,
+    falseHeaderActive: () => void,
     headerActive: boolean
 }) {
 
@@ -19,6 +20,11 @@ export default function Header(props: {
             return state.active.levelOne
         }
     }, shallowEqual);
+
+    // listen to redux active server, pass into useEffectt to turn off headerActive if it changes
+    const activeServer: string = useAppSelector(state => state.active.levelOne)
+
+    useEffect(() => {props.falseHeaderActive()}, [activeServer])
 
     function handleCreateChannel() {
         dispatch(toggleCreateChannel(''))
