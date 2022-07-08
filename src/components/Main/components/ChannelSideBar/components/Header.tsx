@@ -21,14 +21,14 @@ export default function Header(props: {
         }
     }, shallowEqual);
 
-    // listen to redux active server, pass into useEffectt to turn off headerActive if it changes
+    // listen to redux active server, pass into useEffect to turn off headerActive if it changes
     const activeServer: string = useAppSelector(state => state.active.levelOne)
 
     useEffect(() => {props.falseHeaderActive()}, [activeServer])
 
     function handleCreateChannel() {
         dispatch(toggleCreateChannel(''))
-    };
+    }
 
     return (
         <div className={`box-border ${props.headerActive ? "bg-channel-hover-grey" : "bg-sub-black"} 
