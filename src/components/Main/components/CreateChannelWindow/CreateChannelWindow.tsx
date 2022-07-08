@@ -39,7 +39,9 @@ export default function CreateChannelWindow() {
             private: isPrivateChannel
         }
 
-        createChannel(channelPayload).then(() => {setCreateServerInitiated(true)})
+        setCreateServerInitiated(true);
+
+        createChannel(channelPayload).then(() => {onExit(); setCreateServerInitiated(false);})
     }
 
     return (
