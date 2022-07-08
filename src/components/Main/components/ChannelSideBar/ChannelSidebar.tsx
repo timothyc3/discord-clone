@@ -12,6 +12,10 @@ export default function ChannelSidebar() {
         setHeaderActive(!headerActive);
     }
 
+    function falseHeaderActive() {
+        setHeaderActive(false);
+    }
+
     let renderedChannelButtons;
 
     // get the channels of the selected server
@@ -36,7 +40,7 @@ export default function ChannelSidebar() {
 
     return (
         <div className="bg-sub-black grid grid-rows-[3rem_1fr_5rem] w-full h-full">
-            <Header handleHeaderClick={toggleHeaderActive} headerActive={headerActive}/>
+            <Header handleHeaderClick={toggleHeaderActive} headerActive={headerActive} falseHeaderActive={falseHeaderActive}/>
             <div className="w-full h-full py-5 px-2 flex flex-col gap-0.5">
                 {renderedChannelButtons}
             </div>
