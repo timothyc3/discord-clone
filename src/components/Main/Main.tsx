@@ -3,12 +3,13 @@ import ChannelSidebar from "./components/ChannelSideBar/ChannelSidebar";
 import ServerSidebar from "./components/ServerSideBar/ServerSidebar";
 import Content from "./components/Content/Content";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {fetchServerData} from "../../features/serverSlice";
+import {fetchServerData, updateServers} from "../../features/serverSlice";
 import {updateChannels} from "../../features/channelSlice";
 import {fetchUserData} from "../../features/userSlice";
-import {Channel} from "../../types";
-import {listenChannel} from "../../firebase";
+import {Channel, Server} from "../../types";
+import {listenChannel, listenServer} from "../../firebase";
 import CreateServerWindow from "./components/CreateServerWindow/CreateServerWindow";
+import CreateChannelWindow from "./components/CreateChannelWindow/CreateChannelWindow";
 
 export default function Main() {
 
@@ -22,12 +23,21 @@ export default function Main() {
                 dispatch(fetchServerData(uid));
                 dispatch(fetchUserData());
 
+                listenServer(
+                    uid,
+                    (payload: { [key: string]: Server }) => {
+                        dispatch(updateServers(payload))
+                    }
+                )
+
                 listenChannel(
                     uid,
                     (payload: { [key: string]: Channel }) => {
                         dispatch(updateChannels(payload))
                     }
                 );
+
+
             }
         };
 
@@ -40,6 +50,7 @@ export default function Main() {
             <ChannelSidebar/>
             <Content/>
             <CreateServerWindow />
+            <CreateChannelWindow />
         </div>
     )
 }

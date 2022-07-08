@@ -35,7 +35,7 @@ export interface User {
 }
 
 export interface MessagePayload {
-    channelId: string
+    channelId: string,
     userId: string,
     text: string,
     year: number,
@@ -46,3 +46,9 @@ export interface MessagePayload {
     second: number
 }
 
+export interface ChannelPayload {
+    serverId: string,
+    creatorUserId: string,
+    name: string,
+    private: boolean
+}

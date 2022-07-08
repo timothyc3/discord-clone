@@ -2,8 +2,9 @@
 import {initializeApp} from "firebase/app";
 import {arrayUnion, collection, doc, getDocs, getFirestore, setDoc, writeBatch, query, where, onSnapshot} from "firebase/firestore";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth"
-import {Channel, Message, MessagePayload, Server, User} from "./types";
+import {Channel, ChannelPayload, Message, MessagePayload, Server, User} from "./types";
 import {useAppDispatch} from "./hooks";
+import {channel} from "diagnostics_channel";
 // import {updateChannels} from "./features/channelSlice";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -181,8 +182,23 @@ const listenChannel = (userId: string,
 
 }
 
-// called inside writeMessage, updates the respective channel's messageId, and adds a document
-// in firebase for the new message.
+const listenServer = (userId: string,
+                       handler: (payload: {[key: string]: Server}) => void) => {
+
+    const q = query(collection(firestore, "servers"),
+        where("userIds", "array-contains", userId));
+
+    return onSnapshot(q, (querySnapshot) => {
+        const result : any = [];
+        querySnapshot.forEach((doc) => {
+            result.push(doc.data())
+        });
+        handler(result)
+    })
+
+}
+
+// adds documents in firebase for the new message.
 async function writeMessage(data: MessagePayload) {
     const batch = writeBatch(firestore);
 
@@ -199,10 +215,24 @@ async function writeMessage(data: MessagePayload) {
         id: docRefMessages.id
     });
 
-    // add docRefChannels to the batch write
+    // add docRefChannels to the batch write, adds the new messageID to the channel
     batch.update(docRefChannels, {messageIds: arrayUnion(docRefMessages.id)});
 
     await batch.commit()
+}
+
+async function createChannel(data: ChannelPayload) {
+    const batch = writeBatch(firestore);
+
+    const docRefChannels = doc(collection(firestore, "channels"));
+    const docRefServer = doc(collection(firestore, "servers"), data.serverId);
+
+    const {serverId, ...channelPayload} = data;
+
+    batch.set(docRefChannels, {name: channelPayload.name, messageIds: [], userIds: [channelPayload.creatorUserId], id: docRefChannels.id});
+    batch.update(docRefServer, {channelIds: arrayUnion(docRefChannels.id)});
+
+    await batch.commit();
 }
 
 const getChannelData = async (uid: string) => {
@@ -242,4 +272,5 @@ const getServerData = async (uid: string) => {
 }
 
 export {addData, getServerData, getChannelData, getMessageData, getUserData,
-    writeMessage, createNewUser, logOut, getCurrentUser, listenChannel, login}
+    writeMessage, createNewUser, logOut, getCurrentUser, listenChannel, login,
+    createChannel, listenServer}

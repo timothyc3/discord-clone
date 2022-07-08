@@ -4,12 +4,14 @@ interface ActiveState {
     levelOne: string,
     levelTwo: string,
     createServer: boolean
+    createChannel: boolean
 }
 
 const initialState: ActiveState = {
     levelOne: "Discover",
     levelTwo: "1",
-    createServer: false
+    createServer: false,
+    createChannel: false
 }
 
 export const activeSlice = createSlice(
@@ -25,11 +27,14 @@ export const activeSlice = createSlice(
             },
             toggleCreateServer: (state, action) => {
                 state.createServer = !state.createServer
+            },
+            toggleCreateChannel: (state, action) => {
+                state.createChannel = !state.createChannel
             }
         }
     }
 );
 
-export const {updateLevelOne, updateLevelTwo, toggleCreateServer} = activeSlice.actions;
+export const {updateLevelOne, updateLevelTwo, toggleCreateServer, toggleCreateChannel} = activeSlice.actions;
 
 export default activeSlice.reducer;

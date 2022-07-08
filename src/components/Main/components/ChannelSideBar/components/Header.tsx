@@ -1,11 +1,14 @@
 import React from "react";
-import {useAppSelector} from "../../../../../hooks";
+import {useAppDispatch, useAppSelector} from "../../../../../hooks";
 import {shallowEqual} from "react-redux";
+import {toggleCreateChannel} from "../../../../../features/activeSlice";
 
 export default function Header(props: {
     handleHeaderClick: () => void,
     headerActive: boolean
 }) {
+
+    const dispatch = useAppDispatch();
 
     // retrieve the heading to use by seeing if it's a server ID present in server slice, if not just use
     // whatever is defined in the active slice. If it is return the name from that server object in server slice
@@ -16,6 +19,10 @@ export default function Header(props: {
             return state.active.levelOne
         }
     }, shallowEqual);
+
+    function handleCreateChannel() {
+        dispatch(toggleCreateChannel(''))
+    };
 
     return (
         <div className={`box-border ${props.headerActive ? "bg-channel-hover-grey" : "bg-sub-black"} 
@@ -85,7 +92,9 @@ export default function Header(props: {
                     </li>
                     <li className="flex justify-between items-center p-2 rounded my-1
                     first:mt-0 last:mb-0 group transition-all hover:bg-darker-blue"
-                        onClick={props.handleHeaderClick}
+                        onClick={() => {
+                            props.handleHeaderClick();
+                            handleCreateChannel()}}
                     >
                         <h2 className="group-hover:text-white">Create Channel</h2>
                         <svg xmlns="http://www.w3.org/2000/svg"
