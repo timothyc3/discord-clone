@@ -4,7 +4,7 @@ import {toggleCreateServer} from "../../../../features/activeSlice";
 import ServerTemplateSelection from "./components/ServerTemplateSelection";
 import ServerGroupTypeSelection from "./components/ServerGroupTypeSelection";
 import ServerNamePhotoSelection from "./components/ServerNamePhotoSelection";
-import {createServer} from "../../../../firebase";
+import {batchCreateChannels, createServer} from "../../../../firebase";
 import {ServerPayload} from "../../../../types";
 
 export default function CreateServerWindow() {
@@ -43,16 +43,15 @@ export default function CreateServerWindow() {
         setServerName(event.target.value);
     }
 
-    function onServerCreation() {
+    async function onServerCreation() {
 
-        const isPrivate : boolean = serverGroupType === 'For me and my friends'
+        const isPrivate : boolean = serverGroupType === 'For me and my friends';
 
         createServer({name: serverName, creatorUserId: userUid}, isPrivate)
             .then((serverId) => {
                 console.log(`successfully created new server with id: ${serverId}`);
-            }
-
-        )
+                batchCreateChannels(serverTemplate, serverId, userUid);
+            });
     }
 
     const dispatch = useAppDispatch();

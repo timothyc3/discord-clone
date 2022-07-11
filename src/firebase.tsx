@@ -237,10 +237,65 @@ async function createChannel(data: ChannelPayload) {
 
 // batch create channels for the template that the user selected in creating a new server
 async function batchCreateChannels(templateType: string, serverId: string, creatorId: string) {
+    function channelPayload(name: string): ChannelPayload {
+        return {
+            serverId: serverId,
+            creatorUserId: creatorId,
+            name: name,
+            private: false
+        }
+    }
     switch (templateType) {
-        case 'For me and my friends':
+        case 'Make My Own':
+            await createChannel(channelPayload("general"));
+            break;
 
-        case 'For a club or community':
+        case 'Gaming':
+            await createChannel(channelPayload("general"));
+            await createChannel(channelPayload("clips-and-highlights"));
+            break;
+
+        case 'School Club':
+            await createChannel(channelPayload("welcome-and-rules"));
+            await createChannel(channelPayload("announcements"));
+            await createChannel(channelPayload("resources"));
+            await createChannel(channelPayload("general"));
+            await createChannel(channelPayload("meeting-plans"));
+            await createChannel(channelPayload("off-topic"));
+            break;
+
+        case 'Study Group':
+            await createChannel(channelPayload("welcome-and-rules"));
+            await createChannel(channelPayload("notes-resources"));
+            await createChannel(channelPayload("general"));
+            await createChannel(channelPayload("homework-help"));
+            await createChannel(channelPayload("session-planning"));
+            await createChannel(channelPayload("off-topic"));
+            break;
+
+        case 'Friends':
+            await createChannel(channelPayload("general"));
+            await createChannel(channelPayload("games"));
+            await createChannel(channelPayload("music"));
+            break;
+
+        case 'Artists & Creators':
+            await createChannel(channelPayload("welcome-and-rules"));
+            await createChannel(channelPayload("announcements"));
+            await createChannel(channelPayload("general"));
+            await createChannel(channelPayload("events"));
+            await createChannel(channelPayload("ideas-and-feedback"));
+            break;
+
+        case 'Local Community':
+            await createChannel(channelPayload("welcome-and-rules"));
+            await createChannel(channelPayload("announcements"));
+            await createChannel(channelPayload("resources"));
+            await createChannel(channelPayload("general"));
+            await createChannel(channelPayload("meeting-plans"));
+            await createChannel(channelPayload("off-topic"));
+            break;
+
     }
 }
 
@@ -293,4 +348,4 @@ const getServerData = async (uid: string) => {
 
 export {addData, getServerData, getChannelData, getMessageData, getUserData,
     writeMessage, createNewUser, logOut, getCurrentUser, listenChannel, login,
-    createChannel, listenServer, createServer}
+    createChannel, listenServer, createServer, batchCreateChannels}
