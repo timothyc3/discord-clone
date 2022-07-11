@@ -52,3 +52,8 @@ export interface ChannelPayload {
     name: string,
     private: boolean
 }
+
+export interface ServerPayload {
+    creatorUserId: string,
+    name: string
+}

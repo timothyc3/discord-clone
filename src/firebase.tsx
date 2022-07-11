@@ -2,7 +2,7 @@
 import {initializeApp} from "firebase/app";
 import {arrayUnion, collection, doc, getDocs, getFirestore, setDoc, writeBatch, query, where, onSnapshot} from "firebase/firestore";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth"
-import {Channel, ChannelPayload, Message, MessagePayload, Server, User} from "./types";
+import {Channel, ChannelPayload, Message, MessagePayload, Server, ServerPayload, User} from "./types";
 import {useAppDispatch} from "./hooks";
 import {channel} from "diagnostics_channel";
 // import {updateChannels} from "./features/channelSlice";
@@ -235,6 +235,17 @@ async function createChannel(data: ChannelPayload) {
     await batch.commit();
 }
 
+async function createServer(data: ServerPayload) {
+
+    const docRefServer = doc(collection(firestore, "servers"));
+
+    const newServerData: Server = {id: docRefServer.id, name: data.name, channelIds:[], userIds: [data.creatorUserId]}
+
+    await setDoc(docRefServer, newServerData)
+
+    return docRefServer.id
+}
+
 const getChannelData = async (uid: string) => {
     try {
         const snapshot = await getDocs(query(
@@ -273,4 +284,4 @@ const getServerData = async (uid: string) => {
 
 export {addData, getServerData, getChannelData, getMessageData, getUserData,
     writeMessage, createNewUser, logOut, getCurrentUser, listenChannel, login,
-    createChannel, listenServer}
+    createChannel, listenServer, createServer}

@@ -4,6 +4,8 @@ import {toggleCreateServer} from "../../../../features/activeSlice";
 import ServerTemplateSelection from "./components/ServerTemplateSelection";
 import ServerGroupTypeSelection from "./components/ServerGroupTypeSelection";
 import ServerNamePhotoSelection from "./components/ServerNamePhotoSelection";
+import {createServer} from "../../../../firebase";
+import {ServerPayload} from "../../../../types";
 
 export default function CreateServerWindow() {
 
@@ -17,6 +19,8 @@ export default function CreateServerWindow() {
             }
             else {return ''}
         }, (a, b) => a !== '');
+
+    const userUid = useAppSelector(state => state.login.uid)
 
     // when defaultServerName does not return empty string, this will trigger once after mount.
     useEffect(() => {
@@ -37,6 +41,15 @@ export default function CreateServerWindow() {
 
     function onServerNameChange(event: React.ChangeEvent<HTMLInputElement>) {
         setServerName(event.target.value);
+    }
+
+    function onServerCreation() {
+        createServer({name: serverName, creatorUserId: userUid})
+            .then((serverId) => {
+                console.log(`successfully created new server with id: ${serverId}`);
+            }
+
+        )
     }
 
     const dispatch = useAppDispatch();
@@ -71,6 +84,7 @@ export default function CreateServerWindow() {
                                                   onServerTemplateSubmit={(input: string) => onServerTemplateSubmit(input)}
                                                   defaultServerName={serverName}
                                                   onServerNameChange={onServerNameChange}
+                                                  onServerCreation={onServerCreation}
                         />
                 }
             </div>

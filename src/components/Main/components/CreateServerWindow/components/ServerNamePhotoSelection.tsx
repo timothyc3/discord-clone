@@ -1,4 +1,5 @@
 import React from "react"
+import {ServerPayload} from "../../../../../types";
 
 export default function ServerNamePhotoSelection(
     props: {
@@ -6,6 +7,7 @@ export default function ServerNamePhotoSelection(
         onServerGroupTypeSubmit: (input: string) => void
         onServerTemplateSubmit: (input: string) => void
         onServerNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+        onServerCreation: () => void
         defaultServerName: string
     }
 ) {
@@ -74,7 +76,9 @@ export default function ServerNamePhotoSelection(
                     className={`${props.defaultServerName === '' ? "bg-blue/50" :
                         "hover:bg-darker-blue bg-blue"} h-10 w-24 
                     rounded flex justify-center items-center text-white
-                        text-sm font-semibold`}>
+                        text-sm font-semibold`}
+                    onClick={props.onServerCreation}
+                >
                     Create
                 </button>
             </div>
