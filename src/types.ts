@@ -23,6 +23,7 @@ export interface Server {
     name: string,
     channelIds: string[],
     userIds: string[]
+    private: boolean
 }
 
 export interface User {

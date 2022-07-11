@@ -44,7 +44,10 @@ export default function CreateServerWindow() {
     }
 
     function onServerCreation() {
-        createServer({name: serverName, creatorUserId: userUid})
+
+        const isPrivate : boolean = serverGroupType === 'For me and my friends'
+
+        createServer({name: serverName, creatorUserId: userUid}, isPrivate)
             .then((serverId) => {
                 console.log(`successfully created new server with id: ${serverId}`);
             }

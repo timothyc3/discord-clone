@@ -235,11 +235,20 @@ async function createChannel(data: ChannelPayload) {
     await batch.commit();
 }
 
-async function createServer(data: ServerPayload) {
+// batch create channels for the template that the user selected in creating a new server
+async function batchCreateChannels(templateType: string, serverId: string, creatorId: string) {
+    switch (templateType) {
+        case 'For me and my friends':
+
+        case 'For a club or community':
+    }
+}
+
+async function createServer(data: ServerPayload, isPrivate: boolean) {
 
     const docRefServer = doc(collection(firestore, "servers"));
 
-    const newServerData: Server = {id: docRefServer.id, name: data.name, channelIds:[], userIds: [data.creatorUserId]}
+    const newServerData: Server = {id: docRefServer.id, name: data.name, channelIds:[], userIds: [data.creatorUserId], private: isPrivate}
 
     await setDoc(docRefServer, newServerData)
 
