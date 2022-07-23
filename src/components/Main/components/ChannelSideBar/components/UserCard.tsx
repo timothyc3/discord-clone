@@ -1,13 +1,22 @@
 import React from "react";
+import {useAppSelector} from "../../../../../hooks";
 
 export default function UserCard() {
+
+    const username = useAppSelector(state => {
+        const uid = state.login.uid
+        return state.user.entities[uid].name
+    })
+
+    const uid = useAppSelector(state => state.login.uid)
+
     return (
         <div className="w-full bg-server-bar-black/60 p-3 grid grid-cols-[2.5rem_4fr_1fr_1fr_1fr] gap-x-3">
             <div className="bg-white h-full rounded-full"></div>
             <div className="flex flex-col justify-center">
 
-                <h2 className="text-sm font-semibold text-white">Aslonia</h2>
-                <h3 className="text-xs text-inactive-light-grey">#8756</h3>
+                <h2 className="text-sm font-semibold text-white">{username}</h2>
+                <h3 className="text-xs text-inactive-light-grey">{`#${uid.substring(0, 4)}`}</h3>
 
             </div>
             <svg xmlns="http://www.w3.org/2000/svg"
