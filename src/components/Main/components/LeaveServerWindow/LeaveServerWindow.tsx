@@ -5,6 +5,15 @@ import {toggleLeaveServer} from "../../../../features/activeSlice";
 export default function LeaveServerWindow() {
 
     const active = useAppSelector(state => state.active.leaveServer);
+    const serverName = useAppSelector(state => {
+        const activeServerId = state.active.levelOne
+        if (activeServerId in state.server.entities) {
+            return state.server.entities[activeServerId].name
+        } else {
+            return ""
+        }
+
+    })
 
     const dispatch = useAppDispatch();
 
@@ -16,7 +25,19 @@ export default function LeaveServerWindow() {
         <>
             {active && <div className="bg-black/70 w-full h-full fixed flex justify-center items-center"
                             onClick={onExit}>
-
+                <div className="relative w-108 h-56 rounded-md grid grid-rows-[6.5fr_3.5fr] overflow-hidden"
+                     onClick={(event) => {
+                         event.stopPropagation();
+                     }}>
+                    <div className="bg-sub-black pt-4 px-4 text-white">
+                        <h2 className="font-bold text-lg">{`Leave ${serverName}`}</h2>
+                        <p className="text-sm pt-4">
+                            Are you sure you want to leave <span className="font-semibold">{serverName}</span>?
+                            You won't be able to re-join this server unless you are re-invited
+                        </p>
+                    </div>
+                    <div className="bg-server-bar-black"></div>
+                </div>
             </div>}
         </>
     )
