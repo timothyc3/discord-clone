@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../../../../hooks";
 import {shallowEqual} from "react-redux";
-import {toggleCreateChannel} from "../../../../../features/activeSlice";
+import {toggleCreateChannel, toggleLeaveServer} from "../../../../../features/activeSlice";
 
 export default function Header(props: {
     handleHeaderClick: () => void,
@@ -28,6 +28,10 @@ export default function Header(props: {
 
     function handleCreateChannel() {
         dispatch(toggleCreateChannel(''))
+    }
+
+    function handleLeaveServer() {
+        dispatch(toggleLeaveServer(''));
     }
 
     return (
@@ -158,7 +162,10 @@ export default function Header(props: {
                     <hr className="mx-1 h-[1px] border-none bg-channel-active-grey" />
                     <li className="flex justify-between items-center p-2 rounded my-1
                     first:mt-0 last:mb-0 group transition-all hover:bg-red-500"
-                        onClick={props.handleHeaderClick}
+                        onClick={() => {
+                            props.handleHeaderClick();
+                            handleLeaveServer()
+                        }}
                     >
                         <h2 className="text-red-500 group-hover:text-white">Leave Server</h2>
                         <svg xmlns="http://www.w3.org/2000/svg"

@@ -10,6 +10,7 @@ import {Channel, Server} from "../../types";
 import {listenChannel, listenServer} from "../../firebase";
 import CreateServerWindow from "./components/CreateServerWindow/CreateServerWindow";
 import CreateChannelWindow from "./components/CreateChannelWindow/CreateChannelWindow";
+import LeaveServerWindow from "./components/LeaveServerWindow/LeaveServerWindow";
 
 export default function Main() {
 
@@ -51,6 +52,7 @@ export default function Main() {
             <Content/>
             <CreateServerWindow />
             <CreateChannelWindow />
+            <LeaveServerWindow />
         </div>
     )
 }
