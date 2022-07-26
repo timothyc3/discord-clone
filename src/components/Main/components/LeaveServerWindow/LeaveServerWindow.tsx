@@ -37,7 +37,7 @@ export default function LeaveServerWindow() {
                         </p>
                     </div>
                     <div className="bg-server-bar-black flex items-center justify-end gap-8 px-4">
-                        <button className="text-sm text-white font-semibold"
+                        <button className="text-sm text-white font-semibold hover:underline"
                         onClick={onExit}>
                             Cancel
                         </button>
