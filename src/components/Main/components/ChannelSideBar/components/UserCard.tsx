@@ -4,8 +4,13 @@ import {useAppSelector} from "../../../../../hooks";
 export default function UserCard() {
 
     const username = useAppSelector(state => {
+
         const uid = state.login.uid
-        return state.user.entities[uid].name
+        if (uid in  state.user.entities) {
+            return state.user.entities[uid].name
+        }
+        else {return ""}
+
     })
 
     const uid = useAppSelector(state => state.login.uid)
